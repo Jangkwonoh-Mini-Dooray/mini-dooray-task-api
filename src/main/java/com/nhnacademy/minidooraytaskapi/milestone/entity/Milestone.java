@@ -1,7 +1,7 @@
-package com.nhnacademy.minidooraytaskapi.task.entity;
+package com.nhnacademy.minidooraytaskapi.milestone.entity;
 
-import com.nhnacademy.minidooraytaskapi.milestone.entity.Milestone;
 import com.nhnacademy.minidooraytaskapi.project.entity.Project;
+import com.nhnacademy.minidooraytaskapi.task.entity.Task;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,35 +15,31 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
 import java.io.Serializable;
-
+import java.time.LocalDate;
 @Entity
-@Table(name = "task")
-public class Task {
+@Table(name = "milestone")
+public class Milestone {
     @EmbeddedId
     private Pk pk;
     @NoArgsConstructor
     @EqualsAndHashCode
-    @Embeddable
     @Getter
+    @Embeddable
     public static class Pk implements Serializable {
-        @Column(name = "task_id")
-        private Long taskId;
+        @Column(name = "milestone_id")
+        private Long milestoneId;
         @Column(name = "project_id")
         private Long projectId;
     }
-
-    @Column(name = "milestone_id")
-    @ManyToOne
-    @JoinColumn(name = "pk.milestone_id")
-    private Milestone milestone;
     @MapsId("projectId")
     @ManyToOne
     @JoinColumn(name = "project_id")
     private Project project;
-    @Column(name = "title")
-    private String title;
-    @Column(name = "content")
-    private String content;
-    @Column(name = "task_writer_member_id")
-    private String taskWriterMemberId;
+    private String name;
+    @Column(name = "start_period")
+    private LocalDate startPeriod;
+    @Column(name = "end_period")
+    private LocalDate endPeriod;
+    private String status;
+
 }
