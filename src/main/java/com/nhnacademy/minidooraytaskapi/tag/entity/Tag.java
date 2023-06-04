@@ -20,6 +20,7 @@ public class Tag {
     private String name;
 
     @Getter
+    @Setter
     @Embeddable
     @EqualsAndHashCode
     @NoArgsConstructor
@@ -29,9 +30,8 @@ public class Tag {
         @Column(name = "project_id")
         private Long projectId;
     }
-
     @MapsId("projectId")
     @ManyToOne
-    @JoinColumn(name = "project_id")
+    @JoinColumn(name = "project_id", referencedColumnName = "project_id")
     private Project project;
 }
