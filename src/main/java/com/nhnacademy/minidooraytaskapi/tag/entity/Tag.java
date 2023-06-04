@@ -4,11 +4,14 @@ import com.nhnacademy.minidooraytaskapi.project.entity.Project;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@Setter
+@Getter
 @Table(name = "tag")
 public class Tag {
     @EmbeddedId
@@ -23,6 +26,7 @@ public class Tag {
     public static class Pk implements Serializable {
         @Column(name = "tag_id")
         private Long tagId;
+        @Column(name = "project_id")
         private Long projectId;
     }
 
