@@ -21,5 +21,4 @@ public class ProjectController {
         return projectService.getProjects(memberId);
     }
 
-
 }
