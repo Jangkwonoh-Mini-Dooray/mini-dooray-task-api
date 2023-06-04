@@ -20,5 +20,4 @@ public class ProjectController {
     public List<ProjectDto> getProjects(@PathVariable("member-id") String memberId) {
         return projectService.getProjects(memberId);
     }
-
 }
