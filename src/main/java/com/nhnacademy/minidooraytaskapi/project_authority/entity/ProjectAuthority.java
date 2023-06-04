@@ -1,4 +1,4 @@
-package com.nhnacademy.minidooraytaskapi.projectAuthority.entity;
+package com.nhnacademy.minidooraytaskapi.project_authority.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

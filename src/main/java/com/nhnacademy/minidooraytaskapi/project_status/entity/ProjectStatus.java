@@ -1,4 +1,4 @@
-package com.nhnacademy.minidooraytaskapi.projectStatus.entity;
+package com.nhnacademy.minidooraytaskapi.project_status.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

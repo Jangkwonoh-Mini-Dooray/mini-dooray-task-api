@@ -1,6 +1,7 @@
-package com.nhnacademy.minidooraytaskapi.getProject.entity;
+package com.nhnacademy.minidooraytaskapi.get_tag.entity;
 
-import com.nhnacademy.minidooraytaskapi.project.entity.Project;
+import com.nhnacademy.minidooraytaskapi.tag.entity.Tag;
+import com.nhnacademy.minidooraytaskapi.task.entity.Task;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,23 +17,27 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "get_project")
-public class GetProject {
+@Table(name = "get_tag")
+public class GetTag {
     @EmbeddedId
     private Pk pk;
-
     @Embeddable
-    @EqualsAndHashCode
     @Getter
     @NoArgsConstructor
+    @EqualsAndHashCode
     public static class Pk implements Serializable {
-        @Column(name = "target_member_id")
-        private Long targetMemberId;
-        @Column(name = "project_id")
-        private Long projectId;
+        @Column(name = "tag_id")
+        private Long tagId;
+        @Column(name = "task_id")
+        private Long taskId;
     }
-    @MapsId("projectId")
+
+    @MapsId("tagId")
     @ManyToOne
-    @JoinColumn(name = "project_id")
-    private Project project;
+    @JoinColumn(name = "tag_id")
+    private Tag tag;
+    @MapsId("taskId")
+    @ManyToOne
+    @JoinColumn(name = "task_id")
+    private Task task;
 }
