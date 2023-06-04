@@ -1,5 +1,6 @@
 package com.nhnacademy.minidooraytaskapi.tag.entity;
 
+import com.nhnacademy.minidooraytaskapi.project.entity.Project;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +23,11 @@ public class Tag {
     public static class Pk implements Serializable {
         @Column(name = "tag_id")
         private Long tagId;
-        @Column(name = "project_id")
         private Long projectId;
     }
+
+    @MapsId("projectId")
+    @ManyToOne
+    @JoinColumn(name = "project_id")
+    private Project project;
 }
