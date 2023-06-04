@@ -1,4 +1,8 @@
 package com.nhnacademy.minidooraytaskapi.task.dto;
 
-public class TaskDto {
+public interface TaskDto {
+    Long getTaskId();
+    Long getTaskWriterId();
+    Long getMilestoneId();
+    String getTitle();
 }
