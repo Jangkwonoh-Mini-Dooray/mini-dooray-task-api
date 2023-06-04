@@ -131,15 +131,15 @@ CREATE TABLE `comment_mention`
 );
 
 
-# project_status 테이블 데이터 추가
+--project_status 테이블 데이터 추가
 
-MERGE INTO project_status VALUES (1, '활성');
-MERGE INTO project_status VALUES (2, '휴면');
-MERGE INTO project_status VALUES (3, '종료');
+MERGE INTO `project_status` VALUES (1, '활성');
+MERGE INTO `project_status` VALUES (2, '휴면');
+MERGE INTO `project_status` VALUES (3, '종료');
 
-# project_authority 테이블 데이터 추가
+--project_authority 테이블 데이터 추가
 
-MERGE INTO project_authority
+MERGE INTO `project_authority`
 VALUES (1, 'ADMIN');
-MERGE INTO project_authority
+MERGE INTO `project_authority`
 VALUES (2, 'MEMBER');
