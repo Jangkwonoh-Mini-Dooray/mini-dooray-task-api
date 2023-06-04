@@ -2,8 +2,12 @@ package com.nhnacademy.minidooraytaskapi.getTag.entity;
 
 import com.nhnacademy.minidooraytaskapi.tag.entity.Tag;
 import com.nhnacademy.minidooraytaskapi.task.entity.Task;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -17,6 +21,10 @@ import java.io.Serializable;
 public class GetTag {
     @EmbeddedId
     private Pk pk;
+    @Embeddable
+    @Getter
+    @NoArgsConstructor
+    @EqualsAndHashCode
     public static class Pk implements Serializable {
         @Column(name = "tag_id")
         private Long tagId;
