@@ -1,6 +1,5 @@
 package com.nhnacademy.minidooraytaskapi.task.service;
 
-import com.nhnacademy.minidooraytaskapi.project.entity.Project;
 import com.nhnacademy.minidooraytaskapi.task.entity.Task;
 import com.nhnacademy.minidooraytaskapi.task.repository.TaskRepository;
 import org.assertj.core.api.Assertions;
