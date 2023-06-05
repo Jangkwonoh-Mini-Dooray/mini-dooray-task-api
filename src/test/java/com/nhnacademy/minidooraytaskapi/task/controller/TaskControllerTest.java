@@ -47,7 +47,6 @@ class TaskControllerTest {
         Task task2 = new Task();
 
         Project project = new Project();
-//        project.setProjectId(1L);
         project.setName("ggg");
         ProjectStatus projectStatus = new ProjectStatus();
         projectStatus.setName("활성");
