@@ -12,9 +12,10 @@ import javax.persistence.*;
 @Table(name = "project")
 public class Project {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "project_id")
     private Long projectId;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "project_status_id")
     private ProjectStatus projectStatus;
     private String name;
