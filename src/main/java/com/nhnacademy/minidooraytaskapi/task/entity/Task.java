@@ -2,19 +2,14 @@ package com.nhnacademy.minidooraytaskapi.task.entity;
 
 import com.nhnacademy.minidooraytaskapi.milestone.entity.Milestone;
 import com.nhnacademy.minidooraytaskapi.project.entity.Project;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Setter
 @Getter
-@EqualsAndHashCode
 @Table(name = "task")
 public class Task {
     @Id

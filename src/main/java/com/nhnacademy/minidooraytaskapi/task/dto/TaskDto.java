@@ -1,8 +1,10 @@
 package com.nhnacademy.minidooraytaskapi.task.dto;
 
+import com.nhnacademy.minidooraytaskapi.milestone.entity.Milestone;
+
 public interface TaskDto {
     Long getTaskId();
-    Long getTaskWriterId();
-    Long getMilestoneId();
+    String getTaskWriterMemberId();
+    Milestone getMilestone();
     String getTitle();
 }

@@ -1,27 +1,37 @@
 package com.nhnacademy.minidooraytaskapi.task.service;
 
+import com.nhnacademy.minidooraytaskapi.milestone.entity.Milestone;
 import com.nhnacademy.minidooraytaskapi.project.entity.Project;
+import com.nhnacademy.minidooraytaskapi.task.dto.TaskDto;
 import com.nhnacademy.minidooraytaskapi.task.entity.Task;
 import com.nhnacademy.minidooraytaskapi.task.repository.TaskRepository;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class DefaultTaskServiceTest {
+    @Autowired
+    TaskService taskService;
     @MockBean
     TaskRepository taskRepository;
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
 
     @Test
     void getAllByProjectId() {
@@ -40,11 +50,52 @@ class DefaultTaskServiceTest {
 
         allByProjectProjectId.add(task);
         allByProjectProjectId.add(task2);
-        given(taskRepository.getAllByProject_ProjectId(anyLong()))
-                .willReturn(allByProjectProjectId);
+        given(taskRepository.getAllByProjectProjectId(anyLong()))
+                .willReturn(List.of(new TaskDto() {
+                    @Override
+                    public Long getTaskId() {
+                        return task.getTaskId();
+                    }
 
-        List<Task> allTask = taskRepository.getAllByProject_ProjectId(1L);
+                    @Override
+                    public String getTaskWriterMemberId() {
+                        return task.getTaskWriterMemberId();
+                    }
 
-        Assertions.assertThat(allTask).isNotEmpty();
+                    @Override
+                    public Milestone getMilestone() {
+                        return task.getMilestone();
+                    }
+
+                    @Override
+                    public String getTitle() {
+                        return task.getTitle();
+                    }
+                }, new TaskDto() {
+                    @Override
+                    public Long getTaskId() {
+                        return task2.getTaskId();
+                    }
+
+                    @Override
+                    public String getTaskWriterMemberId() {
+                        return task2.getTaskWriterMemberId();
+                    }
+
+                    @Override
+                    public Milestone getMilestone() {
+                        return task2.getMilestone();
+                    }
+
+                    @Override
+                    public String getTitle() {
+                        return task2.getTitle();
+                    }
+                }));
+
+        List<TaskDto> allTask = taskService.getAllByProjectId(1L);
+
+        Assertions.assertThat(allTask).isNotEmpty().hasSize(2);
+        Assertions.assertThat(allTask.get(0).getTaskId()).isEqualTo(1L);
     }
 }
