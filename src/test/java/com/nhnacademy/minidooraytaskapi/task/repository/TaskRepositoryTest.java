@@ -16,7 +16,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.AUTO_CONFIGURED)
 class TaskRepositoryTest {
     @Autowired
     TestEntityManager testEntityManager;
@@ -29,11 +29,10 @@ class TaskRepositoryTest {
         Task task2 = new Task();
 
         Project project = new Project();
-        project.setProjectId(1L);
         project.setName("ggg");
         ProjectStatus projectStatus = new ProjectStatus();
-        projectStatus.setProjectStatusId(3);
-        projectStatus.setName("활성");
+        projectStatus.setProjectStatusId(4);
+        projectStatus.setName("test");
         project.setProjectStatus(projectStatus);
         Milestone milestone = new Milestone();
         milestone.setMilestoneId(1L);
