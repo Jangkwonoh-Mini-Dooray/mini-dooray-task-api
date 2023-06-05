@@ -1,27 +1,18 @@
 package com.nhnacademy.minidooraytaskapi.task.controller;
 
-import com.nhnacademy.minidooraytaskapi.milestone.entity.Milestone;
 import com.nhnacademy.minidooraytaskapi.project.entity.Project;
 import com.nhnacademy.minidooraytaskapi.project_status.entity.ProjectStatus;
 import com.nhnacademy.minidooraytaskapi.task.dto.TaskDto;
 import com.nhnacademy.minidooraytaskapi.task.entity.Task;
-import com.nhnacademy.minidooraytaskapi.task.repository.TaskRepository;
 import com.nhnacademy.minidooraytaskapi.task.service.TaskService;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -58,47 +49,8 @@ class TaskControllerTest {
         task2.setProject(project);
 
         when(taskService.getAllByProjectId(anyLong()))
-                .thenReturn(List.of(new TaskDto() {
-                    @Override
-                    public Long getTaskId() {
-                        return task.getTaskId();
-                    }
-
-                    @Override
-                    public String getTaskWriterMemberId() {
-                        return task.getTaskWriterMemberId();
-                    }
-
-                    @Override
-                    public Milestone getMilestone() {
-                        return task.getMilestone();
-                    }
-
-                    @Override
-                    public String getTitle() {
-                        return task.getTitle();
-                    }
-                }, new TaskDto() {
-                    @Override
-                    public Long getTaskId() {
-                        return task2.getTaskId();
-                    }
-
-                    @Override
-                    public String getTaskWriterMemberId() {
-                        return task2.getTaskWriterMemberId();
-                    }
-
-                    @Override
-                    public Milestone getMilestone() {
-                        return task2.getMilestone();
-                    }
-
-                    @Override
-                    public String getTitle() {
-                        return task2.getTitle();
-                    }
-                }));
+                .thenReturn(List.of(new TaskDto(task.getTaskId(), task.getTaskWriterMemberId(), task.getMilestone(), task.getTitle()),
+                        new TaskDto(task2.getTaskId(), task2.getTaskWriterMemberId(), task2.getMilestone(), task.getTitle())));
 
 
         mockMvc.perform(get("/projections/{project-id}/posts", 1L))

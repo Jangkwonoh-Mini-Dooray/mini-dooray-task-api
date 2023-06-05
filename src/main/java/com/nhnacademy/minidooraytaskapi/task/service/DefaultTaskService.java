@@ -12,10 +12,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DefaultTaskService implements TaskService{
     private final TaskRepository taskRepository;
-
     @Override
     @Transactional(readOnly = true)
     public List<TaskDto> getAllByProjectId(Long projectId) {
-        return taskRepository.getAllByProjectProjectId(projectId);
+        return taskRepository.getTasks(projectId);
+    }
+    @Override
+    public TaskDto getTaskByTaskIdAndProjectId(Long taskId, Long projectId) {
+        return taskRepository.getTask(taskId, projectId);
     }
 }
