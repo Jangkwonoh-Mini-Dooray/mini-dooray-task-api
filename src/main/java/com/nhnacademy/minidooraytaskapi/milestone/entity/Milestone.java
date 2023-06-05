@@ -11,6 +11,7 @@ import java.time.LocalDate;
 @Table(name = "milestone")
 public class Milestone {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "milestone_id")
     private Long milestoneId;
     private String name;
@@ -19,7 +20,7 @@ public class Milestone {
     @Column(name = "end_period")
     private LocalDate endPeriod;
     private String status;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "project_id")
     private Project project;
 

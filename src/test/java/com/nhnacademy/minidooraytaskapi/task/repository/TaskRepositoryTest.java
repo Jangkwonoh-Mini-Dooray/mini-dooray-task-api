@@ -31,36 +31,32 @@ class TaskRepositoryTest {
         Project project = new Project();
         project.setName("ggg");
         ProjectStatus projectStatus = new ProjectStatus();
-        projectStatus.setProjectStatusId(4);
         projectStatus.setName("test");
         project.setProjectStatus(projectStatus);
         Milestone milestone = new Milestone();
-        milestone.setMilestoneId(1L);
         milestone.setProject(project);
         milestone.setName("test");
 
-        testEntityManager.merge(projectStatus);
-        testEntityManager.merge(project);
-        testEntityManager.merge(milestone);
+        testEntityManager.persist(projectStatus);
+        testEntityManager.persist(project);
+        testEntityManager.persist(milestone);
 
-        task.setTaskId(1L);
         task.setTitle("test");
         task.setTaskWriterMemberId("naht94");
         task.setProject(project);
         task.setMilestone(milestone);
-        task2.setTaskId(2L);
         task2.setTitle("test");
         task2.setTaskWriterMemberId("naht94");
         task2.setProject(project);
         task2.setMilestone(milestone);
 
-        testEntityManager.merge(task);
-        testEntityManager.merge(task2);
+        testEntityManager.persist(task);
+        testEntityManager.persist(task2);
 
 
-        List<TaskDto> allTask = taskRepository.getAllByProjectProjectId(1L);
+        List<TaskDto> allTask = taskRepository.getAllByProjectProjectId(project.getProjectId());
 
         assertThat(allTask).isNotEmpty().hasSize(2);
-        assertThat(allTask.get(0).getTaskId()).isEqualTo(1L);
+        assertThat(allTask.get(0).getTaskId()).isEqualTo(task.getTaskId());
     }
 }

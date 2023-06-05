@@ -16,7 +16,7 @@ public class Task {
     @Column(name = "task_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long taskId;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "project_id")
     private Project project;
     @ManyToOne
