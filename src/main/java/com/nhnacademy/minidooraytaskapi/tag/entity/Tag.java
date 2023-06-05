@@ -14,24 +14,12 @@ import java.io.Serializable;
 @Getter
 @Table(name = "tag")
 public class Tag {
-    @EmbeddedId
-    private Pk pk;
+    @Id
+    @Column(name = "tag_id")
+    private Long tagId;
 
-    private String name;
-
-    @Getter
-    @Setter
-    @Embeddable
-    @EqualsAndHashCode
-    @NoArgsConstructor
-    public static class Pk implements Serializable {
-        @Column(name = "tag_id")
-        private Long tagId;
-        @Column(name = "project_id")
-        private Long projectId;
-    }
-    @MapsId("projectId")
     @ManyToOne
-    @JoinColumn(name = "project_id", referencedColumnName = "project_id")
+    @JoinColumn(name = "project_id")
     private Project project;
+    private String name;
 }

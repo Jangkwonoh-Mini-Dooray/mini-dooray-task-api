@@ -8,41 +8,23 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Setter
 @Table(name = "task")
 public class Task {
-    @EmbeddedId
-    private Pk pk;
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @EqualsAndHashCode
-    @Embeddable
-    @Getter
-    public static class Pk implements Serializable {
-        @Column(name = "task_id")
-        private Long taskId;
-        @Column(name = "project_id")
-        private Long projectId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "pk.milestone_id")
-    private Milestone milestone;
-    @MapsId("projectId")
+    @Id
+    @Column(name = "task_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long taskId;
     @ManyToOne
     @JoinColumn(name = "project_id")
     private Project project;
+    @ManyToOne
+    @JoinColumn(name = "milestone_id")
+    private Milestone milestone;
     @Column(name = "title")
     private String title;
     @Column(name = "content")
