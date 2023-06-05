@@ -8,12 +8,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class DefaultProjectService implements ProjectService {
     private final ProjectRepository projectRepository;
 
     @Override
     @Transactional(readOnly = true)
     public ProjectDto getProject(Long projectId) {
-        return projectRepository.getAllByProjectId(projectId);
+        return projectRepository.findByProjectId(projectId);
     }
 }
