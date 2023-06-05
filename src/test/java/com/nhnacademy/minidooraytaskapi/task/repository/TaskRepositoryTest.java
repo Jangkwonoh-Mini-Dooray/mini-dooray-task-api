@@ -24,7 +24,7 @@ class TaskRepositoryTest {
     TaskRepository taskRepository;
 
     @Test
-    void getAllByProject_ProjectId() {
+    void getAllByProjectProjectId() {
         Task task = new Task();
         Task task2 = new Task();
 
@@ -54,9 +54,44 @@ class TaskRepositoryTest {
         testEntityManager.persist(task2);
 
 
-        List<TaskDto> allTask = taskRepository.getAllByProjectProjectId(project.getProjectId());
+        List<TaskDto> allTask = taskRepository.getTasks(project.getProjectId());
 
         assertThat(allTask).isNotEmpty().hasSize(2);
         assertThat(allTask.get(0).getTaskId()).isEqualTo(task.getTaskId());
+    }
+
+    @Test
+    void testGetTaskByTaskIdAndProjectProjectId() {
+        Task task = new Task();
+        Task task2 = new Task();
+
+        Project project = new Project();
+        project.setName("ggg");
+        ProjectStatus projectStatus = new ProjectStatus();
+        projectStatus.setName("test");
+        project.setProjectStatus(projectStatus);
+        Milestone milestone = new Milestone();
+        milestone.setProject(project);
+        milestone.setName("test");
+
+        testEntityManager.persist(projectStatus);
+        testEntityManager.persist(project);
+        testEntityManager.persist(milestone);
+
+        task.setTitle("test");
+        task.setTaskWriterMemberId("naht94");
+        task.setProject(project);
+        task.setMilestone(milestone);
+        task2.setTitle("test");
+        task2.setTaskWriterMemberId("naht94");
+        task2.setProject(project);
+        task2.setMilestone(milestone);
+
+
+        testEntityManager.persist(task);
+        testEntityManager.persist(task2);
+
+        assertThat(taskRepository.getTask(project.getProjectId(), task.getTaskId()).getTaskId()).isEqualTo(task.getTaskId());
+
     }
 }

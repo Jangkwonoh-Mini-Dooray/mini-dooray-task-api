@@ -1,12 +1,10 @@
 package com.nhnacademy.minidooraytaskapi.task.service;
 
-import com.nhnacademy.minidooraytaskapi.milestone.entity.Milestone;
 import com.nhnacademy.minidooraytaskapi.project.entity.Project;
 import com.nhnacademy.minidooraytaskapi.task.dto.TaskDto;
 import com.nhnacademy.minidooraytaskapi.task.entity.Task;
 import com.nhnacademy.minidooraytaskapi.task.repository.TaskRepository;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -15,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 
@@ -48,52 +47,28 @@ class DefaultTaskServiceTest {
         task2.setProject(project);
 
 
-        given(taskRepository.getAllByProjectProjectId(anyLong()))
-                .willReturn(List.of(new TaskDto() {
-                    @Override
-                    public Long getTaskId() {
-                        return task.getTaskId();
-                    }
+        given(taskRepository.getTasks(anyLong()))
+                .willReturn(List.of(new TaskDto(task.getTaskId(), task.getTaskWriterMemberId(), task.getMilestone(), task.getTitle()),
+                        new TaskDto(task2.getTaskId(), task2.getTaskWriterMemberId(), task2.getMilestone(), task.getTitle())));
 
-                    @Override
-                    public String getTaskWriterMemberId() {
-                        return task.getTaskWriterMemberId();
-                    }
-
-                    @Override
-                    public Milestone getMilestone() {
-                        return task.getMilestone();
-                    }
-
-                    @Override
-                    public String getTitle() {
-                        return task.getTitle();
-                    }
-                }, new TaskDto() {
-                    @Override
-                    public Long getTaskId() {
-                        return task2.getTaskId();
-                    }
-
-                    @Override
-                    public String getTaskWriterMemberId() {
-                        return task2.getTaskWriterMemberId();
-                    }
-
-                    @Override
-                    public Milestone getMilestone() {
-                        return task2.getMilestone();
-                    }
-
-                    @Override
-                    public String getTitle() {
-                        return task2.getTitle();
-                    }
-                }));
-
-        List<TaskDto> allTask = taskService.getAllByProjectId(1L);
+        List<TaskDto> allTask = taskService.getAllByProjectId(project.getProjectId());
 
         Assertions.assertThat(allTask).isNotEmpty().hasSize(2);
-        Assertions.assertThat(allTask.get(0).getTaskId()).isEqualTo(1L);
+        Assertions.assertThat(allTask.get(0).getTaskId()).isEqualTo(task.getTaskId());
+    }
+
+    @Test
+    void testGetTaskByTaskIdAndProjectId() {
+        Task task = new Task();
+
+        Project project = new Project();
+        project.setProjectId(1L);
+
+        task.setTaskId(1L);
+        task.setProject(project);
+
+        given(taskRepository.getTask(task.getTaskId(), project.getProjectId()))
+                .willReturn(new TaskDto(task.getTaskId(), task.getTaskWriterMemberId(), task.getMilestone(), task.getTitle()));
+        assertThat(taskService.getTaskByTaskIdAndProjectId(task.getTaskId(), project.getProjectId()));
     }
 }
