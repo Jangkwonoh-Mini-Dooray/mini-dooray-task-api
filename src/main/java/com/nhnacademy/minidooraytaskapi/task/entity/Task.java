@@ -13,6 +13,8 @@ import java.io.Serializable;
 
 @Entity
 @Setter
+@Getter
+@EqualsAndHashCode
 @Table(name = "task")
 public class Task {
     @Id
