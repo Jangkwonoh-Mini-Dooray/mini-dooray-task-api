@@ -1,10 +1,13 @@
 package com.nhnacademy.minidooraytaskapi.milestone.entity;
 
 import com.nhnacademy.minidooraytaskapi.project.entity.Project;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
+@Setter
 @Table(name = "milestone")
 public class Milestone {
     @Id

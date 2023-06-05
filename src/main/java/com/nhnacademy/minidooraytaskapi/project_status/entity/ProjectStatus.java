@@ -1,8 +1,11 @@
 package com.nhnacademy.minidooraytaskapi.project_status.entity;
 
+import lombok.Setter;
+
 import javax.persistence.*;
 
 @Entity
+@Setter
 @Table(name = "project_status")
 public class ProjectStatus {
     @Id
