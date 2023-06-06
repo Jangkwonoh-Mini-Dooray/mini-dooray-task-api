@@ -9,5 +9,5 @@ public interface TaskService {
     List<TaskDto> getAllByProjectId(Long projectId);
     TaskDto getTaskByTaskIdAndProjectId(Long taskId, Long projectId);
 
-    void postTask(PostTaskDto postTaskDto, Long projectId);
+    Long postTask(PostTaskDto postTaskDto, Long projectId);
 }

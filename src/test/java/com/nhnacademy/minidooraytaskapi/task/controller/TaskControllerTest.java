@@ -2,6 +2,7 @@ package com.nhnacademy.minidooraytaskapi.task.controller;
 
 import com.nhnacademy.minidooraytaskapi.project.entity.Project;
 import com.nhnacademy.minidooraytaskapi.project_status.entity.ProjectStatus;
+import com.nhnacademy.minidooraytaskapi.task.dto.PostTaskDto;
 import com.nhnacademy.minidooraytaskapi.task.dto.TaskDto;
 import com.nhnacademy.minidooraytaskapi.task.entity.Task;
 import com.nhnacademy.minidooraytaskapi.task.service.TaskService;
@@ -14,8 +15,11 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 
 import static org.hamcrest.Matchers.equalTo;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -29,6 +33,8 @@ class TaskControllerTest {
     TaskService taskService;
     @Autowired
     MockMvc mockMvc;
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Test
     @DisplayName("프로젝트에 존재하는 모든 업무 찾아오기")
@@ -81,5 +87,54 @@ class TaskControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.taskId", equalTo(1)));
+    }
+
+    @Test
+    @DisplayName("프로젝트에 업무 생성 #실패 1 RequestBody 가 오지 않음")
+    void createTask() throws Exception {
+
+        PostTaskDto task = new PostTaskDto();
+
+        Project project = new Project();
+        project.setProjectId(1L);
+        project.setName("ggg");
+        ProjectStatus projectStatus = new ProjectStatus();
+        projectStatus.setName("활성");
+        project.setProjectStatus(projectStatus);
+
+
+        when(taskService.postTask(any(), anyLong()))
+                .thenReturn(1L);
+
+        mockMvc.perform(post("/projections/{project-id}/posts", project.getProjectId()))
+                .andExpect(status().isBadRequest());
+    }
+    @Test
+    @DisplayName("프로젝트에 업무 생성 #성공")
+    void createTask2() throws Exception {
+
+        PostTaskDto task = new PostTaskDto();
+
+        Project project = new Project();
+        project.setProjectId(1L);
+        project.setName("ggg");
+        ProjectStatus projectStatus = new ProjectStatus();
+        projectStatus.setName("활성");
+        project.setProjectStatus(projectStatus);
+
+
+        task.setTaskWriterMemberId("naht94");
+        task.setTitle("세번째 업무");
+        task.setContent("테스트 업무");
+
+        when(taskService.postTask(any(), anyLong()))
+                .thenReturn(1L);
+
+        mockMvc.perform(post("/projections/{project-id}/posts", project.getProjectId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(task)))
+                .andExpect(status().isCreated())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().string("{\"taskId\":1}"));
     }
 }
