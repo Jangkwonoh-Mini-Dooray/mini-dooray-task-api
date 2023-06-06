@@ -14,19 +14,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping("/projects")
 @RequiredArgsConstructor
 public class ProjectController {
     private final ProjectService projectService;
-
-    @GetMapping("/list/{member-id}")
-    public ResponseEntity<List<ProjectDto>> getProjects(@PathVariable("member-id") String memberId) {
-        List<ProjectDto> projectList = projectService.getProjects(memberId);
-        return ResponseEntity.ok().body(projectList);
-    }
 
     @GetMapping("/{project-id}")
     public ResponseEntity<ProjectDto> getProject(@PathVariable("project-id") Long projectId) {
