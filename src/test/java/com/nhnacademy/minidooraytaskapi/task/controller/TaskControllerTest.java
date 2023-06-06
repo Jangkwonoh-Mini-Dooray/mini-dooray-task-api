@@ -6,7 +6,6 @@ import com.nhnacademy.minidooraytaskapi.task.dto.TaskDto;
 import com.nhnacademy.minidooraytaskapi.task.entity.Task;
 import com.nhnacademy.minidooraytaskapi.task.service.TaskService;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -24,6 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @WebMvcTest
+@DisplayName("업무 컨트롤러 테스트")
 class TaskControllerTest {
     @MockBean
     TaskService taskService;
@@ -31,7 +31,6 @@ class TaskControllerTest {
     MockMvc mockMvc;
 
     @Test
-    @Order(1)
     @DisplayName("프로젝트에 존재하는 모든 업무 찾아오기")
     void getTasks() throws Exception {
         Task task = new Task();
@@ -57,5 +56,30 @@ class TaskControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$[0].taskId", equalTo(1)));
+    }
+
+    @Test
+    @DisplayName("프로젝트에 존재하는 특정 업무 찾아오기")
+    void getTask() throws Exception {
+        Task task = new Task();
+
+        Project project = new Project();
+        project.setProjectId(1L);
+        project.setName("ggg");
+        ProjectStatus projectStatus = new ProjectStatus();
+        projectStatus.setName("활성");
+        project.setProjectStatus(projectStatus);
+
+        task.setTaskId(1L);
+        task.setProject(project);
+
+        when(taskService.getTaskByTaskIdAndProjectId(anyLong(), anyLong()))
+                .thenReturn(new TaskDto(task.getTaskId(), task.getTaskWriterMemberId(), task.getMilestone(), task.getTitle()));
+
+
+        mockMvc.perform(get("/projections/{project-id}/posts/{task-id}", project.getProjectId(), task.getTaskId()))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.taskId", equalTo(1)));
     }
 }

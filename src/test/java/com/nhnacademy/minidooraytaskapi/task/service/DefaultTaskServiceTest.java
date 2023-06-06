@@ -6,6 +6,7 @@ import com.nhnacademy.minidooraytaskapi.task.entity.Task;
 import com.nhnacademy.minidooraytaskapi.task.repository.TaskRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ import java.util.List;
 
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.AUTO_CONFIGURED)
+@DisplayName("업무 서비스 테스트")
 class DefaultTaskServiceTest {
     @Autowired
     TaskService taskService;
@@ -34,6 +36,7 @@ class DefaultTaskServiceTest {
     }
 
     @Test
+    @DisplayName("프로젝트에 존재하는 모든 업무 가져오는 서비스")
     void getAllByProjectId() {
         Task task = new Task();
         Task task2 = new Task();
@@ -58,6 +61,7 @@ class DefaultTaskServiceTest {
     }
 
     @Test
+    @DisplayName("프로젝트에 존재하는 특정 업무 가져오는 서비스")
     void testGetTaskByTaskIdAndProjectId() {
         Task task = new Task();
 

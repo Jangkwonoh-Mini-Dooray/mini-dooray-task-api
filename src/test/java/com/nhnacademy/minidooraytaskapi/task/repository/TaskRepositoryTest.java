@@ -5,6 +5,7 @@ import com.nhnacademy.minidooraytaskapi.project.entity.Project;
 import com.nhnacademy.minidooraytaskapi.project_status.entity.ProjectStatus;
 import com.nhnacademy.minidooraytaskapi.task.dto.TaskDto;
 import com.nhnacademy.minidooraytaskapi.task.entity.Task;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -17,6 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.AUTO_CONFIGURED)
+@DisplayName("업무 데이터베이스 테스트")
 class TaskRepositoryTest {
     @Autowired
     TestEntityManager testEntityManager;
@@ -24,7 +26,8 @@ class TaskRepositoryTest {
     TaskRepository taskRepository;
 
     @Test
-    void getAllByProjectProjectId() {
+    @DisplayName("프로젝트에 해당하는 업무 가져오기")
+    void getAllByProjectId() {
         Task task = new Task();
         Task task2 = new Task();
 
@@ -61,6 +64,7 @@ class TaskRepositoryTest {
     }
 
     @Test
+    @DisplayName("해당 프로젝트의 특정 업무 가져오기")
     void testGetTaskByTaskIdAndProjectProjectId() {
         Task task = new Task();
         Task task2 = new Task();
