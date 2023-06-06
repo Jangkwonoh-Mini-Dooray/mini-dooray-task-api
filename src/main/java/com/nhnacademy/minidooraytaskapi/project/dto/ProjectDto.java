@@ -10,7 +10,7 @@ import javax.persistence.Column;
 @AllArgsConstructor
 public class ProjectDto {
     private Long projectId;
-    private ProjectStatus projectStatus;
+    private String projectStatusName;
     private String name;
     private String description;
 }

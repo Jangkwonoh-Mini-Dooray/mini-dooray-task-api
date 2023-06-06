@@ -1,7 +1,7 @@
 package com.nhnacademy.minidooraytaskapi.project.service;
 
+import com.nhnacademy.minidooraytaskapi.exception.NotFoundProjectException;
 import com.nhnacademy.minidooraytaskapi.exception.NotFoundProjectStatusException;
-import com.nhnacademy.minidooraytaskapi.exception.NotfoundProjectException;
 import com.nhnacademy.minidooraytaskapi.project.dto.ProjectDto;
 import com.nhnacademy.minidooraytaskapi.project.dto.ProjectIdDto;
 import com.nhnacademy.minidooraytaskapi.project.dto.ProjectRequestDto;
@@ -13,9 +13,8 @@ import com.nhnacademy.minidooraytaskapi.project_status.repository.ProjectStatusR
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import javax.validation.Valid;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +24,11 @@ public class DefaultProjectService implements ProjectService {
     private final ProjectStatusRepository projectStatusRepository;
 
     @Override
+    public List<ProjectDto> getProjects(String memberId) {
+        return projectRepository.findByMemberId(memberId);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public ProjectDto getProject(Long projectId) {
         return projectRepository.findByProjectId(projectId);
@@ -32,22 +36,35 @@ public class DefaultProjectService implements ProjectService {
 
     @Override
     public ProjectIdDto createProject(ProjectRequestDto projectRequestDto) {
-        Project project = new Project();
         int projectStatusId = ProjectStatusCode.getValue(projectRequestDto.getProjectStatusName());
         ProjectStatus projectStatus = projectStatusRepository
                 .findById(projectStatusId)
                 .orElseThrow(NotFoundProjectStatusException::new);
-        project.setProjectStatus(projectStatus);
-        project.setName(projectRequestDto.getName());
-        project.setDescription(projectRequestDto.getDescription());
+        Project project = new Project(projectStatus, projectRequestDto.getName(), projectRequestDto.getDescription());
         Project result = projectRepository.saveAndFlush(project);
         return new ProjectIdDto(result.getProjectId());
     }
 
     @Override
-    public void deleteProject(Long projectId) {
-        projectRepository.findById(projectId)
-                .orElseThrow(() -> new NotfoundProjectException(projectId));
-        projectRepository.deleteById(projectId);
+    public ProjectIdDto modifyProject(ProjectRequestDto projectRequestDto, Long projectId) {
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new NotFoundProjectException(projectId));
+        int projectStatusId = ProjectStatusCode.getValue(projectRequestDto.getProjectStatusName());
+        ProjectStatus projectStatus = projectStatusRepository
+                .findById(projectStatusId)
+                .orElseThrow(NotFoundProjectStatusException::new);
+        project.setProjectStatus(projectStatus);
+        project.setName(project.getName());
+        project.setDescription(project.getDescription());
+        Project result = projectRepository.saveAndFlush(project);
+        return new ProjectIdDto(result.getProjectId());
+    }
+
+    @Override
+    public boolean deleteProject(Long projectId) {
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new NotFoundProjectException(projectId));
+        projectRepository.deleteById(project.getProjectId());
+        return true;
     }
 }
