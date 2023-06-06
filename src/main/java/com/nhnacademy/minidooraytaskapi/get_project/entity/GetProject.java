@@ -2,7 +2,7 @@ package com.nhnacademy.minidooraytaskapi.get_project.entity;
 
 import com.nhnacademy.minidooraytaskapi.project.entity.Project;
 import com.nhnacademy.minidooraytaskapi.project_authority.entity.ProjectAuthority;
-import lombok.EqualsAndHashCode;
+import lombok .EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class DefaultProjectService implements ProjectService {
     private final ProjectRepository projectRepository;
 
