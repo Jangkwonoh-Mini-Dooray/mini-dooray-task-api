@@ -1,0 +1,11 @@
+### 프로젝트 생성
+
+POST /projects
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "projectStatusName" : "활성",
+  "name" : "세번째 프로젝트",
+  "description" : "test3"
+}

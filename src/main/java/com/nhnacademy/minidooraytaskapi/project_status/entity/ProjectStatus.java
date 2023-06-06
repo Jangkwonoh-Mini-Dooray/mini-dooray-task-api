@@ -1,10 +1,12 @@
 package com.nhnacademy.minidooraytaskapi.project_status.entity;
 
+import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
+@Getter
 @Setter
 @Table(name = "project_status")
 public class ProjectStatus {
