@@ -22,34 +22,8 @@ class ProjectRepositoryTest {
     TestEntityManager testEntityManager;
     @Autowired
     ProjectRepository projectRepository;
-
     @Test
     @Order(1)
-    @DisplayName("Member ID 로 전체 프로젝트 조회")
-    void testFindByMemberId() {
-        Project project = new Project();
-        project.setName("test");
-        ProjectStatus projectStatus = new ProjectStatus();
-        projectStatus.setName("test");
-        project.setProjectStatus(projectStatus);
-
-        testEntityManager.persist(projectStatus);
-        testEntityManager.persist(project);
-
-        Project project2 = new Project();
-        project2.setName("test");
-        ProjectStatus projectStatus2 = new ProjectStatus();
-        projectStatus2.setName("test");
-        project2.setProjectStatus(projectStatus);
-
-        testEntityManager.persist(projectStatus2);
-        testEntityManager.persist(project2);
-
-        //List<ProjectDto> actual = projectRepository.findByMemberId("test");
-    }
-
-    @Test
-    @Order(2)
     @DisplayName("Project ID 로 개별 프로젝트 조회")
     void testFindByProjectId() {
         Project project = new Project();

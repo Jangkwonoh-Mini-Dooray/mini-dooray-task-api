@@ -24,11 +24,6 @@ public class DefaultProjectService implements ProjectService {
     private final ProjectStatusRepository projectStatusRepository;
 
     @Override
-    public List<ProjectDto> getProjects(String memberId) {
-        return projectRepository.findByMemberId(memberId);
-    }
-
-    @Override
     @Transactional(readOnly = true)
     public ProjectDto getProject(Long projectId) {
         return projectRepository.findByProjectId(projectId);
