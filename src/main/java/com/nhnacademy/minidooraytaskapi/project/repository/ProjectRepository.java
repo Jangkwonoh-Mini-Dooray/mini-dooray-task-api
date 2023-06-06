@@ -9,7 +9,5 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 
-public interface ProjectRepository extends JpaRepository<Project, Long> {
-
-    ProjectDto getAllByProjectId(Long projectId);
+public interface ProjectRepository extends JpaRepository<Project, Long>, ProjectRepositoryCustom {
 }

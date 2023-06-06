@@ -4,15 +4,14 @@ import com.nhnacademy.minidooraytaskapi.project.dto.ProjectDto;
 import com.nhnacademy.minidooraytaskapi.project.entity.Project;
 import com.nhnacademy.minidooraytaskapi.project.repository.ProjectRepository;
 import com.nhnacademy.minidooraytaskapi.project_status.entity.ProjectStatus;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.core.parameters.P;
 
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
@@ -20,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.AUTO_CONFIGURED)
 class DefaultProjectServiceTest {
     @Autowired
@@ -33,37 +33,22 @@ class DefaultProjectServiceTest {
     }
 
     @Test
+    @Order(1)
     @DisplayName("개별 프로젝트 조회 서비스")
     void testGetProject() {
-        Project project = new Project();
-        project.setName("test");
+
         ProjectStatus projectStatus = new ProjectStatus();
         projectStatus.setName("test");
-        project.setProjectStatus(projectStatus);
+        ProjectDto projectDto = new ProjectDto(1L, projectStatus, "test", "test");
 
-        given(projectRepository.getAllByProjectId(anyLong()))
-                .willReturn(new ProjectDto() {
-                    @Override
-                    public Long getProjectId() {
-                        return project.getProjectId();
-                    }
+        given(projectRepository.findByProjectId(anyLong()))
+                .willReturn(projectDto);
 
-                    @Override
-                    public ProjectStatus getProjectStatus() {
-                        return project.getProjectStatus();
-                    }
+        ProjectDto actual = projectService.getProject(projectDto.getProjectId());
 
-                    @Override
-                    public String getName() {
-                        return project.getName();
-                    }
-
-                    @Override
-                    public String getDescription() {
-                        return project.getDescription();
-                    }
-                });
-
-        ProjectDto actual = projectService.getProject(project.getProjectId());
+        assertThat(actual.getProjectId()).isEqualTo(projectDto.getProjectId());
+        assertThat(actual.getProjectStatus()).isEqualTo(projectDto.getProjectStatus());
+        assertThat(actual.getName()).isEqualTo(projectDto.getName());
+        assertThat(actual.getDescription()).isEqualTo(projectDto.getDescription());
     }
 }

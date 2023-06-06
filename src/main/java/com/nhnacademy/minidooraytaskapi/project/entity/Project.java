@@ -1,10 +1,9 @@
 package com.nhnacademy.minidooraytaskapi.project.entity;
 
 import com.nhnacademy.minidooraytaskapi.project_status.entity.ProjectStatus;
+import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.persistence.*;
 
 @Getter
 @Setter

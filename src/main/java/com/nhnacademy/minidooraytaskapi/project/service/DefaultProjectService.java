@@ -14,6 +14,6 @@ public class DefaultProjectService implements ProjectService {
     @Override
     @Transactional(readOnly = true)
     public ProjectDto getProject(Long projectId) {
-        return projectRepository.getAllByProjectId(projectId);
+        return projectRepository.findByProjectId(projectId);
     }
 }
