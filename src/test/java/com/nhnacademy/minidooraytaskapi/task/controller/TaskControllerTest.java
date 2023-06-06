@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
-@WebMvcTest
+@WebMvcTest(TaskController.class)
 @DisplayName("업무 컨트롤러 테스트")
 class TaskControllerTest {
     @MockBean
