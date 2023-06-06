@@ -1,7 +1,7 @@
 package com.nhnacademy.minidooraytaskapi.task.service;
 
 import com.nhnacademy.minidooraytaskapi.exception.NotFoundMilestoneException;
-import com.nhnacademy.minidooraytaskapi.exception.NotfoundProjectException;
+import com.nhnacademy.minidooraytaskapi.exception.NotFoundProjectException;
 import com.nhnacademy.minidooraytaskapi.milestone.entity.Milestone;
 import com.nhnacademy.minidooraytaskapi.milestone.repository.MilestoneRepository;
 import com.nhnacademy.minidooraytaskapi.project.entity.Project;
@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -36,26 +35,24 @@ public class DefaultTaskService implements TaskService{
         return taskRepository.getTask(taskId, projectId);
     }
     @Override
-    public void postTask(PostTaskDto postTaskDto, Long projectId) {
+    public Long postTask(PostTaskDto postTaskDto, Long projectId) {
         Task task = new Task();
-        task.setTaskId(postTaskDto.getTaskId());
         task.setTitle(postTaskDto.getTitle());
         task.setTaskWriterMemberId(postTaskDto.getTaskWriterMemberId());
 
-        Optional<Project> targetProject = projectRepository.findById(projectId);
-        if (targetProject.isEmpty()) {
-            throw new NotfoundProjectException(projectId);
-        }
-        task.setProject(targetProject.get());
+        Project targetProject = projectRepository.findById(projectId)
+                .orElseThrow(() -> new NotFoundProjectException(projectId));
+        task.setProject(targetProject);
 
-        if (Objects.nonNull(postTaskDto.getMilestoneId())) {
-            Optional<Milestone> targetMilestone = milestoneRepository.findById(postTaskDto.getMilestoneId());
-            if (targetMilestone.isEmpty()) {
-                throw new NotFoundMilestoneException(postTaskDto.getMilestoneId());
-            }
-            task.setMilestone(targetMilestone.get());
+        Long milestoneId = postTaskDto.getMilestoneId();
+        if (Objects.nonNull(milestoneId)) {
+            Milestone targetMilestone = milestoneRepository.findById(milestoneId)
+                    .orElseThrow(() -> new NotFoundMilestoneException(postTaskDto.getMilestoneId()));
+            task.setMilestone(targetMilestone);
         }
+
         task.setContent(postTaskDto.getContent());
-        taskRepository.saveAndFlush(task);
+        Task result = taskRepository.saveAndFlush(task);
+        return result.getTaskId();
     }
 }

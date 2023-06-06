@@ -1,9 +1,9 @@
 package com.nhnacademy.minidooraytaskapi.exception;
 
-import com.nhnacademy.minidooraytaskapi.task.dto.PostTaskDto;
+import java.util.Arrays;
 
 public class PostTaskDtoException extends RuntimeException {
-    public PostTaskDtoException(String error) {
-        super(error);
+    public PostTaskDtoException(String... error) {
+        super(Arrays.toString(error));
     }
 }

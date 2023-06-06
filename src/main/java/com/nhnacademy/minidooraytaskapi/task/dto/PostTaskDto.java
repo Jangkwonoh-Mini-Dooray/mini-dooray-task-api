@@ -1,21 +1,23 @@
 package com.nhnacademy.minidooraytaskapi.task.dto;
 
+import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.lang.Nullable;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
 @NoArgsConstructor
 public class PostTaskDto {
-    @NotNull(message = "업무 아이디가 존재하지 않습니다.")
-    private Long taskId;
+    @NotBlank(message = "작성자가 존재하지 않습니다.")
     private String taskWriterMemberId;
     @Nullable
     private Long milestoneId;
+    @NotBlank(message = "제목을 기입해주세요.")
     private String title;
+    @NotBlank(message = "내용을 기입해주세요.")
     private String content;
 }
