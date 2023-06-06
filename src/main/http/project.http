@@ -6,6 +6,16 @@ Content-Type: application/json
 
 {
   "projectStatusName" : "활성",
-  "name" : "세번째 프로젝트",
-  "description" : "test3"
+  "name" : "미니 두레이 연구",
+  "description" : "미니 두레이 연구소입니다."
 }
+
+### 프로젝트 조회
+GET /projects/10
+Host: localhost:8080
+Content-Type: application/json
+
+### 프로젝트 삭제
+
+DELETE /projects/9
+Host: localhost:8080
