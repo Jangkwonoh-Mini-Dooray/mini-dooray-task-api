@@ -16,6 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DataJpaTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.AUTO_CONFIGURED)
+@DisplayName("프로젝트 데이터베이스 테스트")
 class ProjectRepositoryTest {
     @Autowired
     TestEntityManager testEntityManager;
