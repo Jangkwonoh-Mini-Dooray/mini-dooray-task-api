@@ -19,14 +19,18 @@ public class GetProject {
     @NoArgsConstructor
     @Embeddable
     @EqualsAndHashCode
-    public class Pk implements Serializable {
+    public static class Pk implements Serializable {
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "target_member_id")
         private String targetMemberId;
-        @ManyToOne
-        @JoinColumn(name = "project_id")
-        private Project project;
+        @Column(name = "project_id")
+        private Long projectId;
     }
+
+    @MapsId("projectId")
+    @ManyToOne
+    @JoinColumn(name = "project_id")
+    private Project project;
 
     @ManyToOne
     @JoinColumn(name = "project_authority_id")
