@@ -36,19 +36,19 @@ class ProjectControllerTest {
     @Autowired
     ObjectMapper objectMapper;
 
-//    @Test
-//    @Order(1)
-//    @DisplayName("개별 프로젝트 조회")
-//    void testGetProject() throws Exception {
-//        ProjectDto projectDto = new ProjectDto(1L, "test", "test", "test");
-//
-//        when(projectService.getProject(anyLong()))
-//                .thenReturn(projectDto);
-//
-//        mockMvc.perform(get("/projects/{project-id}", 1L))
-//                .andExpect(status().isOk())
-//                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
-//    }
+    @Test
+    @Order(1)
+    @DisplayName("개별 프로젝트 조회")
+    void testGetProject() throws Exception {
+        ProjectDto projectDto = new ProjectDto(1L, "test", "test", "test");
+
+        when(projectService.getProject(anyLong()))
+                .thenReturn(projectDto);
+
+        mockMvc.perform(get("/projects/{project-id}", 1L))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
 
     @Test
     @Order(2)
