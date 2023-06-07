@@ -7,8 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class ExceptionAdvice {
-
+public class ExceptionTaskAdvice {
     @ExceptionHandler(value = PostTaskDtoException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public String BadRequest(PostTaskDtoException ex) {

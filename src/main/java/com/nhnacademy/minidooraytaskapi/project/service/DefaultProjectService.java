@@ -1,7 +1,7 @@
 package com.nhnacademy.minidooraytaskapi.project.service;
 
+import com.nhnacademy.minidooraytaskapi.exception.NotFoundProjectException;
 import com.nhnacademy.minidooraytaskapi.exception.NotFoundProjectStatusException;
-import com.nhnacademy.minidooraytaskapi.exception.NotfoundProjectException;
 import com.nhnacademy.minidooraytaskapi.project.dto.ProjectDto;
 import com.nhnacademy.minidooraytaskapi.project.dto.ProjectIdDto;
 import com.nhnacademy.minidooraytaskapi.project.dto.ProjectRequestDto;
@@ -47,7 +47,7 @@ public class DefaultProjectService implements ProjectService {
     @Override
     public void deleteProject(Long projectId) {
         projectRepository.findById(projectId)
-                .orElseThrow(() -> new NotfoundProjectException(projectId));
+                .orElseThrow(() -> new NotFoundProjectException(projectId));
         projectRepository.deleteById(projectId);
     }
 }

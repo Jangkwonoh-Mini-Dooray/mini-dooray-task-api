@@ -2,6 +2,7 @@ package com.nhnacademy.minidooraytaskapi.task.service;
 
 import com.nhnacademy.minidooraytaskapi.exception.NotFoundMilestoneException;
 import com.nhnacademy.minidooraytaskapi.exception.NotFoundProjectException;
+import com.nhnacademy.minidooraytaskapi.exception.NotFoundTaskException;
 import com.nhnacademy.minidooraytaskapi.milestone.entity.Milestone;
 import com.nhnacademy.minidooraytaskapi.milestone.repository.MilestoneRepository;
 import com.nhnacademy.minidooraytaskapi.project.entity.Project;
@@ -37,6 +38,25 @@ public class DefaultTaskService implements TaskService{
     @Override
     public Long postTask(PostTaskDto postTaskDto, Long projectId) {
         Task task = new Task();
+        return saveTask(postTaskDto, projectId, task);
+    }
+
+    @Override
+    public Long putTask(PostTaskDto postTaskDto, Long projectId, Long taskId) {
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new NotFoundTaskException(taskId));
+        return saveTask(postTaskDto, projectId, task);
+    }
+
+    @Override
+    public void deleteTask(Long taskId) {
+        if (!taskRepository.existsById(taskId)) {
+            throw new NotFoundTaskException(taskId);
+        }
+        taskRepository.deleteById(taskId);
+    }
+    @Override
+    public Long saveTask(PostTaskDto postTaskDto, Long projectId, Task task) {
         task.setTitle(postTaskDto.getTitle());
         task.setTaskWriterMemberId(postTaskDto.getTaskWriterMemberId());
 
