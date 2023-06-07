@@ -8,4 +8,5 @@ import java.util.List;
 @NoRepositoryBean
 public interface TagRepositoryCustom {
     List<TagDto> getTagByProjectId(Long projectId);
+    List<TagDto> getTagByProjectIdAndTaskId(Long projectId, Long taskId);
 }

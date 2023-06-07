@@ -2,7 +2,7 @@ package com.nhnacademy.minidooraytaskapi.task.controller;
 
 import com.nhnacademy.minidooraytaskapi.project.entity.Project;
 import com.nhnacademy.minidooraytaskapi.project_status.entity.ProjectStatus;
-import com.nhnacademy.minidooraytaskapi.task.dto.PostTaskDto;
+import com.nhnacademy.minidooraytaskapi.task.dto.TaskRequestDto;
 import com.nhnacademy.minidooraytaskapi.task.dto.TaskDto;
 import com.nhnacademy.minidooraytaskapi.task.entity.Task;
 import com.nhnacademy.minidooraytaskapi.task.service.TaskService;
@@ -37,7 +37,7 @@ class TaskControllerTest {
     @Autowired
     MockMvc mockMvc;
     @Autowired
-    private ObjectMapper objectMapper;
+    ObjectMapper objectMapper;
 
     @Test
     @DisplayName("프로젝트에 존재하는 모든 업무 찾아오기")
@@ -56,7 +56,7 @@ class TaskControllerTest {
         task2.setTaskId(2L);
         task2.setProject(project);
 
-        when(taskService.getAllByProjectId(anyLong()))
+        when(taskService.getTasks(anyLong()))
                 .thenReturn(List.of(new TaskDto(task.getTaskId(), task.getTaskWriterMemberId(), task.getMilestone(), task.getTitle()),
                         new TaskDto(task2.getTaskId(), task2.getTaskWriterMemberId(), task2.getMilestone(), task.getTitle())));
 
@@ -82,7 +82,7 @@ class TaskControllerTest {
         task.setTaskId(1L);
         task.setProject(project);
 
-        when(taskService.getTaskByTaskIdAndProjectId(anyLong(), anyLong()))
+        when(taskService.getTask(anyLong(), anyLong()))
                 .thenReturn(new TaskDto(task.getTaskId(), task.getTaskWriterMemberId(), task.getMilestone(), task.getTitle()));
 
 
@@ -105,7 +105,7 @@ class TaskControllerTest {
     @DisplayName("프로젝트에 업무 생성 #성공")
     void createTask2() throws Exception {
 
-        PostTaskDto task = new PostTaskDto();
+        TaskRequestDto task = new TaskRequestDto();
 
         Project project = new Project();
         project.setProjectId(1L);
@@ -145,7 +145,7 @@ class TaskControllerTest {
     @DisplayName("프로젝트에 업무 수정 #성공")
     void modifyTask2() throws Exception {
         Task task = new Task();
-        PostTaskDto taskDto = new PostTaskDto();
+        TaskRequestDto taskDto = new TaskRequestDto();
 
         Project project = new Project();
         project.setProjectId(1L);

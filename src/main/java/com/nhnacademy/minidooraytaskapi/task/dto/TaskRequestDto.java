@@ -1,6 +1,5 @@
 package com.nhnacademy.minidooraytaskapi.task.dto;
 
-import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,7 +10,7 @@ import javax.validation.constraints.NotBlank;
 @Getter
 @Setter
 @NoArgsConstructor
-public class PostTaskDto {
+public class TaskRequestDto {
     @NotBlank(message = "작성자가 존재하지 않습니다.")
     private String taskWriterMemberId;
     @Nullable

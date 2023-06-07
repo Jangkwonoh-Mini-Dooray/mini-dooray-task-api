@@ -7,7 +7,7 @@ import com.nhnacademy.minidooraytaskapi.milestone.entity.Milestone;
 import com.nhnacademy.minidooraytaskapi.milestone.repository.MilestoneRepository;
 import com.nhnacademy.minidooraytaskapi.project.entity.Project;
 import com.nhnacademy.minidooraytaskapi.project.repository.ProjectRepository;
-import com.nhnacademy.minidooraytaskapi.task.dto.PostTaskDto;
+import com.nhnacademy.minidooraytaskapi.task.dto.TaskRequestDto;
 import com.nhnacademy.minidooraytaskapi.task.dto.TaskDto;
 import com.nhnacademy.minidooraytaskapi.task.entity.Task;
 import com.nhnacademy.minidooraytaskapi.task.repository.TaskRepository;
@@ -27,22 +27,22 @@ public class DefaultTaskService implements TaskService{
     private final MilestoneRepository milestoneRepository;
     @Override
     @Transactional(readOnly = true)
-    public List<TaskDto> getAllByProjectId(Long projectId) {
+    public List<TaskDto> getTasks(Long projectId) {
         return taskRepository.getTasks(projectId);
     }
     @Override
     @Transactional(readOnly = true)
-    public TaskDto getTaskByTaskIdAndProjectId(Long taskId, Long projectId) {
+    public TaskDto getTask(Long taskId, Long projectId) {
         return taskRepository.getTask(taskId, projectId);
     }
     @Override
-    public Long postTask(PostTaskDto postTaskDto, Long projectId) {
+    public Long postTask(TaskRequestDto postTaskDto, Long projectId) {
         Task task = new Task();
         return saveTask(postTaskDto, projectId, task);
     }
 
     @Override
-    public Long putTask(PostTaskDto postTaskDto, Long projectId, Long taskId) {
+    public Long putTask(TaskRequestDto postTaskDto, Long projectId, Long taskId) {
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new NotFoundTaskException(taskId));
         return saveTask(postTaskDto, projectId, task);
@@ -56,7 +56,7 @@ public class DefaultTaskService implements TaskService{
         taskRepository.deleteById(taskId);
     }
     @Override
-    public Long saveTask(PostTaskDto postTaskDto, Long projectId, Task task) {
+    public Long saveTask(TaskRequestDto postTaskDto, Long projectId, Task task) {
         task.setTitle(postTaskDto.getTitle());
         task.setTaskWriterMemberId(postTaskDto.getTaskWriterMemberId());
 

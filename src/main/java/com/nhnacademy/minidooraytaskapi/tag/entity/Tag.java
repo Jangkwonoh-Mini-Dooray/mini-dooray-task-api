@@ -19,7 +19,7 @@ public class Tag {
     @Column(name = "tag_id")
     private Long tagId;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "project_id")
     private Project project;
     private String name;
