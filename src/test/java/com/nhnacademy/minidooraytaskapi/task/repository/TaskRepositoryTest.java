@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.AUTO_CONFIGURED)
-@DisplayName("업무 데이터베이스 테스트")
+@DisplayName("Task : Repository 테스트")
 class TaskRepositoryTest {
     @Autowired
     TestEntityManager testEntityManager;
