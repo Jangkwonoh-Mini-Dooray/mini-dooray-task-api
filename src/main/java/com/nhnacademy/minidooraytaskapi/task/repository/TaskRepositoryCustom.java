@@ -8,6 +8,5 @@ import java.util.List;
 @NoRepositoryBean
 public interface TaskRepositoryCustom {
     List<TaskDto> getTasks(Long projectId);
-
     TaskDto getTask(Long projectId, Long taskId);
 }

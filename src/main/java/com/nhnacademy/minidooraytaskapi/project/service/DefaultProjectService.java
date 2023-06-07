@@ -41,6 +41,7 @@ public class DefaultProjectService implements ProjectService {
     }
 
     @Override
+<<<<<<< HEAD
     public ProjectIdDto modifyProject(ProjectRequestDto projectRequestDto, Long projectId) {
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new NotFoundProjectException(projectId));
@@ -61,5 +62,11 @@ public class DefaultProjectService implements ProjectService {
                 .orElseThrow(() -> new NotFoundProjectException(projectId));
         projectRepository.deleteById(project.getProjectId());
         return true;
+=======
+    public void deleteProject(Long projectId) {
+        projectRepository.findById(projectId)
+                .orElseThrow(() -> new NotFoundProjectException(projectId));
+        projectRepository.deleteById(projectId);
+>>>>>>> mini-dooray-task-api/feature/task
     }
 }

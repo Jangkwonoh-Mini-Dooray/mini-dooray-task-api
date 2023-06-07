@@ -8,12 +8,15 @@ import com.nhnacademy.minidooraytaskapi.task.dto.TaskIdDto;
 import com.nhnacademy.minidooraytaskapi.task.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,24 +25,24 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/projections/{project-id}/posts")
+@RequestMapping("/projects")
 @RequiredArgsConstructor
 public class TaskController {
     private final TaskService taskService;
 
-    @GetMapping
+    @GetMapping("/{project-id}/posts")
     public ResponseEntity<List<TaskDto>> getTasks(@PathVariable("project-id") Long projectId) {
         List<TaskDto> allTasks = taskService.getAllByProjectId(projectId);
         return ResponseEntity.ok().body(allTasks);
     }
 
-    @GetMapping("/{task-id}")
+    @GetMapping("/{project-id}/posts/{task-id}")
     public ResponseEntity<TaskDto> getTask(@PathVariable("project-id") Long projectId, @PathVariable("task-id") Long taskId) {
         TaskDto target = taskService.getTaskByTaskIdAndProjectId(projectId, taskId);
         return ResponseEntity.ok().body(target);
     }
 
-    @PostMapping
+    @PostMapping("/{project-id}/posts")
     public ResponseEntity<TaskIdDto> createTask(@RequestBody @Valid PostTaskDto postTaskDto, BindingResult bindingResult, @PathVariable("project-id") Long projectId) {
         if (bindingResult.hasErrors()) {
             List<ObjectError> errors = bindingResult.getAllErrors();
@@ -49,5 +52,23 @@ public class TaskController {
         TaskIdDto taskIdDto = new TaskIdDto();
         taskIdDto.setTaskId(taskService.postTask(postTaskDto, projectId));
         return ResponseEntity.status(HttpStatus.CREATED).body(taskIdDto);
+    }
+
+    @PutMapping("/{project-id}/posts/{task-id}")
+    public ResponseEntity<TaskIdDto> modifyTask(@RequestBody @Valid PostTaskDto postTaskDto, BindingResult bindingResult, @PathVariable("project-id") Long projectId, @PathVariable("task-id") Long taskId) {
+        if (bindingResult.hasErrors()) {
+            List<ObjectError> errors = bindingResult.getAllErrors();
+            String errorMessage = errors.get(0).getDefaultMessage();
+            throw new PostTaskDtoException(errorMessage);
+        }
+        TaskIdDto taskIdDto = new TaskIdDto();
+        taskIdDto.setTaskId(taskService.putTask(postTaskDto, projectId, taskId));
+        return ResponseEntity.status(HttpStatus.CREATED).body(taskIdDto);
+    }
+
+    @DeleteMapping(value = "/posts/{task-id}",  produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Response> deleteTask(@PathVariable("task-id") Long taskId) {
+        taskService.deleteTask(taskId);
+        return ResponseEntity.ok(new Response("OK"));
     }
 }

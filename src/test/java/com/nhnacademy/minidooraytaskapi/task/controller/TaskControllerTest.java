@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -21,6 +22,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -58,7 +62,7 @@ class TaskControllerTest {
                         new TaskDto(task2.getTaskId(), task2.getTaskWriterMemberId(), task2.getMilestone(), task.getTitle())));
 
 
-        mockMvc.perform(get("/projections/{project-id}/posts", 1L))
+        mockMvc.perform(get("/projects/{project-id}/posts", 1L))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$[0].taskId", equalTo(1)));
@@ -83,30 +87,19 @@ class TaskControllerTest {
                 .thenReturn(new TaskDto(task.getTaskId(), task.getTaskWriterMemberId(), task.getMilestone(), task.getTitle()));
 
 
-        mockMvc.perform(get("/projections/{project-id}/posts/{task-id}", project.getProjectId(), task.getTaskId()))
+        mockMvc.perform(get("/projects/{project-id}/posts/{task-id}", project.getProjectId(), task.getTaskId()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.taskId", equalTo(1)));
     }
 
     @Test
-    @DisplayName("프로젝트에 업무 생성 #실패 1 RequestBody 가 오지 않음")
+    @DisplayName("프로젝트에 업무 생성 #실패 RequestBody 가 오지 않음")
     void createTask() throws Exception {
-
-        PostTaskDto task = new PostTaskDto();
-
         Project project = new Project();
         project.setProjectId(1L);
-        project.setName("ggg");
-        ProjectStatus projectStatus = new ProjectStatus();
-        projectStatus.setName("활성");
-        project.setProjectStatus(projectStatus);
 
-
-        when(taskService.postTask(any(), anyLong()))
-                .thenReturn(1L);
-
-        mockMvc.perform(post("/projections/{project-id}/posts", project.getProjectId()))
+        mockMvc.perform(post("/projects/{project-id}/posts", project.getProjectId()))
                 .andExpect(status().isBadRequest());
     }
     @Test
@@ -130,11 +123,68 @@ class TaskControllerTest {
         when(taskService.postTask(any(), anyLong()))
                 .thenReturn(1L);
 
-        mockMvc.perform(post("/projections/{project-id}/posts", project.getProjectId())
+        mockMvc.perform(post("/projects/{project-id}/posts", project.getProjectId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(task)))
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().string("{\"taskId\":1}"));
     }
+    @Test
+    @DisplayName("프로젝트에 업무 수정 #실패 RequestBody 가 오지 않음")
+    void modifyTask() throws Exception {
+        Project project = new Project();
+        project.setProjectId(1L);
+
+        Task task = new Task();
+        task.setTaskId(1L);
+
+        mockMvc.perform(put("/projects/{project-id}/posts/{task-id}", project.getProjectId(), task.getTaskId()))
+                .andExpect(status().isBadRequest());
+    }
+    @Test
+    @DisplayName("프로젝트에 업무 수정 #성공")
+    void modifyTask2() throws Exception {
+        Task task = new Task();
+        PostTaskDto taskDto = new PostTaskDto();
+
+        Project project = new Project();
+        project.setProjectId(1L);
+        project.setName("ggg");
+        ProjectStatus projectStatus = new ProjectStatus();
+        projectStatus.setName("활성");
+        project.setProjectStatus(projectStatus);
+
+        task.setTaskId(1L);
+
+        taskDto.setTaskWriterMemberId("naht94");
+        taskDto.setTitle("세번째 업무");
+        taskDto.setContent("테스트 업무");
+
+        when(taskService.putTask(any(), anyLong(), anyLong()))
+                .thenReturn(1L);
+
+        mockMvc.perform(put("/projects/{project-id}/posts/{task-id}", project.getProjectId(), task.getTaskId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(taskDto)))
+                .andExpect(status().isCreated())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().string("{\"taskId\":1}"));
+    }
+    @Test
+    @DisplayName("업무 삭제")
+    void deleteTask() throws Exception {
+        Task task = new Task();
+        task.setTaskId(1L);
+
+        doNothing().when(taskService).deleteTask(anyLong());
+
+        mockMvc.perform(delete("/projects/posts/{task-id}", task.getTaskId()))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.result", equalTo("OK")));
+
+        verify(taskService, times(1)).deleteTask(task.getTaskId());
+    }
+
 }
