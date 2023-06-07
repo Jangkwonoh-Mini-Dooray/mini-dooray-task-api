@@ -1,6 +1,15 @@
 package com.nhnacademy.minidooraytaskapi.tag.dto;
 
-public interface TagDto {
-    Long getTagId();
-    String getName();
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class TagDto {
+    private Long tagId;
+    private String name;
 }

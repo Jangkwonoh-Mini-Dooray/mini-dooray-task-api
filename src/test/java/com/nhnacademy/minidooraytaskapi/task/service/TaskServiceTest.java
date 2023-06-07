@@ -36,8 +36,8 @@ import java.util.Optional;
 
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.AUTO_CONFIGURED)
-@DisplayName("업무 서비스 테스트")
-class DefaultTaskServiceTest {
+@DisplayName("Task : Service 테스트")
+class TaskServiceTest {
     @Autowired
     TaskService taskService;
     @MockBean
@@ -49,7 +49,7 @@ class DefaultTaskServiceTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
+            MockitoAnnotations.openMocks(this);
     }
 
     @Test
