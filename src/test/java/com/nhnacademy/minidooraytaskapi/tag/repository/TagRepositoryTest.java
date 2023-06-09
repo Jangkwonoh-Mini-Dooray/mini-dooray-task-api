@@ -31,8 +31,6 @@ class TagRepositoryTest {
     @Test
     @DisplayName("프로젝트에 해당하는 테크 가져오는 Repository")
     void getTagByProjectId() {
-        Tag tag = new Tag();
-        Tag tag2 = new Tag();
 
         Project project = new Project();
         project.setName("ggg");
@@ -47,9 +45,9 @@ class TagRepositoryTest {
         testEntityManager.persist(project);
         testEntityManager.persist(milestone);
 
+        Tag tag = new Tag(project);
+        Tag tag2 = new Tag(project);
         tag.setName("test1");
-        tag.setProject(project);
-        tag2.setProject(project);
         tag2.setName("test2");
 
         testEntityManager.persist(tag);
@@ -64,8 +62,7 @@ class TagRepositoryTest {
     @Test
     @DisplayName("해당 프로젝트의 특정 업무의 태그 가져오기")
     void getTask() {
-        Tag tag = new Tag();
-        Tag tag2 = new Tag();
+
 
         Project project = new Project();
         project.setName("ggg");
@@ -83,22 +80,21 @@ class TagRepositoryTest {
         Task task = new Task();
         Task task2 = new Task();
 
-        task.setTitle("test");
-        task.setTaskWriterMemberId("naht94");
+        task.save("test", "content", "naht94");
         task.setProject(project);
         task.setMilestone(milestone);
-        task2.setTitle("test");
-        task2.setTaskWriterMemberId("naht94");
+        task2.save("test2", "content", "naht94");
         task2.setProject(project);
         task2.setMilestone(milestone);
 
         testEntityManager.persist(task);
         testEntityManager.persist(task2);
 
+        Tag tag = new Tag(project);
+        Tag tag2 = new Tag(project);
+
         tag.setName("test1");
-        tag.setProject(project);
         tag2.setName("test2");
-        tag2.setProject(project);
 
         testEntityManager.persist(tag);
         testEntityManager.persist(tag2);

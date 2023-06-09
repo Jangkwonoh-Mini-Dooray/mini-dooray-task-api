@@ -65,8 +65,6 @@ public class TagController {
             throw new PostDtoException(errorMessages);
         }
         TagIdDto tagIdDto = tagService.putTag(tagRequestDto, projectId, tagId);
-
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(tagIdDto);
-
     }
 }

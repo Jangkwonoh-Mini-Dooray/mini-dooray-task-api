@@ -51,9 +51,9 @@ class TaskControllerTest {
         projectStatus.setName("활성");
         project.setProjectStatus(projectStatus);
 
-        task.setTaskId(1L);
+        task.save("test","content", "naht94");
         task.setProject(project);
-        task2.setTaskId(2L);
+        task2.save("test","content", "naht94");
         task2.setProject(project);
 
         when(taskService.getTasks(anyLong()))
@@ -79,7 +79,7 @@ class TaskControllerTest {
         projectStatus.setName("활성");
         project.setProjectStatus(projectStatus);
 
-        task.setTaskId(1L);
+        task.save("test","content", "naht94");
         task.setProject(project);
 
         when(taskService.getTask(anyLong(), anyLong()))
@@ -136,7 +136,7 @@ class TaskControllerTest {
         project.setProjectId(1L);
 
         Task task = new Task();
-        task.setTaskId(1L);
+        task.save("test","content", "naht94");
 
         mockMvc.perform(put("/projects/{project-id}/posts/{task-id}", project.getProjectId(), task.getTaskId()))
                 .andExpect(status().isBadRequest());
@@ -154,7 +154,7 @@ class TaskControllerTest {
         projectStatus.setName("활성");
         project.setProjectStatus(projectStatus);
 
-        task.setTaskId(1L);
+        task.save("test","content", "naht94");
 
         taskDto.setTaskWriterMemberId("naht94");
         taskDto.setTitle("세번째 업무");
@@ -174,7 +174,7 @@ class TaskControllerTest {
     @DisplayName("업무 삭제")
     void deleteTask() throws Exception {
         Task task = new Task();
-        task.setTaskId(1L);
+        task.save("test","content", "naht94");
 
         doNothing().when(taskService).deleteTask(anyLong());
 
