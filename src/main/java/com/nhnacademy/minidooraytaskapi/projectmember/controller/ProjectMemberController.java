@@ -1,11 +1,13 @@
 package com.nhnacademy.minidooraytaskapi.projectmember.controller;
 
+import com.nhnacademy.minidooraytaskapi.exception.ValidationFailedException;
 import com.nhnacademy.minidooraytaskapi.projectmember.dto.ProjectMemberDeleteRequestDto;
 import com.nhnacademy.minidooraytaskapi.projectmember.dto.ProjectMemberRequestDto;
 import com.nhnacademy.minidooraytaskapi.projectmember.service.ProjectMemberService;
 import com.nhnacademy.minidooraytaskapi.response.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -18,21 +20,33 @@ public class ProjectMemberController {
     private final ProjectMemberService projectMemberService;
 
     @GetMapping
-    public ResponseEntity<List<ProjectMemberRequestDto>> getProjectMembers(@PathVariable("project-id") Long projectId) {
+    public ResponseEntity<List<ProjectMemberRequestDto>> getProjectMembers(@PathVariable("project-id") Long projectId,
+                                                                           BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new ValidationFailedException(bindingResult);
+        }
         List<ProjectMemberRequestDto> targetMembers = projectMemberService.getProjectMembers(projectId);
         return ResponseEntity.ok().body(targetMembers);
     }
 
     @PostMapping
     public ResponseEntity<Response> addProjectMembers(@PathVariable("project-id") Long projectId,
-                                                     @RequestBody @Valid List<ProjectMemberRequestDto> projectMemberRequestDtoList) {
+                                                     @RequestBody @Valid List<ProjectMemberRequestDto> projectMemberRequestDtoList,
+                                                      BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new ValidationFailedException(bindingResult);
+        }
         projectMemberService.addProjectMembers(projectId, projectMemberRequestDtoList);
         return ResponseEntity.ok().body(new Response("OK"));
     }
 
     @PutMapping
     public ResponseEntity<Response> modifyProjectMembers(@PathVariable("project-id") Long projectId,
-                                                         @RequestBody @Valid List<ProjectMemberRequestDto> projectMemberRequestDtoList) {
+                                                         @RequestBody @Valid List<ProjectMemberRequestDto> projectMemberRequestDtoList,
+                                                         BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new ValidationFailedException(bindingResult);
+        }
         projectMemberService.modifyProjectMembers(projectId, projectMemberRequestDtoList);
         return ResponseEntity.ok().body(new Response("OK"));
     }
@@ -40,7 +54,11 @@ public class ProjectMemberController {
     @DeleteMapping
     public ResponseEntity<Response> deleteProjectMembers(@PathVariable("project-id") Long projectId,
                                                          @RequestBody @Valid List<ProjectMemberDeleteRequestDto>
-                                                                 projectMemberDeleteRequestDtoList) {
+                                                                 projectMemberDeleteRequestDtoList,
+                                                         BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new ValidationFailedException(bindingResult);
+        }
         projectMemberService.deleteProjectMembers(projectId, projectMemberDeleteRequestDtoList);
         return ResponseEntity.ok().body(new Response("OK"));
     }
