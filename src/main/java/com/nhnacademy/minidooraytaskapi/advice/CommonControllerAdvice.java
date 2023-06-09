@@ -17,10 +17,18 @@ public class CommonControllerAdvice {
         binder.initDirectFieldAccess();
     }
 
+    // not found
     @ExceptionHandler({NotFoundMilestoneException.class, NotFoundProjectAuthorityException.class, NotFoundProjectException.class,
             NotFoundProjectMemberException.class, NotFoundProjectStatusException.class, NotFoundTaskException.class})
     public ResponseEntity<ErrorMessage> notFoundException(Exception exception) {
         ErrorMessage errorMessage = new ErrorMessage(exception.getMessage(), HttpStatus.NOT_FOUND.value());
         return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+    }
+
+    // bad request
+    @ExceptionHandler(ValidationFailedException.class)
+    public ResponseEntity<ErrorMessage> badRequestException(Exception exception) {
+        ErrorMessage errorMessage = new ErrorMessage(exception.getMessage(), HttpStatus.BAD_REQUEST.value());
+        return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
     }
 }

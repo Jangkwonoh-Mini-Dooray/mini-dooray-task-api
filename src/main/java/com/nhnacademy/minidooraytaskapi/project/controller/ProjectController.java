@@ -1,6 +1,6 @@
 package com.nhnacademy.minidooraytaskapi.project.controller;
 
-import com.nhnacademy.minidooraytaskapi.exception.ProjectBindingResultException;
+import com.nhnacademy.minidooraytaskapi.exception.ValidationFailedException;
 import com.nhnacademy.minidooraytaskapi.project.dto.ProjectDto;
 import com.nhnacademy.minidooraytaskapi.project.dto.ProjectIdDto;
 import com.nhnacademy.minidooraytaskapi.project.dto.ProjectRequestDto;
@@ -31,18 +31,18 @@ public class ProjectController {
     public ResponseEntity<ProjectIdDto> createProject(@RequestBody @Valid ProjectRequestDto projectRequestDto,
                                                       BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            throw new ProjectBindingResultException(bindingResult.getAllErrors().get(0).getDefaultMessage());
+            throw new ValidationFailedException(bindingResult);
         }
         ProjectIdDto result = projectService.createProject(projectRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 
     @PutMapping("/{project-id}")
-    public ResponseEntity<ProjectIdDto> modifyProject(@RequestBody @Valid ProjectRequestDto projectRequestDto,
-                                                      @PathVariable("project-id") Long projectId,
+    public ResponseEntity<ProjectIdDto> modifyProject(@PathVariable("project-id") Long projectId,
+                                                      @RequestBody @Valid ProjectRequestDto projectRequestDto,
                                                       BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            throw new ProjectBindingResultException(bindingResult.getAllErrors().get(0).getDefaultMessage());
+            throw new ValidationFailedException(bindingResult);
         }
         ProjectIdDto result = projectService.modifyProject(projectRequestDto, projectId);
         return ResponseEntity.ok().body(result);
