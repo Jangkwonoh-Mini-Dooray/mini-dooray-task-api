@@ -1,7 +1,7 @@
 package com.nhnacademy.minidooraytaskapi.task.controller;
 
 import com.nhnacademy.minidooraytaskapi.project.entity.Project;
-import com.nhnacademy.minidooraytaskapi.project_status.entity.ProjectStatus;
+import com.nhnacademy.minidooraytaskapi.projectstatus.entity.ProjectStatus;
 import com.nhnacademy.minidooraytaskapi.task.dto.TaskRequestDto;
 import com.nhnacademy.minidooraytaskapi.task.dto.TaskDto;
 import com.nhnacademy.minidooraytaskapi.task.entity.Task;

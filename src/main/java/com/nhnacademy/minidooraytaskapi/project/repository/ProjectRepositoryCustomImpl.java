@@ -3,7 +3,7 @@ package com.nhnacademy.minidooraytaskapi.project.repository;
 import com.nhnacademy.minidooraytaskapi.project.dto.ProjectDto;
 import com.nhnacademy.minidooraytaskapi.project.entity.Project;
 import com.nhnacademy.minidooraytaskapi.project.entity.QProject;
-import com.nhnacademy.minidooraytaskapi.project_status.entity.QProjectStatus;
+import com.nhnacademy.minidooraytaskapi.projectstatus.entity.QProjectStatus;
 import com.querydsl.core.types.Projections;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 

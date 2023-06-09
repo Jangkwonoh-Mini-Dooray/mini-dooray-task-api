@@ -2,11 +2,11 @@ package com.nhnacademy.minidooraytaskapi.tag.repository;
 
 import com.nhnacademy.minidooraytaskapi.milestone.entity.Milestone;
 import com.nhnacademy.minidooraytaskapi.project.entity.Project;
-import com.nhnacademy.minidooraytaskapi.project_status.entity.ProjectStatus;
+import com.nhnacademy.minidooraytaskapi.projectstatus.entity.ProjectStatus;
 import com.nhnacademy.minidooraytaskapi.tag.dto.TagDto;
 import com.nhnacademy.minidooraytaskapi.tag.entity.Tag;
 import com.nhnacademy.minidooraytaskapi.task.entity.Task;
-import com.nhnacademy.minidooraytaskapi.task_tag.entity.TaskTag;
+import com.nhnacademy.minidooraytaskapi.tasktag.entity.TaskTag;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

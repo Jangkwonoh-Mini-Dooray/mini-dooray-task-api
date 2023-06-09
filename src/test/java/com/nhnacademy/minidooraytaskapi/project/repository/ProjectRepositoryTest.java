@@ -2,7 +2,7 @@ package com.nhnacademy.minidooraytaskapi.project.repository;
 
 import com.nhnacademy.minidooraytaskapi.project.dto.ProjectDto;
 import com.nhnacademy.minidooraytaskapi.project.entity.Project;
-import com.nhnacademy.minidooraytaskapi.project_status.entity.ProjectStatus;
+import com.nhnacademy.minidooraytaskapi.projectstatus.entity.ProjectStatus;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;

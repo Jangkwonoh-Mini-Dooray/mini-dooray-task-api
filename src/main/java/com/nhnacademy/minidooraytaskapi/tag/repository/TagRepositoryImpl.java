@@ -5,7 +5,7 @@ import com.nhnacademy.minidooraytaskapi.tag.dto.TagDto;
 import com.nhnacademy.minidooraytaskapi.tag.entity.QTag;
 import com.nhnacademy.minidooraytaskapi.tag.entity.Tag;
 import com.nhnacademy.minidooraytaskapi.task.entity.QTask;
-import com.nhnacademy.minidooraytaskapi.task_tag.entity.QTaskTag;
+import com.nhnacademy.minidooraytaskapi.tasktag.entity.QTaskTag;
 import com.querydsl.core.types.Projections;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
