@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -49,7 +50,7 @@ class TagServiceTest {
         Tag tag2 = new Tag();
 
         Project project = new Project();
-        project.setProjectId(1L);
+        ReflectionTestUtils.setField(project, "projectId", 1L);
 
         tag.setName("test1");
         tag2.setName("test2");
@@ -71,7 +72,7 @@ class TagServiceTest {
         Tag tag2 = new Tag();
 
         Project project = new Project();
-        project.setProjectId(1L);
+        ReflectionTestUtils.setField(project, "projectId", 1L);
         Task task = new Task();
         tag.setName("test1");
         tag.setName("test2");

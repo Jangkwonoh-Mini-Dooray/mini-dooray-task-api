@@ -31,11 +31,8 @@ class TaskRepositoryTest {
         Task task = new Task();
         Task task2 = new Task();
 
-        Project project = new Project();
-        project.setName("ggg");
         ProjectStatus projectStatus = new ProjectStatus();
-        projectStatus.setName("test");
-        project.setProjectStatus(projectStatus);
+        Project project = new Project(projectStatus, "ggg", "소녀시대");
         Milestone milestone = new Milestone();
         milestone.setProject(project);
         milestone.setName("test");
@@ -67,11 +64,8 @@ class TaskRepositoryTest {
         Task task = new Task();
         Task task2 = new Task();
 
-        Project project = new Project();
-        project.setName("ggg");
-        ProjectStatus projectStatus = new ProjectStatus();
-        projectStatus.setName("test");
-        project.setProjectStatus(projectStatus);
+        ProjectStatus projectStatus = new ProjectStatus("test");
+        Project project = new Project(projectStatus, "ggg", "소녀시대");
         Milestone milestone = new Milestone();
         milestone.setProject(project);
         milestone.setName("test");

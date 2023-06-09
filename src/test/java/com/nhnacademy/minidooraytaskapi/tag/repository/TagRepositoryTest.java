@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.List;
 
@@ -32,12 +33,10 @@ class TagRepositoryTest {
     @DisplayName("프로젝트에 해당하는 테크 가져오는 Repository")
     void getTagByProjectId() {
 
-        ProjectStatus projectStatus = new ProjectStatus();
         Project project = new Project();
-        project.setName("ggg");
-
-        projectStatus.setName("test");
-        project.setProjectStatus(projectStatus);
+        ReflectionTestUtils.setField(project, "name", "ggg");
+        ProjectStatus projectStatus = new ProjectStatus("활성");
+        ReflectionTestUtils.setField(project, "projectStatus", projectStatus);
         Milestone milestone = new Milestone();
         milestone.setProject(project);
         milestone.setName("test");
@@ -47,8 +46,8 @@ class TagRepositoryTest {
         testEntityManager.persist(milestone);
 
         Tag tag = new Tag(project);
-        Tag tag2 = new Tag(project);
         tag.setName("test1");
+        Tag tag2 = new Tag(project);
         tag2.setName("test2");
 
         testEntityManager.persist(tag);
@@ -66,10 +65,11 @@ class TagRepositoryTest {
 
 
         Project project = new Project();
-        project.setName("ggg");
-        ProjectStatus projectStatus = new ProjectStatus();
-        projectStatus.setName("test");
-        project.setProjectStatus(projectStatus);
+        ReflectionTestUtils.setField(project, "projectId", 1L);
+        ReflectionTestUtils.setField(project, "name", "ggg");
+        ReflectionTestUtils.setField(project, "projectId", 1L);
+        ProjectStatus projectStatus = new ProjectStatus("활성");
+        ReflectionTestUtils.setField(project, "projectStatus", projectStatus);
         Milestone milestone = new Milestone();
         milestone.setProject(project);
         milestone.setName("test");

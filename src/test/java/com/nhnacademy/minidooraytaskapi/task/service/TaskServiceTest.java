@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -59,7 +60,7 @@ class TaskServiceTest {
         Task task2 = new Task();
 
         Project project = new Project();
-        project.setProjectId(1L);
+        ReflectionTestUtils.setField(project, "projectId", 1L);
 
         task.update("test1", "content");
         task.setProject(project);
@@ -83,7 +84,7 @@ class TaskServiceTest {
         Task task = new Task();
 
         Project project = new Project();
-        project.setProjectId(1L);
+        ReflectionTestUtils.setField(project, "projectId", 1L);
 
         task.update("test1", "content");
         task.setProject(project);
@@ -111,7 +112,7 @@ class TaskServiceTest {
         TaskRequestDto postTaskDto = new TaskRequestDto();
         Task task = new Task();
         Project project = new Project();
-        project.setProjectId(1L);
+        ReflectionTestUtils.setField(project, "projectId", 1L);
 
         postTaskDto.setMilestoneId(1L);
         given(projectRepository.findById(anyLong())).willReturn(Optional.of(project));
@@ -127,7 +128,8 @@ class TaskServiceTest {
         TaskRequestDto postTaskDto = new TaskRequestDto();
         Project project = new Project();
 
-        project.setProjectId(1L);
+        ReflectionTestUtils.setField(project, "projectId", 1L);
+
 
         given(projectRepository.findById(anyLong())).willReturn(Optional.of(project));
 
@@ -146,7 +148,7 @@ class TaskServiceTest {
         Project project = new Project();
         Milestone milestone = new Milestone();
 
-        project.setProjectId(1L);
+        ReflectionTestUtils.setField(project, "projectId", 1L);
         milestone.setMilestoneId(1L);
 
         given(projectRepository.findById(anyLong())).willReturn(Optional.of(project));
