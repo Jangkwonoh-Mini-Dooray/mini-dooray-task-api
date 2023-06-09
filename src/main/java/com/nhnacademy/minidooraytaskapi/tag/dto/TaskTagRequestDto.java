@@ -5,6 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class TagRequestDto {
+public class TaskTagRequestDto {
+    private Long taskId;
     private String name;
 }

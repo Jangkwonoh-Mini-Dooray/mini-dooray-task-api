@@ -1,9 +1,10 @@
 package com.nhnacademy.minidooraytaskapi.tag.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nhnacademy.minidooraytaskapi.tag.dto.TagDto;
 import com.nhnacademy.minidooraytaskapi.tag.dto.TagIdDto;
-import com.nhnacademy.minidooraytaskapi.tag.dto.TagRequestDto;
+import com.nhnacademy.minidooraytaskapi.tag.dto.TaskTagRequestDto;
 import com.nhnacademy.minidooraytaskapi.tag.service.TagService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,7 +21,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -75,11 +75,8 @@ class TagControllerTest {
     }
 
     @Test
-    @DisplayName("프로젝트 내 태그 생성 #실패")
+    @DisplayName("프로젝트 내 태그 생성 #실패 RequestBody 없음")
     void createTags() throws Exception {
-        TagRequestDto tagRequestDto = new TagRequestDto();
-        tagRequestDto.setName("test");
-
         mockMvc.perform(post("/projects/{project-id}/tags", 1L))
                 .andExpect(status().isBadRequest());
     }
@@ -87,13 +84,13 @@ class TagControllerTest {
     @Test
     @DisplayName("프로젝트 내 태그 생성 #성공")
     void createTags2() throws Exception {
-        TagRequestDto tagRequestDto = new TagRequestDto();
+        TaskTagRequestDto tagRequestDto = new TaskTagRequestDto();
         tagRequestDto.setName("test");
 
         TagIdDto tagIdDto = new TagIdDto();
         tagIdDto.setTagId(1L);
 
-        when(tagService.postTag(any(), anyLong()))
+        when(tagService.postTagTask(any(), anyLong()))
                 .thenReturn(tagIdDto);
 
         mockMvc.perform(post("/projects/{project-id}/tags", 1L)
@@ -103,4 +100,44 @@ class TagControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().string("{\"tagId\":1}"));
     }
+
+    @Test
+    @DisplayName("프로젝트 내 태그 수정 #실패")
+    void modifyTag() throws Exception {
+        mockMvc.perform(put("/projects/{project-id}/tags/{tag-id}", 1L, 1L))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @DisplayName("프로젝트 내 태그 수정 #성공")
+    void modifyTag2() throws Exception {
+        TaskTagRequestDto tagRequestDto = new TaskTagRequestDto();
+        tagRequestDto.setTaskId(1L);
+        tagRequestDto.setName("test");
+
+        TagIdDto tagIdDto = new TagIdDto();
+        tagIdDto.setTagId(1L);
+
+        when(tagService.putTagTask(any(), anyLong(), anyLong()))
+                .thenReturn(tagIdDto);
+
+        mockMvc.perform(put("/projects/{project-id}/tags/{tag-id}", 1L, 1L)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(tagRequestDto)))
+                .andExpect(status().isCreated())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.tagId", equalTo(1)));
+    }
+
+    @Test
+    @DisplayName("프로젝트 내 태그 삭제")
+    void deleteTag() throws Exception {
+        doNothing().when(tagService).deleteTag(anyLong());
+
+        mockMvc.perform(delete("/projects/tags/{tag-id}", 1L))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.result", equalTo("OK")));
+    }
+
 }

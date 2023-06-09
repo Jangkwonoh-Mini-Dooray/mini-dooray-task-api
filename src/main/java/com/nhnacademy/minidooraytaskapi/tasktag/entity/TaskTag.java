@@ -46,4 +46,10 @@ public class TaskTag {
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "task_id")
     private Task task;
+
+    public void update(Pk pk, Tag tag, Task task) {
+        this.pk = pk;
+        this.tag = tag;
+        this.task = task;
+    }
 }
