@@ -31,17 +31,20 @@ public class DefaultTagService implements TagService {
 
     @Override
     public TagIdDto postTag(TagRequestDto tagRequestDto, Long projectId) {
-        Tag tag = new Tag();
-        tag.setName(tagRequestDto.getName());
-
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new NotFoundProjectException(projectId));
-        tag.setProject(project);
+        Tag tag = new Tag(project);
+        tag.setName(tagRequestDto.getName());
 
         Tag save = tagRepository.save(tag);
 
         TagIdDto result = new TagIdDto();
         result.setTagId(save.getTagId());
         return result;
+    }
+
+    @Override
+    public TagIdDto putTag(TagRequestDto tagRequestDto, Long projectId, Long tagId) {
+        return null;
     }
 }

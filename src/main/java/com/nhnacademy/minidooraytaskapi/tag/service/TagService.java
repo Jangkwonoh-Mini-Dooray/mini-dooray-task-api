@@ -10,4 +10,5 @@ public interface TagService {
     List<TagDto> getTags(Long projectId);
     List<TagDto> getTags(Long projectId, Long taskId);
     TagIdDto postTag(TagRequestDto tagRequestDto, Long projectId);
+    TagIdDto putTag(TagRequestDto tagRequestDto, Long projectId, Long tagId);
 }

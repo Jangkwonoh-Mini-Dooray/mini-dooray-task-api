@@ -57,8 +57,6 @@ public class DefaultTaskService implements TaskService{
     }
     @Override
     public Long saveTask(TaskRequestDto postTaskDto, Long projectId, Task task) {
-        task.setTitle(postTaskDto.getTitle());
-        task.setTaskWriterMemberId(postTaskDto.getTaskWriterMemberId());
 
         Project targetProject = projectRepository.findById(projectId)
                 .orElseThrow(() -> new NotFoundProjectException(projectId));
@@ -70,8 +68,8 @@ public class DefaultTaskService implements TaskService{
                     .orElseThrow(() -> new NotFoundMilestoneException(postTaskDto.getMilestoneId()));
             task.setMilestone(targetMilestone);
         }
+        task.save(postTaskDto.getTitle(), postTaskDto.getContent(), postTaskDto.getTaskWriterMemberId());
 
-        task.setContent(postTaskDto.getContent());
         Task result = taskRepository.saveAndFlush(task);
         return result.getTaskId();
     }

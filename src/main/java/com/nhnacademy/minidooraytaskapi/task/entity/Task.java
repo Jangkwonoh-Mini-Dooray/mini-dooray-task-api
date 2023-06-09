@@ -8,7 +8,6 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Setter
 @Getter
 @Table(name = "task")
 public class Task {
@@ -28,4 +27,19 @@ public class Task {
     private String content;
     @Column(name = "task_writer_member_id")
     private String taskWriterMemberId;
+
+    public Task() {
+
+    }
+    public void save(String title, String content, String taskWriterMemberId) {
+        this.title = title;
+        this.content = content;
+        this.taskWriterMemberId = taskWriterMemberId;
+    }
+    public void setProject(Project project) {
+        this.project = project;
+    }
+    public void setMilestone(Milestone milestone) {
+        this.milestone = milestone;
+    }
 }

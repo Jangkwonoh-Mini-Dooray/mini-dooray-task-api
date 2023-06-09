@@ -22,7 +22,7 @@ import java.io.Serializable;
 @Entity
 @Setter
 @Getter
-@Table(name = "get_tag")
+@Table(name = "task_tag")
 public class GetTag {
     @EmbeddedId
     private Pk pk;

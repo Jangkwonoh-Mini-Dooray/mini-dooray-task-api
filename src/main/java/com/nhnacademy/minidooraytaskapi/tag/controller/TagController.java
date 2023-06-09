@@ -13,6 +13,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,7 +41,7 @@ public class TagController {
     }
 
     @PostMapping("/{project-id}/tags")
-    public ResponseEntity<TagIdDto> createTags(@RequestBody @Valid TagRequestDto tagRequestDto, BindingResult bindingResult, @PathVariable("project-id") Long projectId) {
+    public ResponseEntity<TagIdDto> createTag(@RequestBody @Valid TagRequestDto tagRequestDto, BindingResult bindingResult, @PathVariable("project-id") Long projectId) {
         if (bindingResult.hasErrors()) {
             List<ObjectError> errors = bindingResult.getAllErrors();
             List<String> errorMessages = new ArrayList<>();
@@ -51,5 +52,21 @@ public class TagController {
         }
         TagIdDto tagIdDto = tagService.postTag(tagRequestDto, projectId);
         return ResponseEntity.status(HttpStatus.CREATED).body(tagIdDto);
+    }
+
+    @PutMapping("/{project-id}/tags/{tag-id}")
+    public ResponseEntity<TagIdDto> modifyTag(@RequestBody @Valid TagRequestDto tagRequestDto, BindingResult bindingResult, @PathVariable("project-id") Long projectId, @PathVariable("tag-id") Long tagId) {
+        if (bindingResult.hasErrors()) {
+            List<ObjectError> errors = bindingResult.getAllErrors();
+            List<String> errorMessages = new ArrayList<>();
+            for (ObjectError error : errors) {
+                errorMessages.add(error.getDefaultMessage());
+            }
+            throw new PostDtoException(errorMessages);
+        }
+        TagIdDto tagIdDto = tagService.putTag(tagRequestDto, projectId, tagId);
+
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(tagIdDto);
+
     }
 }
