@@ -1,11 +1,16 @@
 package com.nhnacademy.minidooraytaskapi.milestone.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDate;
 
-public interface MilestoneDto {
-    Long getMilestoneId();
-    String getName();
-    LocalDate getStartPeriod();
-    LocalDate getEndPeriod();
-    String getStatus();
+@Getter
+@Setter
+public class MilestoneDto {
+    private Long milestoneId;
+    private String name;
+    private LocalDate startPeriod;
+    private LocalDate endPeriod;
+    private String status;
 }
