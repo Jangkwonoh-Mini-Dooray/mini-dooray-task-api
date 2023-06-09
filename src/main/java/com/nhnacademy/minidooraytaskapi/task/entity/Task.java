@@ -39,6 +39,12 @@ public class Task {
     public void setProject(Project project) {
         this.project = project;
     }
+
+    public void update(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+
     public void setMilestone(Milestone milestone) {
         this.milestone = milestone;
     }

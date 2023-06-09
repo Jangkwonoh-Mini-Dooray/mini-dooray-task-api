@@ -61,9 +61,9 @@ class TaskServiceTest {
         Project project = new Project();
         project.setProjectId(1L);
 
-        task.setTaskId(1L);
+        task.update("test1", "content");
         task.setProject(project);
-        task2.setTaskId(2L);
+        task2.update("test2", "content");
         task2.setProject(project);
 
 
@@ -74,7 +74,7 @@ class TaskServiceTest {
         List<TaskDto> allTask = taskService.getTasks(project.getProjectId());
 
         Assertions.assertThat(allTask).isNotEmpty().hasSize(2);
-        Assertions.assertThat(allTask.get(0).getTaskId()).isEqualTo(task.getTaskId());
+        Assertions.assertThat(allTask.get(0).getTitle()).isEqualTo(task.getTitle());
     }
 
     @Test
@@ -85,13 +85,13 @@ class TaskServiceTest {
         Project project = new Project();
         project.setProjectId(1L);
 
-        task.setTaskId(1L);
+        task.update("test1", "content");
         task.setProject(project);
 
         given(taskRepository.getTask(task.getTaskId(), project.getProjectId()))
                 .willReturn(new TaskDto(task.getTaskId(), task.getTaskWriterMemberId(), task.getMilestone(), task.getTitle()));
 
-        assertThat(taskService.getTask(task.getTaskId(), project.getProjectId()).getTaskId()).isEqualTo(task.getTaskId());
+        assertThat(taskService.getTask(task.getTaskId(), project.getProjectId()).getTitle()).isEqualTo(task.getTitle());
     }
 
     @Test
