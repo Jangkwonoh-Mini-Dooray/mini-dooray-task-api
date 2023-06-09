@@ -1,7 +1,7 @@
 package com.nhnacademy.minidooraytaskapi.project_member.controller;
 
 import com.nhnacademy.minidooraytaskapi.project_member.dto.ProjectMemberRequestDto;
-import com.nhnacademy.minidooraytaskapi.project_member.service.GetProjectService;
+import com.nhnacademy.minidooraytaskapi.project_member.service.ProjectMemberService;
 import org.junit.jupiter.api.*;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -24,11 +24,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(ProjectMemberController.class)
-@DisplayName("GetProject : Controller 테스트")
+@DisplayName("ProjectMember : Controller 테스트")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ProjectMemberControllerTest {
     @MockBean
-    GetProjectService getProjectService;
+    ProjectMemberService projectMemberService;
     @Autowired
     MockMvc mockMvc;
     @Autowired
@@ -42,7 +42,7 @@ class ProjectMemberControllerTest {
         targetMembers.add(new ProjectMemberRequestDto(2, "test1"));
         targetMembers.add(new ProjectMemberRequestDto(2, "test2"));
 
-        when(getProjectService.getTargetMembers(anyLong()))
+        when(projectMemberService.getTargetMembers(anyLong()))
                 .thenReturn(targetMembers);
 
         mockMvc.perform(get("/projects/{project-id}/members", 1L))
