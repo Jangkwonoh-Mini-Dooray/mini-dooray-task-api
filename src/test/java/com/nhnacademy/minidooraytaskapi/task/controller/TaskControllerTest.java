@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
@@ -46,13 +47,18 @@ class TaskControllerTest {
         Task task2 = new Task();
 
         Project project = new Project();
-        project.setName("ggg");
-        ProjectStatus projectStatus = new ProjectStatus();
-        projectStatus.setName("활성");
-        project.setProjectStatus(projectStatus);
+        ReflectionTestUtils.setField(project, "projectId", 1L);
+        ReflectionTestUtils.setField(project, "name", "ggg");
+        ReflectionTestUtils.setField(project, "projectId", 1L);
 
+        ProjectStatus projectStatus = new ProjectStatus("활성");
+
+        ReflectionTestUtils.setField(project, "projectStatus", projectStatus);
+
+        ReflectionTestUtils.setField(task, "taskId", 1L);
         task.save("test","content", "naht94");
         task.setProject(project);
+        ReflectionTestUtils.setField(task2, "taskId", 2L);
         task2.save("test","content", "naht94");
         task2.setProject(project);
 
@@ -73,12 +79,14 @@ class TaskControllerTest {
         Task task = new Task();
 
         Project project = new Project();
-        project.setProjectId(1L);
-        project.setName("ggg");
-        ProjectStatus projectStatus = new ProjectStatus();
-        projectStatus.setName("활성");
-        project.setProjectStatus(projectStatus);
+        ReflectionTestUtils.setField(project, "projectId", 1L);
+        ReflectionTestUtils.setField(project, "name", "ggg");
+        ReflectionTestUtils.setField(project, "projectId", 1L);
+        ProjectStatus projectStatus = new ProjectStatus("활성");
+        ReflectionTestUtils.setField(project, "projectStatus", projectStatus);
+        ReflectionTestUtils.setField(task, "taskId", 1L);
 
+        ReflectionTestUtils.setField(task, "taskId", 1L);
         task.save("test","content", "naht94");
         task.setProject(project);
 
@@ -96,7 +104,7 @@ class TaskControllerTest {
     @DisplayName("프로젝트에 업무 생성 #실패 RequestBody 가 오지 않음")
     void createTask() throws Exception {
         Project project = new Project();
-        project.setProjectId(1L);
+        ReflectionTestUtils.setField(project, "projectId", 1L);
 
         mockMvc.perform(post("/projects/{project-id}/posts", project.getProjectId()))
                 .andExpect(status().isBadRequest());
@@ -108,13 +116,13 @@ class TaskControllerTest {
         TaskRequestDto task = new TaskRequestDto();
 
         Project project = new Project();
-        project.setProjectId(1L);
-        project.setName("ggg");
-        ProjectStatus projectStatus = new ProjectStatus();
-        projectStatus.setName("활성");
-        project.setProjectStatus(projectStatus);
+        ReflectionTestUtils.setField(project, "projectId", 1L);
+        ReflectionTestUtils.setField(project, "name", "ggg");
+        ReflectionTestUtils.setField(project, "projectId", 1L);
+        ProjectStatus projectStatus = new ProjectStatus("활성");
+        ReflectionTestUtils.setField(project, "projectStatus", projectStatus);
 
-
+        ReflectionTestUtils.setField(task, "taskId", 1L);
         task.setTaskWriterMemberId("naht94");
         task.setTitle("세번째 업무");
         task.setContent("테스트 업무");
@@ -133,9 +141,9 @@ class TaskControllerTest {
     @DisplayName("프로젝트에 업무 수정 #실패 RequestBody 가 오지 않음")
     void modifyTask() throws Exception {
         Project project = new Project();
-        project.setProjectId(1L);
-
+        ReflectionTestUtils.setField(project, "projectId", 1L);
         Task task = new Task();
+        ReflectionTestUtils.setField(task, "taskId", 1L);
         task.save("test","content", "naht94");
 
         mockMvc.perform(put("/projects/{project-id}/posts/{task-id}", project.getProjectId(), task.getTaskId()))
@@ -148,12 +156,13 @@ class TaskControllerTest {
         TaskRequestDto taskDto = new TaskRequestDto();
 
         Project project = new Project();
-        project.setProjectId(1L);
-        project.setName("ggg");
-        ProjectStatus projectStatus = new ProjectStatus();
-        projectStatus.setName("활성");
-        project.setProjectStatus(projectStatus);
+        ReflectionTestUtils.setField(project, "projectId", 1L);
+        ReflectionTestUtils.setField(project, "name", "ggg");
+        ReflectionTestUtils.setField(project, "projectId", 1L);
+        ProjectStatus projectStatus = new ProjectStatus("활성");
+        ReflectionTestUtils.setField(project, "projectStatus", projectStatus);
 
+        ReflectionTestUtils.setField(task, "taskId", 1L);
         task.save("test","content", "naht94");
 
         taskDto.setTaskWriterMemberId("naht94");
@@ -174,6 +183,7 @@ class TaskControllerTest {
     @DisplayName("업무 삭제")
     void deleteTask() throws Exception {
         Task task = new Task();
+        ReflectionTestUtils.setField(task, "taskId", 1L);
         task.save("test","content", "naht94");
 
         doNothing().when(taskService).deleteTask(anyLong());
