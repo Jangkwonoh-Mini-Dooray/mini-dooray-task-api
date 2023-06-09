@@ -1,6 +1,6 @@
 package com.nhnacademy.minidooraytaskapi.project.controller;
 
-import com.nhnacademy.minidooraytaskapi.exception.ProjectBindingResultException;
+import com.nhnacademy.minidooraytaskapi.exception.ValidationFailedException;
 import com.nhnacademy.minidooraytaskapi.project.dto.ProjectDto;
 import com.nhnacademy.minidooraytaskapi.project.dto.ProjectIdDto;
 import com.nhnacademy.minidooraytaskapi.project.dto.ProjectRequestDto;
@@ -22,7 +22,11 @@ public class ProjectController {
     private final ProjectService projectService;
 
     @GetMapping("/{project-id}")
-    public ResponseEntity<ProjectDto> getProject(@PathVariable("project-id") Long projectId) {
+    public ResponseEntity<ProjectDto> getProject(@PathVariable("project-id") Long projectId,
+                                                 BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new ValidationFailedException(bindingResult);
+        }
         ProjectDto project = projectService.getProject(projectId);
         return ResponseEntity.ok().body(project);
     }
@@ -31,7 +35,7 @@ public class ProjectController {
     public ResponseEntity<ProjectIdDto> createProject(@RequestBody @Valid ProjectRequestDto projectRequestDto,
                                                       BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            throw new ProjectBindingResultException(bindingResult.getAllErrors().get(0).getDefaultMessage());
+            throw new ValidationFailedException(bindingResult);
         }
         ProjectIdDto result = projectService.createProject(projectRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
@@ -42,14 +46,18 @@ public class ProjectController {
                                                       @PathVariable("project-id") Long projectId,
                                                       BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            throw new ProjectBindingResultException(bindingResult.getAllErrors().get(0).getDefaultMessage());
+            throw new ValidationFailedException(bindingResult);
         }
         ProjectIdDto result = projectService.modifyProject(projectRequestDto, projectId);
         return ResponseEntity.ok().body(result);
     }
 
     @DeleteMapping(value = "/{project-id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Response> deleteProject(@PathVariable("project-id") Long projectId) {
+    public ResponseEntity<Response> deleteProject(@PathVariable("project-id") Long projectId,
+                                                  BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new ValidationFailedException(bindingResult);
+        }
         projectService.deleteProject(projectId);
         return ResponseEntity.ok().body(new Response("ok"));
     }
