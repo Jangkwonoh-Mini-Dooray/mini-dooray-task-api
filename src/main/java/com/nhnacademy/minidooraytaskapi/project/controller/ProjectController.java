@@ -22,11 +22,7 @@ public class ProjectController {
     private final ProjectService projectService;
 
     @GetMapping("/{project-id}")
-    public ResponseEntity<ProjectDto> getProject(@PathVariable("project-id") Long projectId,
-                                                 BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            throw new ValidationFailedException(bindingResult);
-        }
+    public ResponseEntity<ProjectDto> getProject(@PathVariable("project-id") Long projectId) {
         ProjectDto project = projectService.getProject(projectId);
         return ResponseEntity.ok().body(project);
     }
@@ -42,8 +38,8 @@ public class ProjectController {
     }
 
     @PutMapping("/{project-id}")
-    public ResponseEntity<ProjectIdDto> modifyProject(@RequestBody @Valid ProjectRequestDto projectRequestDto,
-                                                      @PathVariable("project-id") Long projectId,
+    public ResponseEntity<ProjectIdDto> modifyProject(@PathVariable("project-id") Long projectId,
+                                                      @RequestBody @Valid ProjectRequestDto projectRequestDto,
                                                       BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new ValidationFailedException(bindingResult);
@@ -53,11 +49,7 @@ public class ProjectController {
     }
 
     @DeleteMapping(value = "/{project-id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Response> deleteProject(@PathVariable("project-id") Long projectId,
-                                                  BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            throw new ValidationFailedException(bindingResult);
-        }
+    public ResponseEntity<Response> deleteProject(@PathVariable("project-id") Long projectId) {
         projectService.deleteProject(projectId);
         return ResponseEntity.ok().body(new Response("ok"));
     }

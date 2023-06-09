@@ -9,7 +9,10 @@ import com.nhnacademy.minidooraytaskapi.project.repository.ProjectRepository;
 import com.nhnacademy.minidooraytaskapi.projectstatus.entity.ProjectStatus;
 import com.nhnacademy.minidooraytaskapi.projectstatus.repository.ProjectStatusRepository;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,30 +28,21 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 
 @SpringBootTest
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.AUTO_CONFIGURED)
 @DisplayName("Project : Service 테스트")
 class DefaultProjectServiceTest {
     @Autowired
-    ProjectService projectService;
+    DefaultProjectService projectService;
     @MockBean
     ProjectRepository projectRepository;
     @MockBean
     ProjectStatusRepository projectStatusRepository;
 
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
-
     @Test
-    @Order(1)
     @DisplayName("Member ID 로 전체 프로젝트 조회 서비스")
     void testGetProjects() {
     }
 
     @Test
-    @Order(2)
     @DisplayName("Project ID 로 개별 프로젝트 조회 서비스")
     void testGetProject() {
         ProjectDto projectDto = new ProjectDto(1L, "test", "test", "test");
@@ -65,7 +59,6 @@ class DefaultProjectServiceTest {
     }
 
     @Test
-    @Order(3)
     @DisplayName("프로젝트 생성 서비스")
     void testCreateProject() {
         ProjectRequestDto projectRequestDto = new ProjectRequestDto("활성", "test", "test");
@@ -84,7 +77,6 @@ class DefaultProjectServiceTest {
     }
 
     @Test
-    @Order(4)
     @DisplayName("프로젝트 수정 서비스")
     void testModifyProject() {
         ProjectRequestDto projectRequestDto = new ProjectRequestDto("휴면", "test", "test");
@@ -103,7 +95,6 @@ class DefaultProjectServiceTest {
     }
 
     @Test
-    @Order(5)
     @DisplayName("프로젝트 삭제 서비스")
     void testDeleteProject() {
         ProjectStatus projectStatus = new ProjectStatus("test");

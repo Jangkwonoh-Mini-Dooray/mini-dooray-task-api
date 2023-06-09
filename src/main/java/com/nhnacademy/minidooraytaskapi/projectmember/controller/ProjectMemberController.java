@@ -20,11 +20,7 @@ public class ProjectMemberController {
     private final ProjectMemberService projectMemberService;
 
     @GetMapping
-    public ResponseEntity<List<ProjectMemberRequestDto>> getProjectMembers(@PathVariable("project-id") Long projectId,
-                                                                           BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            throw new ValidationFailedException(bindingResult);
-        }
+    public ResponseEntity<List<ProjectMemberRequestDto>> getProjectMembers(@PathVariable("project-id") Long projectId) {
         List<ProjectMemberRequestDto> targetMembers = projectMemberService.getProjectMembers(projectId);
         return ResponseEntity.ok().body(targetMembers);
     }
