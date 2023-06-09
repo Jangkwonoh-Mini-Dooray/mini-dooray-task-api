@@ -48,9 +48,7 @@ public class DefaultProjectService implements ProjectService {
         ProjectStatus projectStatus = projectStatusRepository
                 .findById(projectStatusId)
                 .orElseThrow(NotFoundProjectStatusException::new);
-        project.setProjectStatus(projectStatus);
-        project.setName(project.getName());
-        project.setDescription(project.getDescription());
+        project.modify(projectStatus, projectRequestDto.getName(), projectRequestDto.getDescription());
         Project result = projectRepository.saveAndFlush(project);
         return new ProjectIdDto(result.getProjectId());
     }

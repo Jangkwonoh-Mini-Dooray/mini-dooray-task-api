@@ -29,4 +29,10 @@ public class Project {
         this.name = name;
         this.description = description;
     }
+
+    public void modify(ProjectStatus projectStatus, String name, String description) {
+        this.projectStatus = projectStatus;
+        this.name = name;
+        this.description = description;
+    }
 }

@@ -20,10 +20,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.AUTO_CONFIGURED)
-@DisplayName("GetProject : Service 테스트")
-class DefaultProjectMemberServiceTest {
+@DisplayName("ProjectMember : Service 테스트")
+class DefaultDefaultProjectMemberServiceTest {
     @Autowired
-    GetProjectService getProjectService;
+    ProjectMemberService projectMemberService;
     @MockBean
     ProjectMemberRepository projectMemberRepository;
 
@@ -43,7 +43,7 @@ class DefaultProjectMemberServiceTest {
         given(projectMemberRepository.findTargetMembers(anyLong()))
                 .willReturn(targetMembers);
 
-        List<ProjectMemberRequestDto> actual = getProjectService.getTargetMembers(1L);
+        List<ProjectMemberRequestDto> actual = projectMemberService.getTargetMembers(1L);
 
         assertThat(actual.size()).isEqualTo(2);
         assertThat(actual.get(0).getTargetMemberId()).isEqualTo("test1");

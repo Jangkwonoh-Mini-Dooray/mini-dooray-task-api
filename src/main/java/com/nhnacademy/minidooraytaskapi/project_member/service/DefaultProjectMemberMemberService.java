@@ -17,7 +17,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class DefaultGetProjectService implements GetProjectService {
+public class DefaultProjectMemberMemberService implements ProjectMemberService {
     private final ProjectMemberRepository projectMemberRepository;
     private final ProjectRepository projectRepository;
     private final ProjectAuthorityRepository projectAuthorityRepository;
