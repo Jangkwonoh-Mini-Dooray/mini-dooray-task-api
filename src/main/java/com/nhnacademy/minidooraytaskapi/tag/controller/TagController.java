@@ -1,15 +1,16 @@
 package com.nhnacademy.minidooraytaskapi.tag.controller;
 
-import com.nhnacademy.minidooraytaskapi.exception.PostDtoException;
+import com.nhnacademy.minidooraytaskapi.response.Response;
 import com.nhnacademy.minidooraytaskapi.tag.dto.TagDto;
 import com.nhnacademy.minidooraytaskapi.tag.dto.TagIdDto;
-import com.nhnacademy.minidooraytaskapi.tag.dto.TagRequestDto;
+import com.nhnacademy.minidooraytaskapi.tag.dto.TaskTagRequestDto;
 import com.nhnacademy.minidooraytaskapi.tag.service.TagService;
+import com.nhnacademy.minidooraytaskapi.util.ValidateParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,13 +20,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/projects")
 @RequiredArgsConstructor
-public class TagController {
+public class TagController implements ValidateParam {
     private final TagService tagService;
 
     @GetMapping("/{project-id}/tags")
@@ -41,30 +41,22 @@ public class TagController {
     }
 
     @PostMapping("/{project-id}/tags")
-    public ResponseEntity<TagIdDto> createTag(@RequestBody @Valid TagRequestDto tagRequestDto, BindingResult bindingResult, @PathVariable("project-id") Long projectId) {
-        if (bindingResult.hasErrors()) {
-            List<ObjectError> errors = bindingResult.getAllErrors();
-            List<String> errorMessages = new ArrayList<>();
-            for (ObjectError error : errors) {
-                errorMessages.add(error.getDefaultMessage());
-            }
-            throw new PostDtoException(errorMessages);
-        }
-        TagIdDto tagIdDto = tagService.postTag(tagRequestDto, projectId);
+    public ResponseEntity<TagIdDto> createTag(@RequestBody @Valid TaskTagRequestDto taskTagRequest, BindingResult bindingResult, @PathVariable("project-id") Long projectId) {
+        validate(bindingResult);
+        TagIdDto tagIdDto = tagService.postTagTask(taskTagRequest, projectId);
         return ResponseEntity.status(HttpStatus.CREATED).body(tagIdDto);
     }
 
     @PutMapping("/{project-id}/tags/{tag-id}")
-    public ResponseEntity<TagIdDto> modifyTag(@RequestBody @Valid TagRequestDto tagRequestDto, BindingResult bindingResult, @PathVariable("project-id") Long projectId, @PathVariable("tag-id") Long tagId) {
-        if (bindingResult.hasErrors()) {
-            List<ObjectError> errors = bindingResult.getAllErrors();
-            List<String> errorMessages = new ArrayList<>();
-            for (ObjectError error : errors) {
-                errorMessages.add(error.getDefaultMessage());
-            }
-            throw new PostDtoException(errorMessages);
-        }
-        TagIdDto tagIdDto = tagService.putTag(tagRequestDto, projectId, tagId);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(tagIdDto);
+    public ResponseEntity<TagIdDto> modifyTag(@RequestBody @Valid TaskTagRequestDto taskTagRequest, BindingResult bindingResult, @PathVariable("project-id") Long projectId, @PathVariable("tag-id") Long tagId) {
+        validate(bindingResult);
+        TagIdDto tagIdDto = tagService.putTagTask(taskTagRequest, projectId, tagId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(tagIdDto);
+    }
+
+    @DeleteMapping("/tags/{tag-id}")
+    public ResponseEntity<Response> deleteTag(@PathVariable("tag-id") Long id) {
+        tagService.deleteTag(id);
+        return ResponseEntity.ok(new Response("OK"));
     }
 }

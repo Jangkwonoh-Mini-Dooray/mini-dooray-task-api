@@ -1,17 +1,16 @@
 package com.nhnacademy.minidooraytaskapi.task.controller;
 
-import com.nhnacademy.minidooraytaskapi.exception.PostDtoException;
 import com.nhnacademy.minidooraytaskapi.response.Response;
 import com.nhnacademy.minidooraytaskapi.task.dto.TaskRequestDto;
 import com.nhnacademy.minidooraytaskapi.task.dto.TaskDto;
 import com.nhnacademy.minidooraytaskapi.task.dto.TaskIdDto;
 import com.nhnacademy.minidooraytaskapi.task.service.TaskService;
+import com.nhnacademy.minidooraytaskapi.util.ValidateParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,13 +21,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/projects")
 @RequiredArgsConstructor
-public class TaskController {
+public class TaskController implements ValidateParam {
     private final TaskService taskService;
 
     @GetMapping("/{project-id}/posts")
@@ -45,14 +43,7 @@ public class TaskController {
 
     @PostMapping("/{project-id}/posts")
     public ResponseEntity<TaskIdDto> createTask(@RequestBody @Valid TaskRequestDto postTaskDto, BindingResult bindingResult, @PathVariable("project-id") Long projectId) {
-        if (bindingResult.hasErrors()) {
-            List<ObjectError> errors = bindingResult.getAllErrors();
-            List<String> errorMessages = new ArrayList<>();
-            for (ObjectError error : errors) {
-                errorMessages.add(error.getDefaultMessage());
-            }
-            throw new PostDtoException(errorMessages);
-        }
+        validate(bindingResult);
         TaskIdDto taskIdDto = new TaskIdDto();
         taskIdDto.setTaskId(taskService.postTask(postTaskDto, projectId));
         return ResponseEntity.status(HttpStatus.CREATED).body(taskIdDto);
@@ -60,14 +51,7 @@ public class TaskController {
 
     @PutMapping("/{project-id}/posts/{task-id}")
     public ResponseEntity<TaskIdDto> modifyTask(@RequestBody @Valid TaskRequestDto postTaskDto, BindingResult bindingResult, @PathVariable("project-id") Long projectId, @PathVariable("task-id") Long taskId) {
-        if (bindingResult.hasErrors()) {
-            List<ObjectError> errors = bindingResult.getAllErrors();
-            List<String> errorMessages = new ArrayList<>();
-            for (ObjectError error : errors) {
-                errorMessages.add(error.getDefaultMessage());
-            }
-            throw new PostDtoException(errorMessages);
-        }
+        validate(bindingResult);
         TaskIdDto taskIdDto = new TaskIdDto();
         taskIdDto.setTaskId(taskService.putTask(postTaskDto, projectId, taskId));
         return ResponseEntity.status(HttpStatus.CREATED).body(taskIdDto);

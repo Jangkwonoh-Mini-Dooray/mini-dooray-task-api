@@ -12,14 +12,17 @@ import com.nhnacademy.minidooraytaskapi.task.dto.TaskDto;
 import com.nhnacademy.minidooraytaskapi.task.entity.Task;
 import com.nhnacademy.minidooraytaskapi.task.repository.TaskRepository;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -34,11 +37,12 @@ import static org.mockito.Mockito.verify;
 import java.util.List;
 import java.util.Optional;
 
-
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.AUTO_CONFIGURED)
 @DisplayName("Task : Service 테스트")
 class TaskServiceTest {
+    private AutoCloseable closeable;
     @Autowired
     TaskService taskService;
     @MockBean
@@ -50,7 +54,12 @@ class TaskServiceTest {
 
     @BeforeEach
     void setUp() {
-            MockitoAnnotations.openMocks(this);
+        closeable = MockitoAnnotations.openMocks(this);
+    }
+
+    @AfterEach
+    void closeMock() throws Exception {
+        closeable.close();
     }
 
     @Test
@@ -99,11 +108,10 @@ class TaskServiceTest {
     @DisplayName("프로젝트에 업무 수정 및 저장하는 서비스 #실패 1 속하는 프로젝트 없음")
     void saveTask() {
         TaskRequestDto postTaskDto = new TaskRequestDto();
-        Task task = new Task();
 
         given(projectRepository.findById(anyLong())).willReturn(Optional.empty());
 
-        assertThrows(NotFoundProjectException.class, () -> taskService.saveTask(postTaskDto, 1L, task));
+        assertThrows(NotFoundProjectException.class, () -> taskService.postTask(postTaskDto, 1L));
     }
 
     @Test
@@ -118,7 +126,7 @@ class TaskServiceTest {
         given(projectRepository.findById(anyLong())).willReturn(Optional.of(project));
         given(milestoneRepository.findById(anyLong())).willReturn(Optional.empty());
 
-        assertThrows(NotFoundMilestoneException.class, () -> taskService.saveTask(postTaskDto, 1L, task));
+        assertThrows(NotFoundMilestoneException.class, () -> taskService.postTask(postTaskDto, 1L));
     }
 
     @Test
@@ -144,6 +152,7 @@ class TaskServiceTest {
     @DisplayName("프로젝트 업무 수정 및 저장하는 서비스 #성공 2 마일스톤 있음")
     void saveTask4() {
         Task task = new Task();
+        ReflectionTestUtils.setField(task, "taskId", 1L);
         TaskRequestDto postTaskDto = new TaskRequestDto();
         Project project = new Project();
         Milestone milestone = new Milestone();
@@ -151,6 +160,7 @@ class TaskServiceTest {
         ReflectionTestUtils.setField(project, "projectId", 1L);
         milestone.setMilestoneId(1L);
 
+        given(taskRepository.findById(task.getTaskId())).willReturn(Optional.of(task));
         given(projectRepository.findById(anyLong())).willReturn(Optional.of(project));
         given(milestoneRepository.findById(anyLong())).willReturn(Optional.of(milestone));
 
@@ -159,7 +169,7 @@ class TaskServiceTest {
 
         given(taskRepository.saveAndFlush(any())).willReturn(task);
 
-        assertThat(taskService.saveTask(postTaskDto, 1L, task)).isEqualTo(task.getTaskId());
+        assertThat(taskService.putTask(postTaskDto, 1L, 1L)).isEqualTo(task.getTaskId());
     }
 
     @Test
