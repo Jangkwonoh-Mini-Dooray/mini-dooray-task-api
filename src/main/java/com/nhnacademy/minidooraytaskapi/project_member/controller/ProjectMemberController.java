@@ -1,5 +1,7 @@
 package com.nhnacademy.minidooraytaskapi.project_member.controller;
 
+import com.nhnacademy.minidooraytaskapi.project.entity.Project;
+import com.nhnacademy.minidooraytaskapi.project_member.dto.ProjectMemberDeleteRequestDto;
 import com.nhnacademy.minidooraytaskapi.project_member.dto.ProjectMemberRequestDto;
 import com.nhnacademy.minidooraytaskapi.project_member.service.ProjectMemberService;
 import com.nhnacademy.minidooraytaskapi.response.Response;
@@ -17,17 +19,30 @@ public class ProjectMemberController {
     private final ProjectMemberService projectMemberService;
 
     @GetMapping
-    public ResponseEntity<List<ProjectMemberRequestDto>> getTargetMembers(@PathVariable("project-id") Long projectId) {
-        List<ProjectMemberRequestDto> targetMembers = projectMemberService.getTargetMembers(projectId);
+    public ResponseEntity<List<ProjectMemberRequestDto>> getProjectMembers(@PathVariable("project-id") Long projectId) {
+        List<ProjectMemberRequestDto> targetMembers = projectMemberService.getProjectMembers(projectId);
         return ResponseEntity.ok().body(targetMembers);
     }
 
     @PostMapping
-    public ResponseEntity<Response> addTargetMembers(@PathVariable("project-id") Long projectId,
-                                                     @RequestBody @Valid List<ProjectMemberRequestDto> targetMembers) {
-        projectMemberService.addTargetMembers(projectId, targetMembers);
+    public ResponseEntity<Response> addProjectMembers(@PathVariable("project-id") Long projectId,
+                                                     @RequestBody @Valid List<ProjectMemberRequestDto> projectMemberRequestDtoList) {
+        projectMemberService.addProjectMembers(projectId, projectMemberRequestDtoList);
         return ResponseEntity.ok().body(new Response("OK"));
     }
 
+    @PutMapping
+    public ResponseEntity<Response> modifyProjectMembers(@PathVariable("project-id") Long projectId,
+                                                         @RequestBody @Valid List<ProjectMemberRequestDto> projectMemberRequestDtoList) {
+        projectMemberService.modifyProjectMembers(projectId, projectMemberRequestDtoList);
+        return ResponseEntity.ok().body(new Response("OK"));
+    }
 
+    @DeleteMapping
+    public ResponseEntity<Response> deleteProjectMembers(@PathVariable("project-id") Long projectId,
+                                                         @RequestBody @Valid List<ProjectMemberDeleteRequestDto>
+                                                                 projectMemberDeleteRequestDtoList) {
+        projectMemberService.deleteProjectMembers(projectId, projectMemberDeleteRequestDtoList);
+        return ResponseEntity.ok().body(new Response("OK"));
+    }
 }
