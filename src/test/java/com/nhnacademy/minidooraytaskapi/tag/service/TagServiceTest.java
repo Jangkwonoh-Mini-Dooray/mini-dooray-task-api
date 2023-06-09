@@ -74,6 +74,7 @@ class TagServiceTest {
         Project project = new Project();
         ReflectionTestUtils.setField(project, "projectId", 1L);
         Task task = new Task();
+        ReflectionTestUtils.setField(task, "taskId", 1L);
         tag.setName("test1");
         tag.setName("test2");
 

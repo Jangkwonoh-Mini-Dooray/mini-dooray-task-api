@@ -63,9 +63,7 @@ class TagRepositoryTest {
 
 
         Project project = new Project();
-        ReflectionTestUtils.setField(project, "projectId", 1L);
         ReflectionTestUtils.setField(project, "name", "ggg");
-        ReflectionTestUtils.setField(project, "projectId", 1L);
         ProjectStatus projectStatus = new ProjectStatus("활성");
         ReflectionTestUtils.setField(project, "projectStatus", projectStatus);
         Milestone milestone = new Milestone();

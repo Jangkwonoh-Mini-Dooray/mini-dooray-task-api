@@ -113,7 +113,7 @@ class TaskControllerTest {
     @DisplayName("프로젝트에 업무 생성 #성공")
     void createTask2() throws Exception {
 
-        TaskRequestDto task = new TaskRequestDto();
+        TaskRequestDto taskRequestDto = new TaskRequestDto();
 
         Project project = new Project();
         ReflectionTestUtils.setField(project, "projectId", 1L);
@@ -122,17 +122,16 @@ class TaskControllerTest {
         ProjectStatus projectStatus = new ProjectStatus("활성");
         ReflectionTestUtils.setField(project, "projectStatus", projectStatus);
 
-        ReflectionTestUtils.setField(task, "taskId", 1L);
-        task.setTaskWriterMemberId("naht94");
-        task.setTitle("세번째 업무");
-        task.setContent("테스트 업무");
+        taskRequestDto.setTaskWriterMemberId("naht94");
+        taskRequestDto.setTitle("세번째 업무");
+        taskRequestDto.setContent("테스트 업무");
 
         when(taskService.postTask(any(), anyLong()))
                 .thenReturn(1L);
 
         mockMvc.perform(post("/projects/{project-id}/posts", project.getProjectId())
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(task)))
+                        .content(objectMapper.writeValueAsString(taskRequestDto)))
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().string("{\"taskId\":1}"));
