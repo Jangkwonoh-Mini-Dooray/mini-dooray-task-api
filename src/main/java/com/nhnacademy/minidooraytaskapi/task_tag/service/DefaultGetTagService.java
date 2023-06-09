@@ -1,4 +1,4 @@
-package com.nhnacademy.minidooraytaskapi.get_tag.service;
+package com.nhnacademy.minidooraytaskapi.task_tag.service;
 
 public class DefaultGetTagService implements GetTagService {
 }

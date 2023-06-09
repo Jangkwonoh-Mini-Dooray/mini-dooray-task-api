@@ -1,4 +1,4 @@
-package com.nhnacademy.minidooraytaskapi.get_tag.entity;
+package com.nhnacademy.minidooraytaskapi.task_tag.entity;
 
 import com.nhnacademy.minidooraytaskapi.tag.entity.Tag;
 import com.nhnacademy.minidooraytaskapi.task.entity.Task;
@@ -23,7 +23,7 @@ import java.io.Serializable;
 @Setter
 @Getter
 @Table(name = "task_tag")
-public class GetTag {
+public class TaskTag {
     @EmbeddedId
     private Pk pk;
     @Embeddable
