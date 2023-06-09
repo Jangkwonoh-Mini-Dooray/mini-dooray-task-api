@@ -1,8 +1,8 @@
 package com.nhnacademy.minidooraytaskapi.task.controller;
 
-import com.nhnacademy.minidooraytaskapi.exception.PostTaskDtoException;
+import com.nhnacademy.minidooraytaskapi.exception.PostDtoException;
 import com.nhnacademy.minidooraytaskapi.response.Response;
-import com.nhnacademy.minidooraytaskapi.task.dto.PostTaskDto;
+import com.nhnacademy.minidooraytaskapi.task.dto.TaskRequestDto;
 import com.nhnacademy.minidooraytaskapi.task.dto.TaskDto;
 import com.nhnacademy.minidooraytaskapi.task.dto.TaskIdDto;
 import com.nhnacademy.minidooraytaskapi.task.service.TaskService;
@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -32,22 +33,25 @@ public class TaskController {
 
     @GetMapping("/{project-id}/posts")
     public ResponseEntity<List<TaskDto>> getTasks(@PathVariable("project-id") Long projectId) {
-        List<TaskDto> allTasks = taskService.getAllByProjectId(projectId);
+        List<TaskDto> allTasks = taskService.getTasks(projectId);
         return ResponseEntity.ok().body(allTasks);
     }
 
     @GetMapping("/{project-id}/posts/{task-id}")
     public ResponseEntity<TaskDto> getTask(@PathVariable("project-id") Long projectId, @PathVariable("task-id") Long taskId) {
-        TaskDto target = taskService.getTaskByTaskIdAndProjectId(projectId, taskId);
+        TaskDto target = taskService.getTask(projectId, taskId);
         return ResponseEntity.ok().body(target);
     }
 
     @PostMapping("/{project-id}/posts")
-    public ResponseEntity<TaskIdDto> createTask(@RequestBody @Valid PostTaskDto postTaskDto, BindingResult bindingResult, @PathVariable("project-id") Long projectId) {
+    public ResponseEntity<TaskIdDto> createTask(@RequestBody @Valid TaskRequestDto postTaskDto, BindingResult bindingResult, @PathVariable("project-id") Long projectId) {
         if (bindingResult.hasErrors()) {
             List<ObjectError> errors = bindingResult.getAllErrors();
-            String errorMessage = errors.get(0).getDefaultMessage();
-            throw new PostTaskDtoException(errorMessage);
+            List<String> errorMessages = new ArrayList<>();
+            for (ObjectError error : errors) {
+                errorMessages.add(error.getDefaultMessage());
+            }
+            throw new PostDtoException(errorMessages);
         }
         TaskIdDto taskIdDto = new TaskIdDto();
         taskIdDto.setTaskId(taskService.postTask(postTaskDto, projectId));
@@ -55,11 +59,14 @@ public class TaskController {
     }
 
     @PutMapping("/{project-id}/posts/{task-id}")
-    public ResponseEntity<TaskIdDto> modifyTask(@RequestBody @Valid PostTaskDto postTaskDto, BindingResult bindingResult, @PathVariable("project-id") Long projectId, @PathVariable("task-id") Long taskId) {
+    public ResponseEntity<TaskIdDto> modifyTask(@RequestBody @Valid TaskRequestDto postTaskDto, BindingResult bindingResult, @PathVariable("project-id") Long projectId, @PathVariable("task-id") Long taskId) {
         if (bindingResult.hasErrors()) {
             List<ObjectError> errors = bindingResult.getAllErrors();
-            String errorMessage = errors.get(0).getDefaultMessage();
-            throw new PostTaskDtoException(errorMessage);
+            List<String> errorMessages = new ArrayList<>();
+            for (ObjectError error : errors) {
+                errorMessages.add(error.getDefaultMessage());
+            }
+            throw new PostDtoException(errorMessages);
         }
         TaskIdDto taskIdDto = new TaskIdDto();
         taskIdDto.setTaskId(taskService.putTask(postTaskDto, projectId, taskId));

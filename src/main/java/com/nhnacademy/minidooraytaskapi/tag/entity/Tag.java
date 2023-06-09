@@ -10,7 +10,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Setter
 @Getter
 @Table(name = "tag")
 public class Tag {
@@ -19,8 +18,18 @@ public class Tag {
     @Column(name = "tag_id")
     private Long tagId;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "project_id")
     private Project project;
     private String name;
+
+    public Tag() {
+    }
+    public Tag(Project project) {
+        this.project = project;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

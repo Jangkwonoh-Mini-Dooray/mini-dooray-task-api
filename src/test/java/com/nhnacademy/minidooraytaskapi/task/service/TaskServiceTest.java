@@ -7,7 +7,7 @@ import com.nhnacademy.minidooraytaskapi.milestone.entity.Milestone;
 import com.nhnacademy.minidooraytaskapi.milestone.repository.MilestoneRepository;
 import com.nhnacademy.minidooraytaskapi.project.entity.Project;
 import com.nhnacademy.minidooraytaskapi.project.repository.ProjectRepository;
-import com.nhnacademy.minidooraytaskapi.task.dto.PostTaskDto;
+import com.nhnacademy.minidooraytaskapi.task.dto.TaskRequestDto;
 import com.nhnacademy.minidooraytaskapi.task.dto.TaskDto;
 import com.nhnacademy.minidooraytaskapi.task.entity.Task;
 import com.nhnacademy.minidooraytaskapi.task.repository.TaskRepository;
@@ -71,7 +71,7 @@ class TaskServiceTest {
                 .willReturn(List.of(new TaskDto(task.getTaskId(), task.getTaskWriterMemberId(), task.getMilestone(), task.getTitle()),
                         new TaskDto(task2.getTaskId(), task2.getTaskWriterMemberId(), task2.getMilestone(), task.getTitle())));
 
-        List<TaskDto> allTask = taskService.getAllByProjectId(project.getProjectId());
+        List<TaskDto> allTask = taskService.getTasks(project.getProjectId());
 
         Assertions.assertThat(allTask).isNotEmpty().hasSize(2);
         Assertions.assertThat(allTask.get(0).getTaskId()).isEqualTo(task.getTaskId());
@@ -91,13 +91,13 @@ class TaskServiceTest {
         given(taskRepository.getTask(task.getTaskId(), project.getProjectId()))
                 .willReturn(new TaskDto(task.getTaskId(), task.getTaskWriterMemberId(), task.getMilestone(), task.getTitle()));
 
-        assertThat(taskService.getTaskByTaskIdAndProjectId(task.getTaskId(), project.getProjectId()).getTaskId()).isEqualTo(task.getTaskId());
+        assertThat(taskService.getTask(task.getTaskId(), project.getProjectId()).getTaskId()).isEqualTo(task.getTaskId());
     }
 
     @Test
     @DisplayName("프로젝트에 업무 수정 및 저장하는 서비스 #실패 1 속하는 프로젝트 없음")
     void saveTask() {
-        PostTaskDto postTaskDto = new PostTaskDto();
+        TaskRequestDto postTaskDto = new TaskRequestDto();
         Task task = new Task();
 
         given(projectRepository.findById(anyLong())).willReturn(Optional.empty());
@@ -108,7 +108,7 @@ class TaskServiceTest {
     @Test
     @DisplayName("프로젝트에 업무 수정 및 저장하는 서비스 #실패 2 가져온 마일스톤 아이디가 없는 아이디인 경우")
     void saveTask2() {
-        PostTaskDto postTaskDto = new PostTaskDto();
+        TaskRequestDto postTaskDto = new TaskRequestDto();
         Task task = new Task();
         Project project = new Project();
         project.setProjectId(1L);
@@ -124,7 +124,7 @@ class TaskServiceTest {
     @DisplayName("프로젝트 업무 수정 및 저장하는 서비스 #성공 1 마일스톤 없음")
     void saveTask3() {
         Task task = new Task();
-        PostTaskDto postTaskDto = new PostTaskDto();
+        TaskRequestDto postTaskDto = new TaskRequestDto();
         Project project = new Project();
 
         project.setProjectId(1L);
@@ -142,7 +142,7 @@ class TaskServiceTest {
     @DisplayName("프로젝트 업무 수정 및 저장하는 서비스 #성공 2 마일스톤 있음")
     void saveTask4() {
         Task task = new Task();
-        PostTaskDto postTaskDto = new PostTaskDto();
+        TaskRequestDto postTaskDto = new TaskRequestDto();
         Project project = new Project();
         Milestone milestone = new Milestone();
 
@@ -163,7 +163,7 @@ class TaskServiceTest {
     @Test
     @DisplayName("프로젝트에 존재하는 특정 업무 엔티티 가져오는 서비스 #실패")
     void putTask() {
-        PostTaskDto postTaskDto = new PostTaskDto();
+        TaskRequestDto postTaskDto = new TaskRequestDto();
         given(taskRepository.findById(anyLong())).willReturn(Optional.empty());
         assertThrows(NotFoundTaskException.class, () -> taskService.putTask(postTaskDto, 1L, 1L));
     }
