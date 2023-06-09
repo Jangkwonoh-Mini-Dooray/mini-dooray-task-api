@@ -40,7 +40,7 @@ class ProjectMemberRepositoryTest {
         testEntityManager.persist(project);
         testEntityManager.persist(projectMember);
 
-        List<ProjectMemberRequestDto> actual = projectMemberRepository.findTargetMembers(project.getProjectId());
+        List<ProjectMemberRequestDto> actual = projectMemberRepository.findProjectMembers(project.getProjectId());
         assertThat(actual.size()).isEqualTo(1);
     }
 }

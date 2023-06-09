@@ -14,7 +14,7 @@ public class ProjectMemberRepositoryImpl extends QuerydslRepositorySupport imple
     }
 
     @Override
-    public List<ProjectMemberRequestDto> findTargetMembers(Long projectId) {
+    public List<ProjectMemberRequestDto> findProjectMembers(Long projectId) {
         QProjectMember projectMember = QProjectMember.projectMember;
 
         return from(projectMember)

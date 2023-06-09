@@ -7,5 +7,5 @@ import java.util.List;
 
 @NoRepositoryBean
 public interface ProjectMemberRepositoryCustom {
-    List<ProjectMemberRequestDto> findTargetMembers(Long projectId);
+    List<ProjectMemberRequestDto> findProjectMembers(Long projectId);
 }
