@@ -7,14 +7,12 @@ import com.nhnacademy.minidooraytaskapi.project.dto.ProjectIdDto;
 import com.nhnacademy.minidooraytaskapi.project.dto.ProjectRequestDto;
 import com.nhnacademy.minidooraytaskapi.project.entity.Project;
 import com.nhnacademy.minidooraytaskapi.project.repository.ProjectRepository;
-import com.nhnacademy.minidooraytaskapi.project_status.code.ProjectStatusCode;
-import com.nhnacademy.minidooraytaskapi.project_status.entity.ProjectStatus;
-import com.nhnacademy.minidooraytaskapi.project_status.repository.ProjectStatusRepository;
+import com.nhnacademy.minidooraytaskapi.projectstatus.code.ProjectStatusCode;
+import com.nhnacademy.minidooraytaskapi.projectstatus.entity.ProjectStatus;
+import com.nhnacademy.minidooraytaskapi.projectstatus.repository.ProjectStatusRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

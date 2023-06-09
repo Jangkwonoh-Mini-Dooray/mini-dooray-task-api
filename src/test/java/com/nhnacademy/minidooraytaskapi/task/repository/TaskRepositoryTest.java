@@ -2,7 +2,7 @@ package com.nhnacademy.minidooraytaskapi.task.repository;
 
 import com.nhnacademy.minidooraytaskapi.milestone.entity.Milestone;
 import com.nhnacademy.minidooraytaskapi.project.entity.Project;
-import com.nhnacademy.minidooraytaskapi.project_status.entity.ProjectStatus;
+import com.nhnacademy.minidooraytaskapi.projectstatus.entity.ProjectStatus;
 import com.nhnacademy.minidooraytaskapi.task.dto.TaskDto;
 import com.nhnacademy.minidooraytaskapi.task.entity.Task;
 import org.junit.jupiter.api.DisplayName;

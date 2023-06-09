@@ -1,12 +1,11 @@
 package com.nhnacademy.minidooraytaskapi.project.controller;
 
-import com.nhnacademy.minidooraytaskapi.exception.NotFoundProjectException;
 import com.nhnacademy.minidooraytaskapi.project.dto.ProjectDto;
 import com.nhnacademy.minidooraytaskapi.project.dto.ProjectIdDto;
 import com.nhnacademy.minidooraytaskapi.project.dto.ProjectRequestDto;
 import com.nhnacademy.minidooraytaskapi.project.entity.Project;
 import com.nhnacademy.minidooraytaskapi.project.service.ProjectService;
-import com.nhnacademy.minidooraytaskapi.project_status.entity.ProjectStatus;
+import com.nhnacademy.minidooraytaskapi.projectstatus.entity.ProjectStatus;
 import org.junit.jupiter.api.*;
 
 import static org.mockito.ArgumentMatchers.any;

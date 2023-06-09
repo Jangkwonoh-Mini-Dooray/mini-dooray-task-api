@@ -6,20 +6,15 @@ import com.nhnacademy.minidooraytaskapi.project.dto.ProjectIdDto;
 import com.nhnacademy.minidooraytaskapi.project.dto.ProjectRequestDto;
 import com.nhnacademy.minidooraytaskapi.project.entity.Project;
 import com.nhnacademy.minidooraytaskapi.project.repository.ProjectRepository;
-import com.nhnacademy.minidooraytaskapi.project_status.entity.ProjectStatus;
-import com.nhnacademy.minidooraytaskapi.project_status.repository.ProjectStatusRepository;
+import com.nhnacademy.minidooraytaskapi.projectstatus.entity.ProjectStatus;
+import com.nhnacademy.minidooraytaskapi.projectstatus.repository.ProjectStatusRepository;
 import org.junit.jupiter.api.*;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.data.ConditionalOnRepositoryType;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
-import org.springframework.security.core.parameters.P;
 
-import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.*;
@@ -28,7 +23,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
