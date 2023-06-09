@@ -44,12 +44,10 @@ class TaskRepositoryTest {
         testEntityManager.persist(project);
         testEntityManager.persist(milestone);
 
-        task.setTitle("test");
-        task.setTaskWriterMemberId("naht94");
+        task.save("test","content", "naht94");
         task.setProject(project);
         task.setMilestone(milestone);
-        task2.setTitle("test");
-        task2.setTaskWriterMemberId("naht94");
+        task2.save("test2","content2", "naht94");
         task2.setProject(project);
         task2.setMilestone(milestone);
 
@@ -82,12 +80,10 @@ class TaskRepositoryTest {
         testEntityManager.persist(project);
         testEntityManager.persist(milestone);
 
-        task.setTitle("test");
-        task.setTaskWriterMemberId("naht94");
+        task.save("test", "content", "naht94");
         task.setProject(project);
         task.setMilestone(milestone);
-        task2.setTitle("test");
-        task2.setTaskWriterMemberId("naht94");
+        task2.save("test2", "content", "naht94");
         task2.setProject(project);
         task2.setMilestone(milestone);
 

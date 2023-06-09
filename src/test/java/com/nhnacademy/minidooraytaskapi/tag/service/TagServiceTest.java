@@ -51,8 +51,8 @@ class TagServiceTest {
         Project project = new Project();
         project.setProjectId(1L);
 
-        tag.setTagId(1L);
-        tag2.setTagId(2L);
+        tag.setName("test1");
+        tag2.setName("test2");
 
         given(tagRepository.getTagByProjectId(anyLong()))
                 .willReturn(List.of(new TagDto(tag.getTagId(), tag.getName()),
@@ -61,7 +61,7 @@ class TagServiceTest {
         List<TagDto> allTag = tagService.getTags(project.getProjectId());
 
         Assertions.assertThat(allTag).isNotEmpty().hasSize(2);
-        Assertions.assertThat(allTag.get(0).getTagId()).isEqualTo(tag.getTagId());
+        Assertions.assertThat(allTag.get(0).getName()).isEqualTo(tag.getName());
     }
 
     @Test
@@ -73,10 +73,8 @@ class TagServiceTest {
         Project project = new Project();
         project.setProjectId(1L);
         Task task = new Task();
-        task.setTaskId(1L);
-
-        tag.setTagId(1L);
-        tag2.setTagId(2L);
+        tag.setName("test1");
+        tag.setName("test2");
 
         given(tagRepository.getTagByProjectIdAndTaskId(anyLong(), anyLong()))
                 .willReturn(List.of(new TagDto(tag.getTagId(), tag.getName()),
@@ -85,7 +83,7 @@ class TagServiceTest {
         List<TagDto> allTag = tagService.getTags(project.getProjectId(), task.getTaskId());
 
         Assertions.assertThat(allTag).isNotEmpty().hasSize(2);
-        Assertions.assertThat(allTag.get(0).getTagId()).isEqualTo(tag.getTagId());
+        Assertions.assertThat(allTag.get(0).getName()).isEqualTo(tag.getName());
     }
 
     @Test
