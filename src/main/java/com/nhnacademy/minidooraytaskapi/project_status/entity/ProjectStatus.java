@@ -1,13 +1,15 @@
 package com.nhnacademy.minidooraytaskapi.project_status.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
-@Setter
+@NoArgsConstructor
 @Table(name = "project_status")
 public class ProjectStatus {
     @Id
@@ -17,4 +19,8 @@ public class ProjectStatus {
 
     @Column(name = "name")
     private String name;
+
+    public ProjectStatus(String name) {
+        this.name = name;
+    }
 }
