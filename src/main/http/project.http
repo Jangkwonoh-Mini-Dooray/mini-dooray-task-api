@@ -11,7 +11,7 @@ Content-Type: application/json
 }
 
 ### 프로젝트 조회
-GET /projects/11
+GET /projects/10
 Host: localhost:8080
 Content-Type: application/json
 
@@ -19,3 +19,9 @@ Content-Type: application/json
 
 DELETE /projects/11
 Host: localhost:8080
+
+### 프로젝트 멤버 조회
+
+GET /projects/10/members
+Host: localhost:8080
+Content-Type: application/json

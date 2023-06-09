@@ -1,28 +1,30 @@
-package com.nhnacademy.minidooraytaskapi.get_project.entity;
+package com.nhnacademy.minidooraytaskapi.project_member.entity;
 
 import com.nhnacademy.minidooraytaskapi.project.entity.Project;
 import com.nhnacademy.minidooraytaskapi.project_authority.entity.ProjectAuthority;
-import lombok .EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "get_project")
-public class GetProject {
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "project_member")
+public class ProjectMember {
     @EmbeddedId
     private Pk pk;
 
     @Getter
+    @AllArgsConstructor
     @NoArgsConstructor
     @Embeddable
     @EqualsAndHashCode
     public static class Pk implements Serializable {
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "target_member_id")
         private String targetMemberId;
+
         @Column(name = "project_id")
         private Long projectId;
     }

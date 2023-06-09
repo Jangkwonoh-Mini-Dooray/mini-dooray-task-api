@@ -13,5 +13,4 @@ public class CommentMention {
     @ManyToOne
     @JoinColumn(name = "comment_id")
     private Comment comment;
-
 }
