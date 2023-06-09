@@ -4,7 +4,7 @@ import com.nhnacademy.minidooraytaskapi.project_member.dto.ProjectMemberRequestD
 
 import java.util.List;
 
-public interface GetProjectService {
+public interface ProjectMemberService {
     List<ProjectMemberRequestDto> getTargetMembers(Long projectId);
     void addTargetMembers(Long projectId, List<ProjectMemberRequestDto> targetMembers);
 }

@@ -1,7 +1,7 @@
 package com.nhnacademy.minidooraytaskapi.project_member.controller;
 
 import com.nhnacademy.minidooraytaskapi.project_member.dto.ProjectMemberRequestDto;
-import com.nhnacademy.minidooraytaskapi.project_member.service.GetProjectService;
+import com.nhnacademy.minidooraytaskapi.project_member.service.ProjectMemberService;
 import com.nhnacademy.minidooraytaskapi.response.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -14,18 +14,18 @@ import java.util.List;
 @RequestMapping("/projects/{project-id}/members")
 @RequiredArgsConstructor
 public class ProjectMemberController {
-    private final GetProjectService getProjectService;
+    private final ProjectMemberService projectMemberService;
 
     @GetMapping
     public ResponseEntity<List<ProjectMemberRequestDto>> getTargetMembers(@PathVariable("project-id") Long projectId) {
-        List<ProjectMemberRequestDto> targetMembers = getProjectService.getTargetMembers(projectId);
+        List<ProjectMemberRequestDto> targetMembers = projectMemberService.getTargetMembers(projectId);
         return ResponseEntity.ok().body(targetMembers);
     }
 
     @PostMapping
     public ResponseEntity<Response> addTargetMembers(@PathVariable("project-id") Long projectId,
                                                      @RequestBody @Valid List<ProjectMemberRequestDto> targetMembers) {
-        getProjectService.addTargetMembers(projectId, targetMembers);
+        projectMemberService.addTargetMembers(projectId, targetMembers);
         return ResponseEntity.ok().body(new Response("OK"));
     }
 
