@@ -75,8 +75,7 @@ class DefaultProjectServiceTest {
     @DisplayName("프로젝트 생성 서비스")
     void testCreateProject() {
         ProjectRequestDto projectRequestDto = new ProjectRequestDto("활성", "test", "test");
-        ProjectStatus projectStatus = new ProjectStatus();
-        projectStatus.setName("test");
+        ProjectStatus projectStatus = new ProjectStatus("test");
 
         given(projectStatusRepository.findById(anyInt()))
                 .willReturn(Optional.of(projectStatus));
@@ -95,8 +94,7 @@ class DefaultProjectServiceTest {
     @DisplayName("프로젝트 수정 서비스")
     void testModifyProject() {
         ProjectRequestDto projectRequestDto = new ProjectRequestDto("휴면", "test", "test");
-        ProjectStatus projectStatus = new ProjectStatus();
-        projectStatus.setName("test");
+        ProjectStatus projectStatus = new ProjectStatus("test");
         Project project = new Project(1L, projectStatus, projectRequestDto.getName(), projectRequestDto.getDescription());
 
         given(projectRepository.findById(anyLong()))
@@ -114,8 +112,7 @@ class DefaultProjectServiceTest {
     @Order(5)
     @DisplayName("프로젝트 삭제 서비스")
     void testDeleteProject() {
-        ProjectStatus projectStatus = new ProjectStatus();
-        projectStatus.setName("test");
+        ProjectStatus projectStatus = new ProjectStatus("test");
         Project project = new Project(1L, projectStatus, "test", "test");
 
         given(projectRepository.findById(anyLong()))

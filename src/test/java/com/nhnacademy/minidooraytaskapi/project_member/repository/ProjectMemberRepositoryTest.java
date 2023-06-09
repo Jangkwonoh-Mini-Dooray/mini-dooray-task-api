@@ -29,8 +29,7 @@ class ProjectMemberRepositoryTest {
     @Order(1)
     @DisplayName("Project ID 로 프로젝트 멤버 조회")
     void testFindTargetMembers() {
-        ProjectStatus projectStatus = new ProjectStatus();
-        projectStatus.setName("test");
+        ProjectStatus projectStatus = new ProjectStatus("test");
         ProjectAuthority projectAuthority = new ProjectAuthority();
         projectAuthority.setName("test");
         Project project = new Project(projectStatus, "test", "test");

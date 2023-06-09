@@ -54,8 +54,7 @@ class ProjectControllerTest {
     @Order(2)
     @DisplayName("프로젝트 생성")
     void testCreateProject() throws Exception {
-        ProjectStatus projectStatus = new ProjectStatus();
-        projectStatus.setName("test");
+        ProjectStatus projectStatus = new ProjectStatus("test");
         ProjectRequestDto projectRequestDto = new ProjectRequestDto(projectStatus.getName(), "test", "test");
         Project project = new Project(1L, projectStatus, projectRequestDto.getName(), projectRequestDto.getDescription());
 
@@ -85,8 +84,7 @@ class ProjectControllerTest {
     @Order(4)
     @DisplayName("프로젝트 수정")
     void testModifyProject() throws Exception {
-        ProjectStatus projectStatus = new ProjectStatus();
-        projectStatus.setName("test");
+        ProjectStatus projectStatus = new ProjectStatus("test");
         ProjectRequestDto projectRequestDto = new ProjectRequestDto(projectStatus.getName(), "test", "test");
         Project project = new Project(1L, projectStatus, projectRequestDto.getName(), projectRequestDto.getDescription());
 

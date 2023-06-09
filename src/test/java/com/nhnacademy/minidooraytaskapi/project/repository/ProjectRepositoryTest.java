@@ -9,8 +9,6 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
@@ -26,12 +24,8 @@ class ProjectRepositoryTest {
     @Order(1)
     @DisplayName("Project ID 로 개별 프로젝트 조회")
     void testFindByProjectId() {
-        Project project = new Project();
-        project.setName("test");
-        ProjectStatus projectStatus = new ProjectStatus();
-        projectStatus.setName("test");
-        project.setProjectStatus(projectStatus);
-
+        ProjectStatus projectStatus = new ProjectStatus("test");
+        Project project = new Project(projectStatus, "test", "test");
         testEntityManager.persist(projectStatus);
         testEntityManager.persist(project);
 

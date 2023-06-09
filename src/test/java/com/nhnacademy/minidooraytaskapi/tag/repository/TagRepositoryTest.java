@@ -34,9 +34,10 @@ class TagRepositoryTest {
         Tag tag = new Tag();
         Tag tag2 = new Tag();
 
+        ProjectStatus projectStatus = new ProjectStatus();
         Project project = new Project();
         project.setName("ggg");
-        ProjectStatus projectStatus = new ProjectStatus();
+
         projectStatus.setName("test");
         project.setProjectStatus(projectStatus);
         Milestone milestone = new Milestone();
