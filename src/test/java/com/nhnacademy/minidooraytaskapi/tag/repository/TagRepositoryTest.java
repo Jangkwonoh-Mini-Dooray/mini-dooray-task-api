@@ -1,12 +1,12 @@
 package com.nhnacademy.minidooraytaskapi.tag.repository;
 
-import com.nhnacademy.minidooraytaskapi.get_tag.entity.GetTag;
 import com.nhnacademy.minidooraytaskapi.milestone.entity.Milestone;
 import com.nhnacademy.minidooraytaskapi.project.entity.Project;
 import com.nhnacademy.minidooraytaskapi.project_status.entity.ProjectStatus;
 import com.nhnacademy.minidooraytaskapi.tag.dto.TagDto;
 import com.nhnacademy.minidooraytaskapi.tag.entity.Tag;
 import com.nhnacademy.minidooraytaskapi.task.entity.Task;
+import com.nhnacademy.minidooraytaskapi.task_tag.entity.TaskTag;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,8 +17,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.AUTO_CONFIGURED)
@@ -100,15 +98,15 @@ class TagRepositoryTest {
         testEntityManager.persist(tag);
         testEntityManager.persist(tag2);
 
-        GetTag getTag = new GetTag();
-        GetTag getTag2 = new GetTag();
+        TaskTag getTag = new TaskTag();
+        TaskTag getTag2 = new TaskTag();
 
         getTag.setTag(tag);
         getTag.setTask(task);
-        getTag.setPk(new GetTag.Pk(tag.getTagId(), task.getTaskId()));
+        getTag.setPk(new TaskTag.Pk(tag.getTagId(), task.getTaskId()));
         getTag2.setTag(tag2);
         getTag2.setTask(task);
-        getTag2.setPk(new GetTag.Pk(tag2.getTagId(), task2.getTaskId()));
+        getTag2.setPk(new TaskTag.Pk(tag2.getTagId(), task2.getTaskId()));
 
         testEntityManager.persist(getTag);
         testEntityManager.persist(getTag2);
