@@ -20,7 +20,7 @@ public class TaskRepositoryImpl extends QuerydslRepositorySupport implements Tas
         QProject project = QProject.project;
         return from(task).innerJoin(task.project, project)
                 .where(task.project.projectId.eq(projectId))
-                .select(Projections.bean(TaskDto.class,
+                .select(Projections.constructor(TaskDto.class,
                         task.taskId,
                         task.taskWriterMemberId,
                         task.milestone,
@@ -33,7 +33,7 @@ public class TaskRepositoryImpl extends QuerydslRepositorySupport implements Tas
         QTask task = QTask.task;
         QProject project = QProject.project;
         return from(task).innerJoin(task.project, project)
-                .select(Projections.bean(TaskDto.class,
+                .select(Projections.constructor(TaskDto.class,
                         task.taskId,
                         task.taskWriterMemberId,
                         task.milestone,

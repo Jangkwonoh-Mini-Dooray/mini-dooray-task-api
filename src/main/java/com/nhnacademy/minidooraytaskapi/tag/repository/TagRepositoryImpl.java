@@ -23,7 +23,7 @@ public class TagRepositoryImpl extends QuerydslRepositorySupport implements TagR
 
         return from(tag)
                 .innerJoin(tag.project, project)
-                .select(Projections.bean(TagDto.class,
+                .select(Projections.constructor(TagDto.class,
                         tag.tagId,
                         tag.name))
                 .where(project.projectId.eq(projectId))
@@ -40,7 +40,7 @@ public class TagRepositoryImpl extends QuerydslRepositorySupport implements TagR
                 .innerJoin(taskTag.tag, tag)
                 .innerJoin(tag.project, project)
                 .innerJoin(taskTag.task, task)
-                .select(Projections.bean(TagDto.class,
+                .select(Projections.constructor(TagDto.class,
                         tag.tagId,
                         tag.name))
                 .where(project.projectId.eq(projectId), task.taskId.eq(taskId))

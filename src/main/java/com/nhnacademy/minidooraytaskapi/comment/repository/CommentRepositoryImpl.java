@@ -21,7 +21,7 @@ public class CommentRepositoryImpl extends QuerydslRepositorySupport implements 
         return from(comment)
                 .innerJoin(comment.task, task)
                 .where(task.taskId.eq(taskId))
-                .select(Projections.bean(ResponseCommentDto.class,
+                .select(Projections.constructor(ResponseCommentDto.class,
                                 comment.commentId,
                                 comment.commentWriterMemberId,
                                 comment.comment))
