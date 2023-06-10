@@ -27,4 +27,19 @@ public class MilestoneRepositoryImpl extends QuerydslRepositorySupport implement
                         milestone.status))
                 .fetch();
     }
+
+    @Override
+    public MilestoneDto findMilestone(Long milestoneId) {
+        QMilestone milestone = QMilestone.milestone;
+
+        return from(milestone)
+                .where(milestone.milestoneId.eq(milestoneId))
+                .select(Projections.bean(MilestoneDto.class,
+                        milestone.milestoneId,
+                        milestone.name,
+                        milestone.startPeriod,
+                        milestone.endPeriod,
+                        milestone.status))
+                .fetchOne();
+    }
 }

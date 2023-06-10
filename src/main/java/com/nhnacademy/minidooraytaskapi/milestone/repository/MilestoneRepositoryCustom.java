@@ -8,4 +8,5 @@ import java.util.List;
 @NoRepositoryBean
 public interface MilestoneRepositoryCustom {
     List<MilestoneDto> findMilestones(Long projectId);
+    MilestoneDto findMilestone(Long milestoneId);
 }
