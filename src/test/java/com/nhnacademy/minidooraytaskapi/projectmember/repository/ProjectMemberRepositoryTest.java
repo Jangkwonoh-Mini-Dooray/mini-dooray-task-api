@@ -31,7 +31,6 @@ class ProjectMemberRepositoryTest {
     void testFindTargetMembers() {
         ProjectStatus projectStatus = new ProjectStatus("test");
         ProjectAuthority projectAuthority = new ProjectAuthority();
-        projectAuthority.setName("test");
         Project project = new Project(projectStatus, "test", "test");
         ProjectMember projectMember = new ProjectMember(new ProjectMember.Pk("test", project.getProjectId()), project, projectAuthority);
 

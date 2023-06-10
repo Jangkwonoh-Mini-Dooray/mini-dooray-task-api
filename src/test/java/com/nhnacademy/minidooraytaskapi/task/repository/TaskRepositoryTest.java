@@ -34,8 +34,6 @@ class TaskRepositoryTest {
         ProjectStatus projectStatus = new ProjectStatus();
         Project project = new Project(projectStatus, "ggg", "소녀시대");
         Milestone milestone = new Milestone();
-        milestone.setProject(project);
-        milestone.setName("test");
 
         testEntityManager.persist(projectStatus);
         testEntityManager.persist(project);
@@ -67,8 +65,6 @@ class TaskRepositoryTest {
         ProjectStatus projectStatus = new ProjectStatus("test");
         Project project = new Project(projectStatus, "ggg", "소녀시대");
         Milestone milestone = new Milestone();
-        milestone.setProject(project);
-        milestone.setName("test");
 
         testEntityManager.persist(projectStatus);
         testEntityManager.persist(project);
@@ -86,6 +82,5 @@ class TaskRepositoryTest {
         testEntityManager.persist(task2);
 
         assertThat(taskRepository.getTask(project.getProjectId(), task.getTaskId()).getTaskId()).isEqualTo(task.getTaskId());
-
     }
 }
