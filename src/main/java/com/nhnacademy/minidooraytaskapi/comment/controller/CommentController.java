@@ -23,8 +23,8 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/task")
+@RequiredArgsConstructor
 public class CommentController implements ValidateParam {
     private final CommentService commentService;
 
