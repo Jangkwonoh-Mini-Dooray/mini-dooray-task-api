@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProjectMemberRequestDto {
+public class ProjectMemberResponseDto {
      private int projectAuthorityId;
      private String targetMemberId;
 }

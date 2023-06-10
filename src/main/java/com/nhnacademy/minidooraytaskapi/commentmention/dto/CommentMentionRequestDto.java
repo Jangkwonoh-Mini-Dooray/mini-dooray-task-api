@@ -1,5 +1,12 @@
 package com.nhnacademy.minidooraytaskapi.commentmention.dto;
 
-public interface CommentMentionRequestDto {
-    Long getTargetMemberId();
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+public class CommentMentionRequestDto {
+    private Long targetMemberId;
 }

@@ -7,7 +7,7 @@ import com.nhnacademy.minidooraytaskapi.project.entity.Project;
 import com.nhnacademy.minidooraytaskapi.project.repository.ProjectRepository;
 import com.nhnacademy.minidooraytaskapi.projectauthority.entity.ProjectAuthority;
 import com.nhnacademy.minidooraytaskapi.projectauthority.repository.ProjectAuthorityRepository;
-import com.nhnacademy.minidooraytaskapi.projectmember.dto.ProjectMemberRequestDto;
+import com.nhnacademy.minidooraytaskapi.projectmember.dto.ProjectMemberResponseDto;
 import com.nhnacademy.minidooraytaskapi.projectmember.entity.ProjectMember;
 import com.nhnacademy.minidooraytaskapi.projectmember.repository.ProjectMemberRepository;
 import org.junit.jupiter.api.*;
@@ -52,14 +52,14 @@ class DefaultProjectMemberServiceTest {
     @Order(1)
     @DisplayName("Project ID 로 프로젝트 멤버 조회 서비스")
     void testGetTargetMembers() {
-        List<ProjectMemberRequestDto> projectMemberRequestDtoList = new ArrayList<>();
-        projectMemberRequestDtoList.add(new ProjectMemberRequestDto(2, "test1"));
-        projectMemberRequestDtoList.add(new ProjectMemberRequestDto(2, "test2"));
+        List<ProjectMemberResponseDto> projectMemberResponseDtoList = new ArrayList<>();
+        projectMemberResponseDtoList.add(new ProjectMemberResponseDto(2, "test1"));
+        projectMemberResponseDtoList.add(new ProjectMemberResponseDto(2, "test2"));
 
         given(projectMemberRepository.findProjectMembers(anyLong()))
-                .willReturn(projectMemberRequestDtoList);
+                .willReturn(projectMemberResponseDtoList);
 
-        List<ProjectMemberRequestDto> actual = projectMemberService.getProjectMembers(1L);
+        List<ProjectMemberResponseDto> actual = projectMemberService.getProjectMembers(1L);
 
         assertThat(actual).hasSize(2);
         assertThat(actual.get(0).getTargetMemberId()).isEqualTo("test1");
@@ -70,9 +70,9 @@ class DefaultProjectMemberServiceTest {
     @Order(2)
     @DisplayName("프로젝트 멤버 초대 서비스")
     void testAddTargetMembers() {
-        List<ProjectMemberRequestDto> projectMemberRequestDtoList = new ArrayList<>();
-        projectMemberRequestDtoList.add(new ProjectMemberRequestDto(2, "suebin"));
-        projectMemberRequestDtoList.add(new ProjectMemberRequestDto(2, "sudoli"));
+        List<ProjectMemberResponseDto> projectMemberResponseDtoList = new ArrayList<>();
+        projectMemberResponseDtoList.add(new ProjectMemberResponseDto(2, "suebin"));
+        projectMemberResponseDtoList.add(new ProjectMemberResponseDto(2, "sudoli"));
 
         ProjectMember projectMember1 = new ProjectMember();
         ProjectMember projectMember2 = new ProjectMember();
@@ -85,7 +85,7 @@ class DefaultProjectMemberServiceTest {
         given(projectMemberRepository.saveAllAndFlush(anyList()))
                 .willReturn(projectMembers);
 
-        projectMemberService.addProjectMembers(1L, projectMemberRequestDtoList);
+        projectMemberService.addProjectMembers(1L, projectMemberResponseDtoList);
 
         verify(projectMemberRepository).saveAllAndFlush(anyList());
         ArgumentCaptor<List<ProjectMember>> projectMembersCaptor = ArgumentCaptor.forClass(List.class);
@@ -99,15 +99,15 @@ class DefaultProjectMemberServiceTest {
     @Order(3)
     @DisplayName("프로젝트 멤버 초대 서비스 실패 : 프로젝트나 권한을 찾을 수 없는 경우")
     void testAddTargetMembersFail() {
-        List<ProjectMemberRequestDto> projectMemberRequestDtoList = new ArrayList<>();
-        projectMemberRequestDtoList.add(new ProjectMemberRequestDto(2, "suebin"));
-        projectMemberRequestDtoList.add(new ProjectMemberRequestDto(2, "sudoli"));
+        List<ProjectMemberResponseDto> projectMemberResponseDtoList = new ArrayList<>();
+        projectMemberResponseDtoList.add(new ProjectMemberResponseDto(2, "suebin"));
+        projectMemberResponseDtoList.add(new ProjectMemberResponseDto(2, "sudoli"));
 
         given(projectRepository.findById(anyLong()))
                 .willReturn(Optional.empty());
 
         Assertions.assertThrows(NotFoundProjectException.class, () -> {
-            projectMemberService.addProjectMembers(1L, projectMemberRequestDtoList);
+            projectMemberService.addProjectMembers(1L, projectMemberResponseDtoList);
         });
 
         given(projectRepository.findById(anyLong()))
@@ -116,7 +116,7 @@ class DefaultProjectMemberServiceTest {
                 .willReturn(Optional.empty());
 
         Assertions.assertThrows(NotFoundProjectAuthorityException.class, () -> {
-            projectMemberService.addProjectMembers(1L, projectMemberRequestDtoList);
+            projectMemberService.addProjectMembers(1L, projectMemberResponseDtoList);
         });
     }
 
@@ -125,9 +125,9 @@ class DefaultProjectMemberServiceTest {
     @DisplayName("프로젝트 멤버 수정")
     void testModifyProjectMembers() {
         Long projectId = 1L;
-        List<ProjectMemberRequestDto> projectMemberRequestDtoList = new ArrayList<>();
-        projectMemberRequestDtoList.add(new ProjectMemberRequestDto(2, "test1"));
-        projectMemberRequestDtoList.add(new ProjectMemberRequestDto(2, "test2"));
+        List<ProjectMemberResponseDto> projectMemberResponseDtoList = new ArrayList<>();
+        projectMemberResponseDtoList.add(new ProjectMemberResponseDto(2, "test1"));
+        projectMemberResponseDtoList.add(new ProjectMemberResponseDto(2, "test2"));
 
         ProjectMember projectMember1 = new ProjectMember();
         ProjectMember projectMember2 = new ProjectMember();
@@ -142,7 +142,7 @@ class DefaultProjectMemberServiceTest {
         given(projectMemberRepository.saveAllAndFlush(anyList()))
                 .willReturn(projectMembers);
 
-        projectMemberService.modifyProjectMembers(projectId, projectMemberRequestDtoList);
+        projectMemberService.modifyProjectMembers(projectId, projectMemberResponseDtoList);
         verify(projectMemberRepository).saveAllAndFlush(anyList());
         ArgumentCaptor<List<ProjectMember>> projectMembersCaptor = ArgumentCaptor.forClass(List.class);
         verify(projectMemberRepository).saveAllAndFlush(projectMembersCaptor.capture());
@@ -157,14 +157,14 @@ class DefaultProjectMemberServiceTest {
     void testModifyProjectMembersFail() {
         Long projectId = 1L;
         String targetMemberId = "test";
-        List<ProjectMemberRequestDto> projectMemberRequestDtoList = new ArrayList<>();
-        projectMemberRequestDtoList.add(new ProjectMemberRequestDto(2, targetMemberId));
+        List<ProjectMemberResponseDto> projectMemberResponseDtoList = new ArrayList<>();
+        projectMemberResponseDtoList.add(new ProjectMemberResponseDto(2, targetMemberId));
 
         given(projectMemberRepository.existsById(new ProjectMember.Pk(targetMemberId, projectId)))
                 .willReturn(false);
 
         Assertions.assertThrows(NotFoundProjectMemberException.class, () -> {
-            projectMemberService.modifyProjectMembers(projectId, projectMemberRequestDtoList);
+            projectMemberService.modifyProjectMembers(projectId, projectMemberResponseDtoList);
         });
     }
 }

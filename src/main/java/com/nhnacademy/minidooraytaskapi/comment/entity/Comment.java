@@ -1,6 +1,7 @@
 package com.nhnacademy.minidooraytaskapi.comment.entity;
 
 import com.nhnacademy.minidooraytaskapi.task.entity.Task;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,8 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "comment")
 public class Comment {

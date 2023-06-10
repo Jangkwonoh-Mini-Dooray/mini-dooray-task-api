@@ -4,7 +4,7 @@ import com.nhnacademy.minidooraytaskapi.exception.NotFoundProjectAuthorityExcept
 import com.nhnacademy.minidooraytaskapi.exception.NotFoundProjectException;
 import com.nhnacademy.minidooraytaskapi.exception.NotFoundProjectMemberException;
 import com.nhnacademy.minidooraytaskapi.projectmember.dto.ProjectMemberDeleteRequestDto;
-import com.nhnacademy.minidooraytaskapi.projectmember.dto.ProjectMemberRequestDto;
+import com.nhnacademy.minidooraytaskapi.projectmember.dto.ProjectMemberResponseDto;
 import com.nhnacademy.minidooraytaskapi.projectmember.entity.ProjectMember;
 import com.nhnacademy.minidooraytaskapi.projectmember.repository.ProjectMemberRepository;
 import com.nhnacademy.minidooraytaskapi.project.entity.Project;
@@ -29,24 +29,24 @@ public class DefaultProjectMemberService implements ProjectMemberService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ProjectMemberRequestDto> getProjectMembers(Long projectId) {
+    public List<ProjectMemberResponseDto> getProjectMembers(Long projectId) {
         return projectMemberRepository.findProjectMembers(projectId);
     }
 
     @Override
-    public void addProjectMembers(Long projectId, List<ProjectMemberRequestDto> projectMemberRequestDtoList) {
-        List<ProjectMember> projectMemberList = convertToProjectMember(projectId, projectMemberRequestDtoList);
+    public void addProjectMembers(Long projectId, List<ProjectMemberResponseDto> projectMemberResponseDtoList) {
+        List<ProjectMember> projectMemberList = convertToProjectMember(projectId, projectMemberResponseDtoList);
         projectMemberRepository.saveAllAndFlush(projectMemberList);
     }
 
     @Override
-    public void modifyProjectMembers(Long projectId, List<ProjectMemberRequestDto> projectMemberRequestDtoList) {
-        for (ProjectMemberRequestDto dto : projectMemberRequestDtoList) {
+    public void modifyProjectMembers(Long projectId, List<ProjectMemberResponseDto> projectMemberResponseDtoList) {
+        for (ProjectMemberResponseDto dto : projectMemberResponseDtoList) {
             if (!projectMemberRepository.existsById(new ProjectMember.Pk(dto.getTargetMemberId(), projectId))) {
                 throw new NotFoundProjectMemberException();
             }
         }
-        List<ProjectMember> projectMemberList = convertToProjectMember(projectId, projectMemberRequestDtoList);
+        List<ProjectMember> projectMemberList = convertToProjectMember(projectId, projectMemberResponseDtoList);
         projectMemberRepository.saveAllAndFlush(projectMemberList);
     }
 
@@ -60,12 +60,12 @@ public class DefaultProjectMemberService implements ProjectMemberService {
     }
 
     // helper
-    public List<ProjectMember> convertToProjectMember(Long projectId, List<ProjectMemberRequestDto> targetMembers) {
+    public List<ProjectMember> convertToProjectMember(Long projectId, List<ProjectMemberResponseDto> targetMembers) {
         List<ProjectMember> projectMembers = new ArrayList<>();
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new NotFoundProjectException(projectId));
 
-        for (ProjectMemberRequestDto dto : targetMembers) {
+        for (ProjectMemberResponseDto dto : targetMembers) {
             String targetMemberId = dto.getTargetMemberId();
             int projectAuthorityId = dto.getProjectAuthorityId();
 
