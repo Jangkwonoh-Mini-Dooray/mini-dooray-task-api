@@ -40,7 +40,7 @@ import static org.mockito.Mockito.*;
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.AUTO_CONFIGURED)
-@DisplayName("ProjectMember : Service 테스트")
+@DisplayName("milestone : Service 테스트")
 class DefaultMilestoneServiceTest {
     @Autowired
     MilestoneService milestoneService;
