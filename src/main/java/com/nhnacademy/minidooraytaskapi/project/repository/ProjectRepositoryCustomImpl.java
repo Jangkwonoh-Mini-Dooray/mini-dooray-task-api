@@ -20,7 +20,7 @@ public class ProjectRepositoryCustomImpl extends QuerydslRepositorySupport imple
         return from(project)
                 .innerJoin(project.projectStatus, projectStatus)
                 .where(project.projectId.eq(projectId))
-                .select(Projections.bean(ProjectDto.class,
+                .select(Projections.constructor(ProjectDto.class,
                         project.projectId,
                         project.projectStatus.name,
                         project.name,

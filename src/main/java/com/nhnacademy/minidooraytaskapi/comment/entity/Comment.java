@@ -9,8 +9,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Getter
 @NoArgsConstructor

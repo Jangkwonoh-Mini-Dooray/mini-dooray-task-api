@@ -10,9 +10,9 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
@@ -33,7 +33,8 @@ class CommentMentionRepositoryTest {
         testEntityManager.persist(task);
 
         Long commentId = 1L;
-        Comment comment = new Comment(commentId, task, "test", "test");
+        Comment comment = new Comment();
+        comment.save(task, "test", "test", LocalDateTime.now());
         CommentMention commentMention1 = new CommentMention(new CommentMention.Pk("user", commentId), comment);
         CommentMention commentMention2 = new CommentMention(new CommentMention.Pk("user2", commentId), comment);
 

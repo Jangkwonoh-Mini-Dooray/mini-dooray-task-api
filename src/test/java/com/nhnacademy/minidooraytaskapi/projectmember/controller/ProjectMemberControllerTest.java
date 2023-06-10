@@ -68,7 +68,7 @@ class ProjectMemberControllerTest {
         mockMvc.perform(post("/projects/{project-id}/members", projectId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(projectMemberResponseDtoList)))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.result", is("OK")));
     }
 
