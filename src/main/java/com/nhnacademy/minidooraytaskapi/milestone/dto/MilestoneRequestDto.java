@@ -11,8 +11,7 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class MilestoneDto {
-    private Long milestoneId;
+public class MilestoneRequestDto {
     private String name;
     private LocalDate startPeriod;
     private LocalDate endPeriod;
