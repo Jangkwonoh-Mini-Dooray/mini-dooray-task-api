@@ -19,7 +19,7 @@ public class MilestoneRepositoryImpl extends QuerydslRepositorySupport implement
 
         return from(milestone)
                 .where(milestone.project.projectId.eq(projectId))
-                .select(Projections.bean(MilestoneDto.class,
+                .select(Projections.constructor(MilestoneDto.class,
                         milestone.milestoneId,
                         milestone.name,
                         milestone.startPeriod,

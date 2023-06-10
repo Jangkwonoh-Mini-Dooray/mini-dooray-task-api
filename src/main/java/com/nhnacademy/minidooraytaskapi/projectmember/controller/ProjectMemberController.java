@@ -7,6 +7,7 @@ import com.nhnacademy.minidooraytaskapi.projectmember.service.ProjectMemberServi
 import com.nhnacademy.minidooraytaskapi.response.Response;
 import com.nhnacademy.minidooraytaskapi.util.ValidateParam;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +33,7 @@ public class ProjectMemberController implements ValidateParam {
                                                       BindingResult bindingResult) {
         validate(bindingResult);
         projectMemberService.addProjectMembers(projectId, projectMemberResponseDtoList);
-        return ResponseEntity.ok().body(new Response("OK"));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new Response("OK"));
     }
 
     @PutMapping

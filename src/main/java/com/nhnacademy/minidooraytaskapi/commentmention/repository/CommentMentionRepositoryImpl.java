@@ -19,7 +19,7 @@ public class CommentMentionRepositoryImpl extends QuerydslRepositorySupport impl
 
         return from(commentMention)
                 .where(commentMention.comment.commentId.eq(commentId))
-                .select(Projections.bean(CommentMentionResponseDto.class,
+                .select(Projections.constructor(CommentMentionResponseDto.class,
                         commentMention.pk.targetMemberId))
                 .fetch();
     }
