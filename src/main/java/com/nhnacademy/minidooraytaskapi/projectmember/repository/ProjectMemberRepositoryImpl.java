@@ -1,6 +1,6 @@
 package com.nhnacademy.minidooraytaskapi.projectmember.repository;
 
-import com.nhnacademy.minidooraytaskapi.projectmember.dto.ProjectMemberRequestDto;
+import com.nhnacademy.minidooraytaskapi.projectmember.dto.ProjectMemberResponseDto;
 import com.nhnacademy.minidooraytaskapi.projectmember.entity.ProjectMember;
 import com.nhnacademy.minidooraytaskapi.projectmember.entity.QProjectMember;
 import com.querydsl.core.types.Projections;
@@ -14,12 +14,12 @@ public class ProjectMemberRepositoryImpl extends QuerydslRepositorySupport imple
     }
 
     @Override
-    public List<ProjectMemberRequestDto> findProjectMembers(Long projectId) {
+    public List<ProjectMemberResponseDto> findProjectMembers(Long projectId) {
         QProjectMember projectMember = QProjectMember.projectMember;
 
         return from(projectMember)
                 .where(projectMember.project.projectId.eq(projectId))
-                .select(Projections.bean(ProjectMemberRequestDto.class,
+                .select(Projections.bean(ProjectMemberResponseDto.class,
                         projectMember.pk.targetMemberId))
                 .fetch();
     }

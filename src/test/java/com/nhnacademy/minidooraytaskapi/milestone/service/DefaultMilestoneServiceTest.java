@@ -1,8 +1,5 @@
 package com.nhnacademy.minidooraytaskapi.milestone.service;
 
-import com.nhnacademy.minidooraytaskapi.exception.NotFoundProjectAuthorityException;
-import com.nhnacademy.minidooraytaskapi.exception.NotFoundProjectException;
-import com.nhnacademy.minidooraytaskapi.exception.NotFoundProjectMemberException;
 import com.nhnacademy.minidooraytaskapi.milestone.dto.MilestoneDto;
 import com.nhnacademy.minidooraytaskapi.milestone.dto.MilestoneIdDto;
 import com.nhnacademy.minidooraytaskapi.milestone.dto.MilestoneRequestDto;
@@ -10,14 +7,7 @@ import com.nhnacademy.minidooraytaskapi.milestone.entity.Milestone;
 import com.nhnacademy.minidooraytaskapi.milestone.repository.MilestoneRepository;
 import com.nhnacademy.minidooraytaskapi.project.entity.Project;
 import com.nhnacademy.minidooraytaskapi.project.repository.ProjectRepository;
-import com.nhnacademy.minidooraytaskapi.projectauthority.entity.ProjectAuthority;
-import com.nhnacademy.minidooraytaskapi.projectauthority.repository.ProjectAuthorityRepository;
-import com.nhnacademy.minidooraytaskapi.projectmember.dto.ProjectMemberRequestDto;
-import com.nhnacademy.minidooraytaskapi.projectmember.entity.ProjectMember;
-import com.nhnacademy.minidooraytaskapi.projectmember.repository.ProjectMemberRepository;
 import org.junit.jupiter.api.*;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -26,7 +16,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,7 +24,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)

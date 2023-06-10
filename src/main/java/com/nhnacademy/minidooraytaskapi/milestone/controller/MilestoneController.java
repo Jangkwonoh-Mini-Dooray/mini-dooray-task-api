@@ -7,6 +7,7 @@ import com.nhnacademy.minidooraytaskapi.milestone.service.MilestoneService;
 import com.nhnacademy.minidooraytaskapi.response.Response;
 import com.nhnacademy.minidooraytaskapi.util.ValidateParam;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -38,7 +39,7 @@ public class MilestoneController implements ValidateParam {
                                                                BindingResult bindingResult) {
         validate(bindingResult);
         MilestoneIdDto result = milestoneService.createMilestone(projectId, milestoneRequestDto);
-        return ResponseEntity.ok().body(result);
+        return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 
     @PutMapping("{milestone-id}")

@@ -1,12 +1,16 @@
 package com.nhnacademy.minidooraytaskapi.comment.entity;
 
 import com.nhnacademy.minidooraytaskapi.task.entity.Task;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Getter
 @NoArgsConstructor

@@ -1,7 +1,7 @@
 package com.nhnacademy.minidooraytaskapi.projectmember.controller;
 
 import com.nhnacademy.minidooraytaskapi.projectmember.dto.ProjectMemberDeleteRequestDto;
-import com.nhnacademy.minidooraytaskapi.projectmember.dto.ProjectMemberRequestDto;
+import com.nhnacademy.minidooraytaskapi.projectmember.dto.ProjectMemberResponseDto;
 import com.nhnacademy.minidooraytaskapi.projectmember.service.ProjectMemberService;
 import org.junit.jupiter.api.*;
 
@@ -41,9 +41,9 @@ class ProjectMemberControllerTest {
     @Order(1)
     @DisplayName("Project ID 로 프로젝트 멤버 조회")
     void testGetProjectMembers() throws Exception {
-        List<ProjectMemberRequestDto> targetMembers = new ArrayList<>();
-        targetMembers.add(new ProjectMemberRequestDto(2, "test1"));
-        targetMembers.add(new ProjectMemberRequestDto(2, "test2"));
+        List<ProjectMemberResponseDto> targetMembers = new ArrayList<>();
+        targetMembers.add(new ProjectMemberResponseDto(2, "test1"));
+        targetMembers.add(new ProjectMemberResponseDto(2, "test2"));
 
         when(projectMemberService.getProjectMembers(anyLong()))
                 .thenReturn(targetMembers);
@@ -61,13 +61,13 @@ class ProjectMemberControllerTest {
     @DisplayName("프로젝트 멤버 초대")
     void testAddProjectMembers() throws Exception {
         Long projectId = 1L;
-        List<ProjectMemberRequestDto> projectMemberRequestDtoList = new ArrayList<>();
-        projectMemberRequestDtoList.add(new ProjectMemberRequestDto(2, "test1"));
-        projectMemberRequestDtoList.add(new ProjectMemberRequestDto(2, "test2"));
+        List<ProjectMemberResponseDto> projectMemberResponseDtoList = new ArrayList<>();
+        projectMemberResponseDtoList.add(new ProjectMemberResponseDto(2, "test1"));
+        projectMemberResponseDtoList.add(new ProjectMemberResponseDto(2, "test2"));
 
         mockMvc.perform(post("/projects/{project-id}/members", projectId)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(projectMemberRequestDtoList)))
+                        .content(new ObjectMapper().writeValueAsString(projectMemberResponseDtoList)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.result", is("OK")));
     }
@@ -77,13 +77,13 @@ class ProjectMemberControllerTest {
     @DisplayName("프로젝트 멤버 수정")
     void testModifyProjectMembers() throws Exception {
         Long projectId = 1L;
-        List<ProjectMemberRequestDto> projectMemberRequestDtoList = new ArrayList<>();
-        projectMemberRequestDtoList.add(new ProjectMemberRequestDto(2, "test1"));
-        projectMemberRequestDtoList.add(new ProjectMemberRequestDto(2, "test2"));
+        List<ProjectMemberResponseDto> projectMemberResponseDtoList = new ArrayList<>();
+        projectMemberResponseDtoList.add(new ProjectMemberResponseDto(2, "test1"));
+        projectMemberResponseDtoList.add(new ProjectMemberResponseDto(2, "test2"));
 
         mockMvc.perform(put("/projects/{project-id}/members", projectId)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(projectMemberRequestDtoList)))
+                        .content(new ObjectMapper().writeValueAsString(projectMemberResponseDtoList)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.result", is("OK")));
     }

@@ -1,6 +1,6 @@
 package com.nhnacademy.minidooraytaskapi.projectmember.repository;
 
-import com.nhnacademy.minidooraytaskapi.projectmember.dto.ProjectMemberRequestDto;
+import com.nhnacademy.minidooraytaskapi.projectmember.dto.ProjectMemberResponseDto;
 import com.nhnacademy.minidooraytaskapi.projectmember.entity.ProjectMember;
 import com.nhnacademy.minidooraytaskapi.project.entity.Project;
 import com.nhnacademy.minidooraytaskapi.projectauthority.entity.ProjectAuthority;
@@ -39,7 +39,7 @@ class ProjectMemberRepositoryTest {
         testEntityManager.persist(project);
         testEntityManager.persist(projectMember);
 
-        List<ProjectMemberRequestDto> actual = projectMemberRepository.findProjectMembers(project.getProjectId());
+        List<ProjectMemberResponseDto> actual = projectMemberRepository.findProjectMembers(project.getProjectId());
         assertThat(actual.size()).isEqualTo(1);
     }
 }

@@ -4,10 +4,6 @@ import com.nhnacademy.minidooraytaskapi.milestone.dto.MilestoneDto;
 import com.nhnacademy.minidooraytaskapi.milestone.dto.MilestoneIdDto;
 import com.nhnacademy.minidooraytaskapi.milestone.dto.MilestoneRequestDto;
 import com.nhnacademy.minidooraytaskapi.milestone.service.MilestoneService;
-import com.nhnacademy.minidooraytaskapi.projectmember.controller.ProjectMemberController;
-import com.nhnacademy.minidooraytaskapi.projectmember.dto.ProjectMemberDeleteRequestDto;
-import com.nhnacademy.minidooraytaskapi.projectmember.dto.ProjectMemberRequestDto;
-import com.nhnacademy.minidooraytaskapi.projectmember.service.ProjectMemberService;
 import org.junit.jupiter.api.*;
 
 import static org.hamcrest.Matchers.is;
@@ -95,7 +91,7 @@ class MilestoneControllerTest {
         mockMvc.perform(post("/milestones/projects/{project-id}", projectId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(requestDto)))
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
     }
 
     @Test
