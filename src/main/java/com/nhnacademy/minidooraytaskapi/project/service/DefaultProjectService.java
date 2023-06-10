@@ -14,12 +14,20 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
 public class DefaultProjectService implements ProjectService {
     private final ProjectRepository projectRepository;
     private final ProjectStatusRepository projectStatusRepository;
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Project> getProjects() {
+        return projectRepository.findAll();
+    }
 
     @Override
     @Transactional(readOnly = true)

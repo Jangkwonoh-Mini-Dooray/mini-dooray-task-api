@@ -17,7 +17,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.core.parameters.P;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.*;
@@ -39,11 +42,26 @@ class DefaultProjectServiceTest {
     ProjectStatusRepository projectStatusRepository;
 
     @Test
-    @DisplayName("Member ID 로 전체 프로젝트 조회 서비스")
+    @Order(1)
+    @DisplayName("전체 프로젝트 조회 서비스")
     void testGetProjects() {
+        List<Project> projectList = new ArrayList<>();
+        ProjectStatus projectStatus = new ProjectStatus("test");
+        Project project = new Project(projectStatus, "test", "test");
+        projectList.add(project);
+
+        given(projectRepository.findAll())
+                .willReturn(projectList);
+
+        List<Project> actual = projectService.getProjects();
+
+        assertThat(actual.get(0).getProjectId()).isEqualTo(project.getProjectId());
+        assertThat(actual.get(0).getName()).isEqualTo(project.getName());
+        assertThat(actual.get(0).getDescription()).isEqualTo(project.getDescription());
     }
 
     @Test
+    @Order(2)
     @DisplayName("Project ID 로 개별 프로젝트 조회 서비스")
     void testGetProject() {
         ProjectDto projectDto = new ProjectDto(1L, "test", "test", "test");
@@ -60,6 +78,7 @@ class DefaultProjectServiceTest {
     }
 
     @Test
+    @Order(3)
     @DisplayName("프로젝트 생성 서비스")
     void testCreateProject() {
         ProjectRequestDto projectRequestDto = new ProjectRequestDto("활성", "test", "test");
@@ -78,6 +97,7 @@ class DefaultProjectServiceTest {
     }
 
     @Test
+    @Order(4)
     @DisplayName("프로젝트 수정 서비스")
     void testModifyProject() {
         ProjectRequestDto projectRequestDto = new ProjectRequestDto("휴면", "test", "test");
@@ -96,6 +116,7 @@ class DefaultProjectServiceTest {
     }
 
     @Test
+    @Order(5)
     @DisplayName("프로젝트 삭제 서비스")
     void testDeleteProject() {
         ProjectStatus projectStatus = new ProjectStatus("test");

@@ -19,7 +19,11 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -37,6 +41,23 @@ class ProjectControllerTest {
 
     @Test
     @Order(1)
+    @DisplayName("전체 프로젝트 조회")
+    void testGetProjects() throws Exception {
+        List<Project> projectList = new ArrayList<>();
+        ProjectStatus projectStatus = new ProjectStatus("test");
+        Project project = new Project(projectStatus, "test", "test");
+        projectList.add(project);
+
+        when(projectService.getProjects())
+                .thenReturn(projectList);
+
+        mockMvc.perform(get("/projects"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    @Order(2)
     @DisplayName("개별 프로젝트 조회")
     void testGetProject() throws Exception {
         ProjectDto projectDto = new ProjectDto(1L, "test", "test", "test");
@@ -50,7 +71,7 @@ class ProjectControllerTest {
     }
 
     @Test
-    @Order(2)
+    @Order(3)
     @DisplayName("프로젝트 생성")
     void testCreateProject() throws Exception {
         ProjectStatus projectStatus = new ProjectStatus("test");
@@ -69,7 +90,7 @@ class ProjectControllerTest {
     }
 
     @Test
-    @Order(3)
+    @Order(4)
     @DisplayName("프로젝트 생성 : error (RequestBody 가 없는 경우)")
     void testFailCreateProject() throws Exception {
         when(projectService.createProject(any()))
@@ -80,7 +101,7 @@ class ProjectControllerTest {
     }
 
     @Test
-    @Order(4)
+    @Order(5)
     @DisplayName("프로젝트 수정")
     void testModifyProject() throws Exception {
         ProjectStatus projectStatus = new ProjectStatus("test");
@@ -99,7 +120,7 @@ class ProjectControllerTest {
     }
 
     @Test
-    @Order(5)
+    @Order(6)
     @DisplayName("프로젝트 삭제")
     void testDeleteProject() throws Exception {
         mockMvc.perform(delete("/projects/{project-id}", 1L))
