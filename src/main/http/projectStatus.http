@@ -1,0 +1,15 @@
+### 프로젝트 상태 목록 정보 조회
+GET /project-status
+Host: localhost:8080
+
+### 프로젝트 상태 단건 정보 조회1
+GET /project-status/1
+Host: localhost:8080
+
+### 프로젝트 상태 단건 정보 조회2
+GET /project-status/2
+Host: localhost:8080
+
+### 프로젝트 상태 단건 정보 조회3
+GET /project-status/3
+Host: localhost:8080
