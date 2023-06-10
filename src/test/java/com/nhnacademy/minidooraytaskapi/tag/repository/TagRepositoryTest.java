@@ -36,8 +36,6 @@ class TagRepositoryTest {
         ProjectStatus projectStatus = new ProjectStatus("활성");
         ReflectionTestUtils.setField(project, "projectStatus", projectStatus);
         Milestone milestone = new Milestone();
-        milestone.setProject(project);
-        milestone.setName("test");
 
         testEntityManager.persist(projectStatus);
         testEntityManager.persist(project);
@@ -67,8 +65,6 @@ class TagRepositoryTest {
         ProjectStatus projectStatus = new ProjectStatus("활성");
         ReflectionTestUtils.setField(project, "projectStatus", projectStatus);
         Milestone milestone = new Milestone();
-        milestone.setProject(project);
-        milestone.setName("test");
 
         testEntityManager.persist(projectStatus);
         testEntityManager.persist(project);

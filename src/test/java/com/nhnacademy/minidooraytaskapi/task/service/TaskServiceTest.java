@@ -158,7 +158,6 @@ class TaskServiceTest {
         Milestone milestone = new Milestone();
 
         ReflectionTestUtils.setField(project, "projectId", 1L);
-        milestone.setMilestoneId(1L);
 
         given(taskRepository.findById(task.getTaskId())).willReturn(Optional.of(task));
         given(projectRepository.findById(anyLong())).willReturn(Optional.of(project));
