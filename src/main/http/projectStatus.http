@@ -2,14 +2,46 @@
 GET /project-status
 Host: localhost:8080
 
+
 ### 프로젝트 상태 단건 정보 조회1
 GET /project-status/1
 Host: localhost:8080
+
 
 ### 프로젝트 상태 단건 정보 조회2
 GET /project-status/2
 Host: localhost:8080
 
+
 ### 프로젝트 상태 단건 정보 조회3
 GET /project-status/3
+Host: localhost:8080
+
+
+### 프로젝트 상태 단건 정보 조회4
+GET /project-status/4
+Host: localhost:8080
+
+
+### 프로젝트 상태 정보 생성
+POST /project-status
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "projectStatusId" : 4,
+  "name" : "name4"
+}
+
+### 프로젝트 상태 정보 수정
+PUT /project-status/4
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "name" : "updated Id"
+}
+
+### 프로젝트 상태 정보 삭제
+DELETE /project-status/4
 Host: localhost:8080
