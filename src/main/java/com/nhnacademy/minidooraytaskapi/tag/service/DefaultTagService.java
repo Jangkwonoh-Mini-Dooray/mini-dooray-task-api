@@ -32,7 +32,8 @@ public class DefaultTagService implements TagService {
     @Override
     @Transactional(readOnly = true)
     public List<TagDto> getTags(Long projectId) {
-        return tagRepository.getTagByProjectId(projectId);
+        List<TagDto> tagByProjectId = tagRepository.getTagByProjectId(projectId);
+        return tagByProjectId;
     }
     @Override
     @Transactional(readOnly = true)

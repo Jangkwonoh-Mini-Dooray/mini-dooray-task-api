@@ -20,12 +20,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.List;
@@ -35,36 +35,37 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-
-@ExtendWith(SpringExtension.class)
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
+//@ExtendWith(SpringExtension.class)
+//@SpringBootTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.AUTO_CONFIGURED)
 @DisplayName("Tag : Service 테스트")
 class TagServiceTest {
-    private AutoCloseable closeable;
-    @Autowired
-    TagService tagService;
-    @MockBean
+//    private AutoCloseable closeable;
+    @InjectMocks
+    DefaultTagService tagService;
+    @Mock
     TagRepository tagRepository;
-    @MockBean
+    @Mock
     ProjectRepository projectRepository;
-    @MockBean
+    @Mock
     TaskRepository taskRepository;
-    @MockBean
+    @Mock
     TaskTagRepository taskTagRepository;
 
-    @BeforeEach
-    void setUp() {
-        closeable = MockitoAnnotations.openMocks(this);
-    }
+//    @BeforeEach
+//    void setUp() {
+//MockitoAnnotations.openMocks(this);
+//    }
 
-    @AfterEach
-    void closeMock() throws Exception {
-        closeable.close();
-    }
+//    @AfterEach
+//    void closeMock() throws Exception {
+//        closeable.close();
+//    }
 
     @Test
     @DisplayName("프로젝트에 해당하는 테크 가져오는 Service")
@@ -77,14 +78,17 @@ class TagServiceTest {
 
         tag.setName("test1");
         tag2.setName("test2");
+        ReflectionTestUtils.setField(tag, "project", project);
+        ReflectionTestUtils.setField(tag2, "project", project);
 
-        given(tagRepository.getTagByProjectId(anyLong()))
-                .willReturn(List.of(new TagDto(tag.getTagId(), tag.getName()),
+
+        when(tagRepository.getTagByProjectId(anyLong()))
+                .thenReturn(List.of(new TagDto(tag.getTagId(), tag.getName()),
                         new TagDto(tag2.getTagId(), tag2.getName())));
 
         List<TagDto> allTag = tagService.getTags(project.getProjectId());
 
-        Assertions.assertThat(allTag).isNotEmpty().hasSize(2);
+        Assertions.assertThat(allTag).hasSize(2);
         Assertions.assertThat(allTag.get(0).getName()).isEqualTo(tag.getName());
     }
 
@@ -101,8 +105,8 @@ class TagServiceTest {
         tag.setName("test1");
         tag.setName("test2");
 
-        given(tagRepository.getTagByProjectIdAndTaskId(anyLong(), anyLong()))
-                .willReturn(List.of(new TagDto(tag.getTagId(), tag.getName()),
+        when(tagRepository.getTagByProjectIdAndTaskId(anyLong(), anyLong()))
+                .thenReturn(List.of(new TagDto(tag.getTagId(), tag.getName()),
                         new TagDto(tag2.getTagId(), tag2.getName())));
 
         List<TagDto> allTag = tagService.getTags(project.getProjectId(), task.getTaskId());
@@ -116,8 +120,8 @@ class TagServiceTest {
     void saveTag() {
         TaskTagRequestDto tagRequestDto = new TaskTagRequestDto();
 
-        given(projectRepository.findById(anyLong()))
-                .willReturn(Optional.empty());
+        Mockito.when(projectRepository.findById(anyLong()))
+                .thenReturn(Optional.empty());
 
         assertThrows(NotFoundProjectException.class, () -> tagService.postTagTask(tagRequestDto, 1L));
     }
@@ -166,7 +170,7 @@ class TagServiceTest {
     @DisplayName("프로젝트에 태그 생성하는 Service #성공2 taskId 없음")
     void saveTag4() {
         TaskTagRequestDto tagRequestDto = new TaskTagRequestDto();
-        Project project = new Project();
+//        Project project = new Project();
         Task task = new Task();
         Tag tag = new Tag();
         TaskTag taskTag = new TaskTag();
@@ -175,8 +179,8 @@ class TagServiceTest {
         ReflectionTestUtils.setField(tag, "tagId", 1L);
         given(tagRepository.findById(anyLong()))
                 .willReturn(Optional.of(tag));
-        given(projectRepository.findById(anyLong()))
-                .willReturn(Optional.of(project));
+//        given(projectRepository.findById(anyLong()))
+//                .willReturn(Optional.of(project));
         given(tagRepository.saveAndFlush(any()))
                 .willReturn(tag);
 

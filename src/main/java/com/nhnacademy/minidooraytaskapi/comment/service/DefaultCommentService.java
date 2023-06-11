@@ -11,16 +11,20 @@ import com.nhnacademy.minidooraytaskapi.task.entity.Task;
 import com.nhnacademy.minidooraytaskapi.task.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class DefaultCommentService implements CommentService{
+@Transactional
+public class DefaultCommentService implements CommentService {
     private final CommentRepository commentRepository;
     private final TaskRepository taskRepository;
+
     @Override
+    @Transactional(readOnly = true)
     public List<ResponseCommentDto> getComment(Long taskId) {
         return commentRepository.getCommentByTaskId(taskId);
     }

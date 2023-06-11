@@ -17,7 +17,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -36,31 +39,19 @@ import static org.mockito.Mockito.verify;
 
 import java.util.List;
 import java.util.Optional;
-
-@ExtendWith(SpringExtension.class)
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.AUTO_CONFIGURED)
 @DisplayName("Task : Service 테스트")
 class TaskServiceTest {
-    private AutoCloseable closeable;
-    @Autowired
-    TaskService taskService;
-    @MockBean
+    @InjectMocks
+    DefaultTaskService taskService;
+    @Mock
     TaskRepository taskRepository;
-    @MockBean
+    @Mock
     ProjectRepository projectRepository;
-    @MockBean
+    @Mock
     MilestoneRepository milestoneRepository;
 
-    @BeforeEach
-    void setUp() {
-        closeable = MockitoAnnotations.openMocks(this);
-    }
-
-    @AfterEach
-    void closeMock() throws Exception {
-        closeable.close();
-    }
 
     @Test
     @DisplayName("프로젝트에 존재하는 모든 업무 가져오는 서비스")
@@ -156,6 +147,7 @@ class TaskServiceTest {
         TaskRequestDto postTaskDto = new TaskRequestDto();
         Project project = new Project();
         Milestone milestone = new Milestone();
+        postTaskDto.setMilestoneId(1L);
 
         ReflectionTestUtils.setField(project, "projectId", 1L);
 
@@ -164,7 +156,6 @@ class TaskServiceTest {
         given(milestoneRepository.findById(anyLong())).willReturn(Optional.of(milestone));
 
         task.setProject(project);
-        task.setMilestone(milestone);
 
         given(taskRepository.saveAndFlush(any())).willReturn(task);
 
