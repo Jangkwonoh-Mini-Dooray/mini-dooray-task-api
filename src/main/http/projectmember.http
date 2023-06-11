@@ -1,0 +1,46 @@
+### 프로젝트 멤버 조회
+GET /projects/1/members
+Host: localhost:8080
+Content-Type: application/json
+
+### 프로젝트 멤버 초대
+POST /projects/1/members
+Host: localhost:8080
+Content-Type: application/json
+
+[
+  {
+    "targetMemberId": "user1",
+    "projectAuthorityId": 2
+  },
+  {
+    "targetMemberId": "user2",
+    "projectAuthorityId": 2
+  }
+]
+
+### 프로젝트 멤버 수정
+PUT /projects/1/members
+Host: localhost:8080
+Content-Type: application/json
+
+[
+  {
+    "targetMemberId": "user1",
+    "projectAuthorityId": 1
+  }
+]
+
+### 프로젝트 멤버 삭제
+DELETE /projects/1/members
+Host: localhost:8080
+Content-Type: application/json
+
+[
+  {
+    "targetMemberId": "user1"
+  },
+  {
+    "targetMemberId": "user2"
+  }
+]

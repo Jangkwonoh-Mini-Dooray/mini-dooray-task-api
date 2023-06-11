@@ -1,9 +1,11 @@
 package com.nhnacademy.minidooraytaskapi.projectauthority.entity;
 
+import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 
+@Getter
 @Entity
 @Table(name = "project_authority")
 public class ProjectAuthority {
