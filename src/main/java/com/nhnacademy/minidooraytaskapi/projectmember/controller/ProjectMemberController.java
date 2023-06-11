@@ -1,6 +1,5 @@
 package com.nhnacademy.minidooraytaskapi.projectmember.controller;
 
-import com.nhnacademy.minidooraytaskapi.exception.ValidationFailedException;
 import com.nhnacademy.minidooraytaskapi.projectmember.dto.ProjectMemberDeleteRequestDto;
 import com.nhnacademy.minidooraytaskapi.projectmember.dto.ProjectMemberResponseDto;
 import com.nhnacademy.minidooraytaskapi.projectmember.service.ProjectMemberService;
