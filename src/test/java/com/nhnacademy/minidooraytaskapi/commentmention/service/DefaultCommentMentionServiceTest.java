@@ -6,13 +6,7 @@ import com.nhnacademy.minidooraytaskapi.commentmention.dto.CommentMentionRequest
 import com.nhnacademy.minidooraytaskapi.commentmention.dto.CommentMentionResponseDto;
 import com.nhnacademy.minidooraytaskapi.commentmention.entity.CommentMention;
 import com.nhnacademy.minidooraytaskapi.commentmention.repository.CommentMentionRepository;
-import com.nhnacademy.minidooraytaskapi.milestone.dto.MilestoneDto;
-import com.nhnacademy.minidooraytaskapi.milestone.dto.MilestoneIdDto;
-import com.nhnacademy.minidooraytaskapi.milestone.dto.MilestoneRequestDto;
-import com.nhnacademy.minidooraytaskapi.milestone.entity.Milestone;
-import com.nhnacademy.minidooraytaskapi.milestone.repository.MilestoneRepository;
-import com.nhnacademy.minidooraytaskapi.project.entity.Project;
-import com.nhnacademy.minidooraytaskapi.project.repository.ProjectRepository;
+import com.nhnacademy.minidooraytaskapi.exception.NotFoundCommentException;
 import com.nhnacademy.minidooraytaskapi.task.entity.Task;
 import org.junit.jupiter.api.*;
 import org.mockito.MockitoAnnotations;
@@ -21,14 +15,12 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -71,6 +63,7 @@ class DefaultCommentMentionServiceTest {
     @Order(2)
     @DisplayName("댓글 내 멘션 생성")
     void testCreateCommentMention() {
+        Long commentId = 1L;
         Task task = new Task();
         Comment comment = new Comment();
         comment.save(task, "test", "test", LocalDateTime.now());
@@ -78,25 +71,79 @@ class DefaultCommentMentionServiceTest {
         List<CommentMention> commentMentionList = new ArrayList<>();
         commentMentionList.add(commentMention);
 
-        List<CommentMentionRequestDto> commentMentionRequestDtoList = new ArrayList<>();
-//        CommentMentionRequestDto commentMentionRequestDto = new CommentMentionRequestDto("test");
-//        commentMentionRequestDtoList.add(commentMentionRequestDto);
+        List<String> targetMemberIdList = new ArrayList<>();
+        targetMemberIdList.add("test");
+        CommentMentionRequestDto commentMentionRequestDto = new CommentMentionRequestDto(targetMemberIdList);
 
-        given(commentRepository.findById(anyLong()))
+        given(commentRepository.findById(commentId))
                 .willReturn(Optional.of(comment));
         given(commentMentionRepository.saveAllAndFlush(any()))
                 .willReturn(commentMentionList);
 
-        //commentMentionService.createCommentMention(comment.getCommentId(), commentMentionRequestDtoList);
-        //verify(commentMentionRepository).saveAllAndFlush(anyList());
+        commentMentionService.createCommentMention(commentId, commentMentionRequestDto);
+        verify(commentMentionRepository).saveAllAndFlush(anyList());
     }
 
     @Test
+    @Order(3)
+    @DisplayName("댓글 내 멘션 수정")
     void testModifyCommentMention() {
+        Long commentId = 1L;
+        Task task = new Task();
+        Comment comment = new Comment();
+        comment.save(task, "test", "test", LocalDateTime.now());
+        CommentMention commentMention = new CommentMention();
+        List<CommentMention> commentMentionList = new ArrayList<>();
+        commentMentionList.add(commentMention);
+
+        List<String> targetMemberIdList = new ArrayList<>();
+        targetMemberIdList.add("test");
+        CommentMentionRequestDto commentMentionRequestDto = new CommentMentionRequestDto(targetMemberIdList);
+
+        given(commentRepository.findById(commentId))
+                .willReturn(Optional.of(comment));
+        given(commentMentionRepository.saveAllAndFlush(any()))
+                .willReturn(commentMentionList);
+
+        commentMentionService.modifyCommentMention(commentId, commentMentionRequestDto);
+        verify(commentMentionRepository).saveAllAndFlush(anyList());
     }
 
     @Test
+    @Order(4)
+    @DisplayName("댓글 내 멘션 삭제")
     void testDeleteCommentMention() {
+        Long commentId = 1L;
+        Task task = new Task();
+        Comment comment = new Comment();
+        comment.save(task, "test", "test", LocalDateTime.now());
+        CommentMention commentMention = new CommentMention();
+        List<CommentMention> commentMentionList = new ArrayList<>();
+        commentMentionList.add(commentMention);
 
+        List<String> targetMemberIdList = new ArrayList<>();
+        targetMemberIdList.add("test");
+        CommentMentionRequestDto commentMentionRequestDto = new CommentMentionRequestDto(targetMemberIdList);
+
+        given(commentRepository.findById(commentId))
+                .willReturn(Optional.of(comment));
+        given(commentMentionRepository.saveAllAndFlush(any()))
+                .willReturn(commentMentionList);
+
+        commentMentionService.deleteCommentMention(commentId, commentMentionRequestDto);
+        verify(commentMentionRepository).deleteAll(anyList());
+    }
+
+    @Test
+    @Order(5)
+    @DisplayName("댓글 내 멘션 생성 실패 : 댓글이 없는 경우")
+    public void createCommentMentionFail() {
+        Long commentId = 1L;
+        CommentMentionRequestDto commentMentionRequestDto = new CommentMentionRequestDto();
+
+        when(commentRepository.findById(commentId)).thenReturn(Optional.empty());
+
+        assertThrows(NotFoundCommentException.class, () ->
+                commentMentionService.createCommentMention(commentId, commentMentionRequestDto));
     }
 }

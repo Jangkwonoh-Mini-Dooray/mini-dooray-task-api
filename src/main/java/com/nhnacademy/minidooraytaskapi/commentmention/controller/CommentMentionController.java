@@ -30,7 +30,7 @@ public class CommentMentionController implements ValidateParam {
 
     @PostMapping
     public ResponseEntity<Response> createCommentMention(@PathVariable("comment-id") Long commentId,
-                                                         @RequestBody @Valid List<CommentMentionRequestDto> commentMentionRequestDto,
+                                                         @RequestBody @Valid CommentMentionRequestDto commentMentionRequestDto,
                                                          BindingResult bindingResult) {
         validate(bindingResult);
         commentMentionService.createCommentMention(commentId, commentMentionRequestDto);
@@ -39,7 +39,7 @@ public class CommentMentionController implements ValidateParam {
 
     @PutMapping
     public ResponseEntity<Response> modifyCommentMention(@PathVariable("comment-id") Long commentId,
-                                                         @RequestBody @Valid List<CommentMentionRequestDto> commentMentionRequestDto,
+                                                         @RequestBody @Valid CommentMentionRequestDto commentMentionRequestDto,
                                                          BindingResult bindingResult) {
         validate(bindingResult);
         commentMentionService.modifyCommentMention(commentId, commentMentionRequestDto);
@@ -48,7 +48,7 @@ public class CommentMentionController implements ValidateParam {
 
     @DeleteMapping
     public ResponseEntity<Response> deleteCommentMention(@PathVariable("comment-id") Long commentId,
-                                                         @RequestBody @Valid List<CommentMentionRequestDto> commentMentionRequestDto,
+                                                         @RequestBody @Valid CommentMentionRequestDto commentMentionRequestDto,
                                                          BindingResult bindingResult) {
         validate(bindingResult);
         commentMentionService.deleteCommentMention(commentId, commentMentionRequestDto);

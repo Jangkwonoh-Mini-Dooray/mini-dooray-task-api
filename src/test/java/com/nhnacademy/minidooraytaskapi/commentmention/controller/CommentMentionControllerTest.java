@@ -3,16 +3,9 @@ package com.nhnacademy.minidooraytaskapi.commentmention.controller;
 import com.nhnacademy.minidooraytaskapi.commentmention.dto.CommentMentionRequestDto;
 import com.nhnacademy.minidooraytaskapi.commentmention.dto.CommentMentionResponseDto;
 import com.nhnacademy.minidooraytaskapi.commentmention.service.CommentMentionService;
-import com.nhnacademy.minidooraytaskapi.milestone.controller.MilestoneController;
-import com.nhnacademy.minidooraytaskapi.milestone.dto.MilestoneDto;
-import com.nhnacademy.minidooraytaskapi.milestone.dto.MilestoneIdDto;
-import com.nhnacademy.minidooraytaskapi.milestone.dto.MilestoneRequestDto;
-import com.nhnacademy.minidooraytaskapi.milestone.service.MilestoneService;
 import org.junit.jupiter.api.*;
 
-import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.hasSize;
-import static org.mockito.ArgumentMatchers.any;
 import static org.hamcrest.Matchers.equalTo;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,45 +57,53 @@ class CommentMentionControllerTest {
     @DisplayName("댓글 내 멘션 생성")
     void createCommentMention() throws Exception {
         Long commentId = 1L;
-        List<CommentMentionRequestDto> commentMentionRequestDtoList = new ArrayList<>();
-        CommentMentionRequestDto commentMentionRequestDto = new CommentMentionRequestDto("test");
-        commentMentionRequestDtoList.add(commentMentionRequestDto);
+        List<String> targetMemberIdList = new ArrayList<>();
+        targetMemberIdList.add("test");
+        CommentMentionRequestDto commentMentionRequestDto = new CommentMentionRequestDto(targetMemberIdList);
 
-        doNothing().when(commentMentionService).createCommentMention(commentId, commentMentionRequestDtoList);
+        doNothing().when(commentMentionService).createCommentMention(commentId, commentMentionRequestDto);
 
         mockMvc.perform(post("/mentions/{comment-id}", commentId)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(commentMentionRequestDtoList)))
+                        .content(objectMapper.writeValueAsString(commentMentionRequestDto)))
                 .andExpect(status().isCreated())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.result", equalTo("OK")));
     }
 
     @Test
+    @Order(3)
+    @DisplayName("댓글 내 멘션 수정")
     void modifyCommentMention() throws Exception {
         Long commentId = 1L;
-        List<CommentMentionRequestDto> commentMentionRequestDtoList = new ArrayList<>();
-        CommentMentionRequestDto commentMentionRequestDto = new CommentMentionRequestDto("test");
-        commentMentionRequestDtoList.add(commentMentionRequestDto);
+        List<String> targetMemberIdList = new ArrayList<>();
+        targetMemberIdList.add("test");
+        CommentMentionRequestDto commentMentionRequestDto = new CommentMentionRequestDto(targetMemberIdList);
 
-        doNothing().when(commentMentionService).modifyCommentMention(commentId, commentMentionRequestDtoList);
+        doNothing().when(commentMentionService).modifyCommentMention(commentId, commentMentionRequestDto);
 
         mockMvc.perform(put("/mentions/{comment-id}", commentId)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(commentMentionRequestDtoList)))
-                .andExpect(status().isOk());
+                        .content(objectMapper.writeValueAsString(commentMentionRequestDto)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.result", equalTo("OK")));;
     }
 
     @Test
+    @Order(4)
+    @DisplayName("댓글 내 멘션 삭제")
     void deleteCommentMention() throws Exception {
-//        Long commentId = 1L;
-//        List<CommentMentionRequestDto> commentMentionRequestDtoList = new ArrayList<>();
-//        CommentMentionRequestDto commentMentionRequestDto = new CommentMentionRequestDto("test");
-//        commentMentionRequestDtoList.add(commentMentionRequestDto);
-//
-//        doNothing().when(commentMentionService).modifyCommentMention(commentId, commentMentionRequestDtoList);
-//
-//        mockMvc.perform(delete("/mentions/{comment-id}", commentId)
-//                        .contentType(MediaType.APPLICATION_JSON))
-//                .andExpect(status().isOk());
+        Long commentId = 1L;
+        List<String> targetMemberIdList = new ArrayList<>();
+        targetMemberIdList.add("test");
+        CommentMentionRequestDto commentMentionRequestDto = new CommentMentionRequestDto(targetMemberIdList);
+
+        doNothing().when(commentMentionService).deleteCommentMention(commentId, commentMentionRequestDto);
+
+        mockMvc.perform(delete("/mentions/{comment-id}", commentId)
+                        .content(objectMapper.writeValueAsString(commentMentionRequestDto))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.result", equalTo("OK")));;
     }
 }
