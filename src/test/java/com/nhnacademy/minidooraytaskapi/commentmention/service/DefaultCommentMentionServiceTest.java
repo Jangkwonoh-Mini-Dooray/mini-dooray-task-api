@@ -137,7 +137,7 @@ class DefaultCommentMentionServiceTest {
     @Test
     @Order(5)
     @DisplayName("댓글 내 멘션 생성 실패 : 댓글이 없는 경우")
-    public void createCommentMentionFail() {
+    void createCommentMentionFail() {
         Long commentId = 1L;
         CommentMentionRequestDto commentMentionRequestDto = new CommentMentionRequestDto();
 
