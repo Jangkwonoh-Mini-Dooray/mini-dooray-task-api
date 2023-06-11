@@ -15,7 +15,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -36,29 +39,29 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-
-@ExtendWith(SpringExtension.class)
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
+//@ExtendWith(SpringExtension.class)
+//@SpringBootTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.AUTO_CONFIGURED)
 @DisplayName("Comment : Service 테스트")
 class CommentServiceTest {
-    private AutoCloseable closeable;
-    @Autowired
-    CommentService commentService;
-    @MockBean
+//    private AutoCloseable closeable;
+    @InjectMocks
+    DefaultCommentService commentService;
+    @Mock
     CommentRepository commentRepository;
-    @MockBean
+    @Mock
     TaskRepository taskRepository;
 
-    @BeforeEach
-    void setUp() {
-        closeable = MockitoAnnotations.openMocks(this);
-    }
-
-    @AfterEach
-    void closeMock() throws Exception {
-        closeable.close();
-    }
+//    @BeforeEach
+//    void setUp() {
+//        closeable = MockitoAnnotations.openMocks(this);
+//    }
+//
+//    @AfterEach
+//    void closeMock() throws Exception {
+//        closeable.close();
+//    }
 
 
     @Test
