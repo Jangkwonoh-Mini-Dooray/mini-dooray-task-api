@@ -25,34 +25,35 @@ public class DefaultCommentMentionService implements CommentMentionService {
     }
 
     @Override
-    public void createCommentMention(Long commentId, List<CommentMentionRequestDto> commentMentionRequestDtoList) {
+    public void createCommentMention(Long commentId, CommentMentionRequestDto commentMentionRequestDto) {
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new NotFoundCommentException(commentId));
-        List<CommentMention> commentMentionList = convertToCommentMention(comment, commentMentionRequestDtoList);
+        List<CommentMention> commentMentionList = convertToCommentMention(comment, commentMentionRequestDto);
         commentMentionRepository.saveAllAndFlush(commentMentionList);
     }
 
     @Override
-    public void modifyCommentMention(Long commentId, List<CommentMentionRequestDto> commentMentionRequestDtoList) {
+    public void modifyCommentMention(Long commentId, CommentMentionRequestDto commentMentionRequestDto) {
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new NotFoundCommentException(commentId));
-        List<CommentMention> commentMentionList = convertToCommentMention(comment, commentMentionRequestDtoList);
+        List<CommentMention> commentMentionList = convertToCommentMention(comment, commentMentionRequestDto);
         commentMentionRepository.saveAllAndFlush(commentMentionList);
     }
 
     @Override
-    public void deleteCommentMention(Long commentId, List<CommentMentionRequestDto> commentMentionRequestDtoList) {
+    public void deleteCommentMention(Long commentId, CommentMentionRequestDto commentMentionRequestDto) {
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new NotFoundCommentException(commentId));
-        List<CommentMention> commentMentionList = convertToCommentMention(comment, commentMentionRequestDtoList);
+        List<CommentMention> commentMentionList = convertToCommentMention(comment, commentMentionRequestDto);
         commentMentionRepository.deleteAll(commentMentionList);
     }
 
-    public List<CommentMention> convertToCommentMention(Comment comment, List<CommentMentionRequestDto> commentMentionRequestDtoList) {
+    public List<CommentMention> convertToCommentMention(Comment comment, CommentMentionRequestDto commentMentionRequestDto) {
         List<CommentMention> commentMentionList = new ArrayList<>();
-        for (CommentMentionRequestDto dto : commentMentionRequestDtoList) {
-//            CommentMention commentMention = new CommentMention(new CommentMention.Pk(dto.getTargetMemberId(), comment.getCommentId()), comment);
-//            commentMentionList.add(commentMention);
+        List<String> targetMemberIdList = commentMentionRequestDto.getTargetMemberId();
+        for (String targetMemberId : targetMemberIdList) {
+            CommentMention commentMention = new CommentMention(new CommentMention.Pk(targetMemberId, comment.getCommentId()), comment);
+            commentMentionList.add(commentMention);
         }
         return commentMentionList;
     }
