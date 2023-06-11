@@ -32,17 +32,17 @@ class CommentMentionRepositoryTest {
         Task task = new Task();
         testEntityManager.persist(task);
 
-        Long commentId = 1L;
         Comment comment = new Comment();
         comment.save(task, "test", "test", LocalDateTime.now());
-        CommentMention commentMention1 = new CommentMention(new CommentMention.Pk("user", commentId), comment);
-        CommentMention commentMention2 = new CommentMention(new CommentMention.Pk("user2", commentId), comment);
-
         testEntityManager.persist(comment);
+
+        CommentMention commentMention1 = new CommentMention(new CommentMention.Pk("user", comment.getCommentId()), comment);
+        CommentMention commentMention2 = new CommentMention(new CommentMention.Pk("user2", comment.getCommentId()), comment);
+
         testEntityManager.persist(commentMention1);
         testEntityManager.persist(commentMention2);
 
-        List<CommentMentionResponseDto> actual = commentMentionRepository.getCommentMentions(commentId);
+        List<CommentMentionResponseDto> actual = commentMentionRepository.getCommentMentions(comment.getCommentId());
         assertThat(actual.size()).isEqualTo(2);
     }
 }
