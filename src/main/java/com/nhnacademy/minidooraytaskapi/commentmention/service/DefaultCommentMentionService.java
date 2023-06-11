@@ -9,17 +9,20 @@ import com.nhnacademy.minidooraytaskapi.commentmention.repository.CommentMention
 import com.nhnacademy.minidooraytaskapi.exception.NotFoundCommentException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class DefaultCommentMentionService implements CommentMentionService {
     private final CommentMentionRepository commentMentionRepository;
     private final CommentRepository commentRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public List<CommentMentionResponseDto> getCommentMentions(Long commentId) {
         return commentMentionRepository.getCommentMentions(commentId);
     }
