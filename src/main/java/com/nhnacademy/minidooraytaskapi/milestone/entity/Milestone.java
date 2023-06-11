@@ -3,7 +3,6 @@ package com.nhnacademy.minidooraytaskapi.milestone.entity;
 import com.nhnacademy.minidooraytaskapi.project.entity.Project;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
