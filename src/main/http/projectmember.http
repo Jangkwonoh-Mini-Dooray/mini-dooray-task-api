@@ -1,11 +1,11 @@
 ### 프로젝트 멤버 조회
 GET /projects/1/members
-Host: localhost:8080
+Host: localhost:9091
 Content-Type: application/json
 
 ### 프로젝트 멤버 초대
 POST /projects/1/members
-Host: localhost:8080
+Host: localhost:9091
 Content-Type: application/json
 
 [
@@ -21,7 +21,7 @@ Content-Type: application/json
 
 ### 프로젝트 멤버 수정
 PUT /projects/1/members
-Host: localhost:8080
+Host: localhost:9091
 Content-Type: application/json
 
 [
@@ -33,7 +33,7 @@ Content-Type: application/json
 
 ### 프로젝트 멤버 삭제
 DELETE /projects/1/members
-Host: localhost:8080
+Host: localhost:9091
 Content-Type: application/json
 
 [
