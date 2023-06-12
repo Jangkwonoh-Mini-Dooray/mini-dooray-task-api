@@ -28,6 +28,12 @@ public class ProjectController implements ValidateParam {
         return ResponseEntity.ok().body(result);
     }
 
+    @GetMapping("/list/{member-id}")
+    public ResponseEntity<List<ProjectDto>> getProjectsByMemberId(@PathVariable("member-id") String memberId) {
+        List<ProjectDto> result = projectService.getProjectsByMemberId(memberId);
+        return ResponseEntity.ok().body(result);
+    }
+
     @GetMapping("/{project-id}")
     public ResponseEntity<ProjectDto> getProject(@PathVariable("project-id") Long projectId) {
         ProjectDto result = projectService.getProject(projectId);

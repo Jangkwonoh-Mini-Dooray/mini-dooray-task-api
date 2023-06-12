@@ -1,5 +1,5 @@
 ### 프로젝트 멤버 조회
-GET /projects/1/members
+GET /projects/2/members
 Host: localhost:9091
 Content-Type: application/json
 
@@ -10,11 +10,7 @@ Content-Type: application/json
 
 [
   {
-    "targetMemberId": "user1",
-    "projectAuthorityId": 2
-  },
-  {
-    "targetMemberId": "user2",
+    "targetMemberId": "suebin",
     "projectAuthorityId": 2
   }
 ]
