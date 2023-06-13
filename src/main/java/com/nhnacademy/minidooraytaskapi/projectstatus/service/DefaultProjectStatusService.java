@@ -47,7 +47,7 @@ public class DefaultProjectStatusService implements ProjectStatusService {
 
     @Override
     @Transactional
-    public ProjectStatusIdDto updateMember(int projectStatusId, ProjectStatusNameDto projectStatusNameDto) {
+    public ProjectStatusIdDto updateProjectStatus(int projectStatusId, ProjectStatusNameDto projectStatusNameDto) {
         ProjectStatus projectStatus = projectStatusRepository.findById(projectStatusId)
                 .orElseThrow(() -> new NotFoundProjectStatusException(projectStatusId));
         projectStatus.setName(projectStatusNameDto.getName());

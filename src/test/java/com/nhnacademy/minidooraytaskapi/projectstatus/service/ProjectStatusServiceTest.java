@@ -11,23 +11,18 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.api.function.Executable;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -97,7 +92,7 @@ class ProjectStatusServiceTest {
     @DisplayName("상태 데이터 업데이트 Service # 실패")
     void updateMember() {
         given(projectStatusRepository.findById(anyInt())).willReturn(Optional.empty());
-        assertThrows(NotFoundProjectStatusException.class, () -> projectStatusService.updateMember(1, new ProjectStatusNameDto()));
+        assertThrows(NotFoundProjectStatusException.class, () -> projectStatusService.updateProjectStatus(1, new ProjectStatusNameDto()));
     }
 
     @Test
@@ -108,7 +103,7 @@ class ProjectStatusServiceTest {
         given(projectStatusRepository.findById(anyInt())).willReturn(Optional.of(projectStatus));
         given(projectStatusRepository.saveAndFlush(any())).willReturn(projectStatus);
 
-        ProjectStatusIdDto projectStatusIdDto = projectStatusService.updateMember(1, new ProjectStatusNameDto());
+        ProjectStatusIdDto projectStatusIdDto = projectStatusService.updateProjectStatus(1, new ProjectStatusNameDto());
 
         Assertions.assertThat(projectStatusIdDto.getProjectStatusId()).isEqualTo(1);
     }

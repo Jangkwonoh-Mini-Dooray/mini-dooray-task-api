@@ -4,6 +4,9 @@ import com.nhnacademy.minidooraytaskapi.projectauthority.dto.ProjectAuthorityDto
 import com.nhnacademy.minidooraytaskapi.projectauthority.dto.ProjectAuthorityNameDto;
 import com.nhnacademy.minidooraytaskapi.projectauthority.entity.ProjectAuthority;
 import com.nhnacademy.minidooraytaskapi.projectauthority.entity.QProjectAuthority;
+
+import com.nhnacademy.minidooraytaskapi.projectstatus.dto.ProjectStatusNameDto;
+
 import com.querydsl.core.types.Projections;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
@@ -17,21 +20,21 @@ public class ProjectAuthorityRepositoryImpl extends QuerydslRepositorySupport im
 
     @Override
     public List<ProjectAuthorityDto> getProjectAuthorities() {
-        QProjectAuthority qProjectAuthority = QProjectAuthority.projectAuthority;
-        return from(qProjectAuthority)
+        QProjectAuthority projectAuthority = QProjectAuthority.projectAuthority;
+        return from(projectAuthority)
                 .select(Projections.bean(ProjectAuthorityDto.class,
-                        qProjectAuthority.projectAuthorityId,
-                        qProjectAuthority.name))
+                        projectAuthority.projectAuthorityId,
+                        projectAuthority.name))
                 .fetch();
     }
 
     @Override
     public ProjectAuthorityNameDto getProjectAuthority(int projectAuthorityId) {
-        QProjectAuthority qProjectAuthority = QProjectAuthority.projectAuthority;
-        return from(qProjectAuthority)
-                .where(qProjectAuthority.projectAuthorityId.eq(projectAuthorityId))
+        QProjectAuthority projectAuthority = QProjectAuthority.projectAuthority;
+        return from(projectAuthority)
                 .select(Projections.bean(ProjectAuthorityNameDto.class,
-                        qProjectAuthority.name))
+                        projectAuthority.name))
+                .where(projectAuthority.projectAuthorityId.eq(projectAuthorityId))
                 .fetchOne();
     }
 }

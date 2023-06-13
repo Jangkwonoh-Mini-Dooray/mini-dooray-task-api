@@ -17,4 +17,9 @@ public class ProjectAuthority {
 
     @Column(name = "name")
     private String name;
+
+    public void save(int projectAuthorityId, String name) {
+        this.projectAuthorityId = projectAuthorityId;
+        this.name = name;
+    }
 }
