@@ -1,0 +1,62 @@
+package com.nhnacademy.minidooraytaskapi.projectauthority.service;
+
+import com.nhnacademy.minidooraytaskapi.exception.DuplicateIntIdException;
+import com.nhnacademy.minidooraytaskapi.exception.NotFoundProjectAuthorityException;
+import com.nhnacademy.minidooraytaskapi.exception.NotFoundProjectStatusException;
+import com.nhnacademy.minidooraytaskapi.projectauthority.dto.ProjectAuthorityDto;
+import com.nhnacademy.minidooraytaskapi.projectauthority.dto.ProjectAuthorityNameDto;
+import com.nhnacademy.minidooraytaskapi.projectauthority.entity.ProjectAuthority;
+import com.nhnacademy.minidooraytaskapi.projectauthority.repository.ProjectAuthorityRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+public class DefaultProjectAuthorityService implements ProjectAuthorityService {
+    private final ProjectAuthorityRepository projectAuthorityRepository;
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ProjectAuthorityDto> getProjectAuthorities() {
+        return projectAuthorityRepository.getProjectAuthorities();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public ProjectAuthorityNameDto getProjectAuthority(int projectAuthorityId) {
+        return projectAuthorityRepository.getProjectAuthority(projectAuthorityId);
+    }
+
+    @Override
+    @Transactional
+    public ProjectAuthority createProjectAuthority(ProjectAuthorityDto projectAuthorityDto) {
+        if (projectAuthorityRepository.existsById(projectAuthorityDto.getProjectAuthorityId())) {
+            throw new DuplicateIntIdException(projectAuthorityDto.getProjectAuthorityId());
+        }
+        ProjectAuthority projectAuthority = new ProjectAuthority();
+        projectAuthority.setProjectAuthorityId(projectAuthorityDto.getProjectAuthorityId());
+        projectAuthority.setName(projectAuthorityDto.getName());
+        return projectAuthorityRepository.saveAndFlush(projectAuthority);
+    }
+
+    @Override
+    @Transactional
+    public ProjectAuthority updateMember(int projectAuthorityId, ProjectAuthorityNameDto projectAuthorityNameDto) {
+        ProjectAuthority projectAuthority = projectAuthorityRepository.findById(projectAuthorityId)
+                .orElseThrow(() -> new NotFoundProjectAuthorityException(projectAuthorityId));
+        projectAuthority.setName(projectAuthorityNameDto.getName());
+        return projectAuthorityRepository.saveAndFlush(projectAuthority);
+    }
+
+    @Override
+    @Transactional
+    public void deleteProjectAuthority(int projectAuthorityId) {
+        if (!projectAuthorityRepository.existsById(projectAuthorityId)) {
+            throw new NotFoundProjectStatusException(projectAuthorityId);
+        }
+        projectAuthorityRepository.deleteById(projectAuthorityId);
+    }
+}
