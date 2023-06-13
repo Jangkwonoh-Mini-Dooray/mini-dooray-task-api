@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface ProjectService {
     List<Project> getProjects();
+    List<ProjectDto> getProjectsByMemberId(String memberId);
     ProjectDto getProject(Long projectId);
 
     ProjectIdDto createProject(ProjectRequestDto projectRequestDto);

@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,6 +28,16 @@ public class DefaultProjectService implements ProjectService {
     @Transactional(readOnly = true)
     public List<Project> getProjects() {
         return projectRepository.findAll();
+    }
+
+    @Override
+    public List<ProjectDto> getProjectsByMemberId(String memberId) {
+        List<ProjectDto> projectDtoList = new ArrayList<>();
+        List<ProjectIdDto> projectIdDtoList = projectRepository.findAllByMemberId(memberId);
+        for (ProjectIdDto dto : projectIdDtoList) {
+            projectDtoList.add(projectRepository.findByProjectId(dto.getProjectId()));
+        }
+        return projectDtoList;
     }
 
     @Override
