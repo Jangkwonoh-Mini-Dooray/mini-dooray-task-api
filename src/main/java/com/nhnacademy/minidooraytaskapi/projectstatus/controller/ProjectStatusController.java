@@ -31,7 +31,7 @@ public class ProjectStatusController implements ValidateParam {
     }
 
     @PostMapping
-    public ResponseEntity<ProjectStatusIdDto> createMember(@Valid @RequestBody ProjectStatusDto projectStatusDto,
+    public ResponseEntity<ProjectStatusIdDto> createProjectStatus(@Valid @RequestBody ProjectStatusDto projectStatusDto,
                                                            BindingResult bindingResult) {
         validate(bindingResult);
         ProjectStatusIdDto responseDto = projectStatusService.createProjectStatus(projectStatusDto);
@@ -39,7 +39,7 @@ public class ProjectStatusController implements ValidateParam {
     }
 
     @PutMapping("/{projectStatusId}")
-    public ResponseEntity<ProjectStatusIdDto> updateMember(@PathVariable int projectStatusId, @Valid @RequestBody ProjectStatusNameDto projectStatusNameDto,
+    public ResponseEntity<ProjectStatusIdDto> updateProjectStatus(@PathVariable int projectStatusId, @Valid @RequestBody ProjectStatusNameDto projectStatusNameDto,
                                                            BindingResult bindingResult) {
         validate(bindingResult);
         ProjectStatusIdDto responseDto = projectStatusService.updateProjectStatus(projectStatusId, projectStatusNameDto);

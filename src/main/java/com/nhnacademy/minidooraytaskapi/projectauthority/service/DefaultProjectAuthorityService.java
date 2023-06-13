@@ -23,17 +23,32 @@ public class DefaultProjectAuthorityService implements ProjectAuthorityService {
     }
 
     @Override
-    public ProjectAuthorityIdDto postProjectAuthority(ProjectAuthorityDto projectAuthorityDto) {
-        return null;
+    @Transactional
+    public ProjectAuthority createProjectAuthority(ProjectAuthorityDto projectAuthorityDto) {
+        if (projectAuthorityRepository.existsById(projectAuthorityDto.getProjectAuthorityId())) {
+            throw new DuplicateIntIdException(projectAuthorityDto.getProjectAuthorityId());
+        }
+        ProjectAuthority projectAuthority = new ProjectAuthority();
+        projectAuthority.setProjectAuthorityId(projectAuthorityDto.getProjectAuthorityId());
+        projectAuthority.setName(projectAuthorityDto.getName());
+        return projectAuthorityRepository.saveAndFlush(projectAuthority);
     }
 
     @Override
-    public ProjectAuthorityIdDto putProjectAuthority(ProjectAuthorityDto projectAuthorityDto, int projectAuthorityId) {
-        return null;
+    @Transactional
+    public ProjectAuthority updateMember(int projectAuthorityId, ProjectAuthorityNameDto projectAuthorityNameDto) {
+        ProjectAuthority projectAuthority = projectAuthorityRepository.findById(projectAuthorityId)
+                .orElseThrow(() -> new NotFoundProjectAuthorityException(projectAuthorityId));
+        projectAuthority.setName(projectAuthorityNameDto.getName());
+        return projectAuthorityRepository.saveAndFlush(projectAuthority);
     }
 
     @Override
+    @Transactional
     public void deleteProjectAuthority(int projectAuthorityId) {
-
+        if (!projectAuthorityRepository.existsById(projectAuthorityId)) {
+            throw new NotFoundProjectStatusException(projectAuthorityId);
+        }
+        projectAuthorityRepository.deleteById(projectAuthorityId);
     }
 }

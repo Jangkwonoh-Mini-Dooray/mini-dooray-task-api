@@ -64,13 +64,13 @@ class ProjectStatusControllerTest {
 
     @Test
     @DisplayName("projectStatus 데이터 생성하는 Controller #살패")
-    void createMember() throws Exception {
+    void createProjectStatus() throws Exception {
         mockMvc.perform(post("/project-status"))
                 .andExpect(status().isBadRequest());
     }
     @Test
     @DisplayName("projectStatus 데이터 생성하는 Controller #성공")
-    void createMember2() throws Exception {
+    void createProjectStatus2() throws Exception {
         ProjectStatusDto projectStatusDto = new ProjectStatusDto();
         projectStatusDto.setProjectStatusId(1);
         projectStatusDto.setName("test");
@@ -87,14 +87,14 @@ class ProjectStatusControllerTest {
 
     @Test
     @DisplayName("projectStatus 데이터 수정하는 Controller #실패")
-    void updateMember() throws Exception {
+    void updateProjectStatus() throws Exception {
         mockMvc.perform(put("/project-status/{projectStatusId}", 1))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
     @DisplayName("projectStatus 데이터 수정하는 Controller #성공")
-    void updateMember2() throws Exception {
+    void updateProjectStatus2() throws Exception {
         ProjectStatusDto projectStatusDto = new ProjectStatusDto();
         projectStatusDto.setProjectStatusId(1);
         projectStatusDto.setName("test");
@@ -111,7 +111,7 @@ class ProjectStatusControllerTest {
 
     @Test
     @DisplayName("projectStatus 데이터 삭제하는 Controller")
-    void deleteMember() throws Exception {
+    void deleteProjectStatus() throws Exception {
         doNothing().when(projectStatusService).deleteProjectStatus(anyInt());
         mockMvc.perform(delete("/project-status/{projectStatusId}", 1))
                 .andExpect(status().isNoContent());

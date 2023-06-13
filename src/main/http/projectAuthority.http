@@ -1,0 +1,47 @@
+### 프로젝트 권한 목록 정보 조회
+GET /project-authority
+Host: localhost:8080
+
+
+### 프로젝트 권한 단건 정보 조회1
+GET /project-authority/1
+Host: localhost:8080
+
+
+### 프로젝트 권한 단건 정보 조회2
+GET /project-authority/2
+Host: localhost:8080
+
+
+### 프로젝트 권한 단건 정보 조회3
+GET /project-authority/3
+Host: localhost:8080
+
+
+### 프로젝트 권한 단건 정보 조회4
+GET /project-authority/4
+Host: localhost:8080
+
+
+### 프로젝트 권한 정보 생성
+POST /project-authority
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "projectAuthorityId": 8,
+  "name" : "name3"
+}
+
+### 프로젝트 권한 정보 수정
+PUT /project-authority/3
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "name" : "updated name"
+}
+
+### 프로젝트 권한 정보 삭제
+DELETE /project-authority/4
+Host: localhost:8080
