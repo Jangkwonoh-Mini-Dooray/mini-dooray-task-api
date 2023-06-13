@@ -5,7 +5,6 @@ import com.nhnacademy.minidooraytaskapi.projectstatus.dto.ProjectStatusDto;
 import com.nhnacademy.minidooraytaskapi.projectstatus.dto.ProjectStatusIdDto;
 import com.nhnacademy.minidooraytaskapi.projectstatus.dto.ProjectStatusNameDto;
 import com.nhnacademy.minidooraytaskapi.projectstatus.service.ProjectStatusService;
-import com.nhnacademy.minidooraytaskapi.tag.controller.TagController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -102,7 +100,7 @@ class ProjectStatusControllerTest {
         projectStatusDto.setName("test");
         ProjectStatusIdDto projectStatusIdDto = new ProjectStatusIdDto();
         projectStatusIdDto.setProjectStatusId(1);
-        when(projectStatusService.updateMember(anyInt(),any())).thenReturn(projectStatusIdDto);
+        when(projectStatusService.updateProjectStatus(anyInt(),any())).thenReturn(projectStatusIdDto);
         mockMvc.perform(put("/project-status/{projectStatusId}", 1)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsBytes(projectStatusDto)))
