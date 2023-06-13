@@ -3,7 +3,7 @@ package com.nhnacademy.minidooraytaskapi.projectstatus.controller;
 import com.nhnacademy.minidooraytaskapi.exception.ValidationFailedException;
 import com.nhnacademy.minidooraytaskapi.projectstatus.dto.ProjectStatusDto;
 import com.nhnacademy.minidooraytaskapi.projectstatus.dto.ProjectStatusNameDto;
-import com.nhnacademy.minidooraytaskapi.projectstatus.dto.ProjectStautusIdDto;
+import com.nhnacademy.minidooraytaskapi.projectstatus.dto.ProjectStatusIdDto;
 import com.nhnacademy.minidooraytaskapi.projectstatus.entity.ProjectStatus;
 import com.nhnacademy.minidooraytaskapi.projectstatus.service.ProjectStatusService;
 import lombok.RequiredArgsConstructor;
@@ -31,25 +31,23 @@ public class ProjectStatusController {
     }
 
     @PostMapping
-    public ResponseEntity<ProjectStautusIdDto> createMember(@Valid @RequestBody ProjectStatusDto projectStatusDto,
-                                                            BindingResult bindingResult) {
+    public ResponseEntity<ProjectStatusIdDto> createMember(@Valid @RequestBody ProjectStatusDto projectStatusDto,
+                                                           BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new ValidationFailedException(bindingResult);
         }
-        ProjectStatus projectStatus = projectStatusService.createProjectStatus(projectStatusDto);
-        ProjectStautusIdDto responseDto = new ProjectStautusIdDto(projectStatus.getProjectStatusId());
+        ProjectStatusIdDto responseDto = projectStatusService.createProjectStatus(projectStatusDto);
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
     }
 
     @PutMapping("/{projectStatusId}")
-    public ResponseEntity<ProjectStautusIdDto> updateMember(@PathVariable int projectStatusId, @Valid @RequestBody ProjectStatusNameDto projectStatusNameDto,
-                                                    BindingResult bindingResult) {
+    public ResponseEntity<ProjectStatusIdDto> updateMember(@PathVariable int projectStatusId, @Valid @RequestBody ProjectStatusNameDto projectStatusNameDto,
+                                                           BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new ValidationFailedException(bindingResult);
         }
-        ProjectStatus projectStatus = projectStatusService.updateMember(projectStatusId, projectStatusNameDto);
-        ProjectStautusIdDto responseDto = new ProjectStautusIdDto(projectStatus.getProjectStatusId());
-        return new ResponseEntity<>(responseDto, HttpStatus.OK);
+        ProjectStatusIdDto responseDto = projectStatusService.updateMember(projectStatusId, projectStatusNameDto);
+        return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{projectStatusId}")

@@ -10,7 +10,6 @@ import javax.validation.constraints.NotBlank;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class ProjectStatusNameDto {
     @NotBlank
     private String name;

@@ -8,7 +8,11 @@ import com.nhnacademy.minidooraytaskapi.milestone.repository.MilestoneRepository
 import com.nhnacademy.minidooraytaskapi.project.entity.Project;
 import com.nhnacademy.minidooraytaskapi.project.repository.ProjectRepository;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,23 +29,15 @@ import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
-@SpringBootTest
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.AUTO_CONFIGURED)
+@ExtendWith(MockitoExtension.class)
 @DisplayName("milestone : Service 테스트")
 class DefaultMilestoneServiceTest {
-    @Autowired
-    MilestoneService milestoneService;
-    @MockBean
+    @InjectMocks
+    DefaultMilestoneService milestoneService;
+    @Mock
     MilestoneRepository milestoneRepository;
-    @MockBean
+    @Mock
     ProjectRepository projectRepository;
-
-
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
 
     @Test
     @Order(1)

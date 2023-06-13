@@ -40,12 +40,8 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 @ExtendWith(MockitoExtension.class)
-//@ExtendWith(SpringExtension.class)
-//@SpringBootTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.AUTO_CONFIGURED)
 @DisplayName("Tag : Service 테스트")
 class TagServiceTest {
-//    private AutoCloseable closeable;
     @InjectMocks
     DefaultTagService tagService;
     @Mock
@@ -56,16 +52,6 @@ class TagServiceTest {
     TaskRepository taskRepository;
     @Mock
     TaskTagRepository taskTagRepository;
-
-//    @BeforeEach
-//    void setUp() {
-//MockitoAnnotations.openMocks(this);
-//    }
-
-//    @AfterEach
-//    void closeMock() throws Exception {
-//        closeable.close();
-//    }
 
     @Test
     @DisplayName("프로젝트에 해당하는 테크 가져오는 Service")
