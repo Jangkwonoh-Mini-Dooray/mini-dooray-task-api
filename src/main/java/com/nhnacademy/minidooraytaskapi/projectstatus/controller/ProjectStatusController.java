@@ -31,7 +31,7 @@ public class ProjectStatusController {
     }
 
     @PostMapping
-    public ResponseEntity<ProjectStatusIdDto> createMember(@Valid @RequestBody ProjectStatusDto projectStatusDto,
+    public ResponseEntity<ProjectStatusIdDto> createProjectStatus(@Valid @RequestBody ProjectStatusDto projectStatusDto,
                                                            BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new ValidationFailedException(bindingResult);
@@ -41,7 +41,7 @@ public class ProjectStatusController {
     }
 
     @PutMapping("/{projectStatusId}")
-    public ResponseEntity<ProjectStatusIdDto> updateMember(@PathVariable int projectStatusId, @Valid @RequestBody ProjectStatusNameDto projectStatusNameDto,
+    public ResponseEntity<ProjectStatusIdDto> updateProjectStatus(@PathVariable int projectStatusId, @Valid @RequestBody ProjectStatusNameDto projectStatusNameDto,
                                                            BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new ValidationFailedException(bindingResult);
@@ -51,7 +51,7 @@ public class ProjectStatusController {
     }
 
     @DeleteMapping("/{projectStatusId}")
-    public ResponseEntity<Void> deleteMember(@PathVariable int projectStatusId) {
+    public ResponseEntity<Void> deleteProjectStatus(@PathVariable int projectStatusId) {
         projectStatusService.deleteProjectStatus(projectStatusId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
