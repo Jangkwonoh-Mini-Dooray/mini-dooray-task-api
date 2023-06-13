@@ -11,6 +11,7 @@ import com.nhnacademy.minidooraytaskapi.projectstatus.repository.ProjectStatusRe
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,15 +31,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 @DisplayName("Project : Service 테스트")
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.AUTO_CONFIGURED)
 class DefaultProjectServiceTest {
-    @Autowired
+    @InjectMocks
     DefaultProjectService projectService;
-    @MockBean
+    @Mock
     ProjectRepository projectRepository;
-    @MockBean
+    @Mock
     ProjectStatusRepository projectStatusRepository;
 
     @Test

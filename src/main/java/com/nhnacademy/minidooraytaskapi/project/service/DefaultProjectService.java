@@ -51,7 +51,7 @@ public class DefaultProjectService implements ProjectService {
         int projectStatusId = ProjectStatusCode.getValue(projectRequestDto.getProjectStatusName());
         ProjectStatus projectStatus = projectStatusRepository
                 .findById(projectStatusId)
-                .orElseThrow(NotFoundProjectStatusException::new);
+                .orElseThrow(() -> new NotFoundProjectStatusException(projectStatusId));
         Project project = new Project(projectStatus, projectRequestDto.getName(), projectRequestDto.getDescription());
         Project result = projectRepository.saveAndFlush(project);
         return new ProjectIdDto(result.getProjectId());
@@ -64,7 +64,7 @@ public class DefaultProjectService implements ProjectService {
         int projectStatusId = ProjectStatusCode.getValue(projectRequestDto.getProjectStatusName());
         ProjectStatus projectStatus = projectStatusRepository
                 .findById(projectStatusId)
-                .orElseThrow(NotFoundProjectStatusException::new);
+                .orElseThrow(() -> new NotFoundProjectStatusException(projectStatusId));
         project.modify(projectStatus, projectRequestDto.getName(), projectRequestDto.getDescription());
         Project result = projectRepository.saveAndFlush(project);
         return new ProjectIdDto(result.getProjectId());

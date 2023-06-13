@@ -12,7 +12,6 @@ import javax.validation.constraints.Positive;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class ProjectStatusDto {
     @NotNull
     @Positive

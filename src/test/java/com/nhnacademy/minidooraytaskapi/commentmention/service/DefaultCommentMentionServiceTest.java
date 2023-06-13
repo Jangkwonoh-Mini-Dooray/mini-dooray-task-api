@@ -9,7 +9,11 @@ import com.nhnacademy.minidooraytaskapi.commentmention.repository.CommentMention
 import com.nhnacademy.minidooraytaskapi.exception.NotFoundCommentException;
 import com.nhnacademy.minidooraytaskapi.task.entity.Task;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,22 +30,15 @@ import static org.mockito.BDDMockito.given;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.AUTO_CONFIGURED)
+@ExtendWith(MockitoExtension.class)
 @DisplayName("commentMention : Service 테스트")
 class DefaultCommentMentionServiceTest {
-    @Autowired
-    CommentMentionService commentMentionService;
-    @MockBean
+    @InjectMocks
+    DefaultCommentMentionService commentMentionService;
+    @Mock
     CommentMentionRepository commentMentionRepository;
-    @MockBean
+    @Mock
     CommentRepository commentRepository;
-
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
 
     @Test
     @Order(1)
@@ -127,8 +124,6 @@ class DefaultCommentMentionServiceTest {
 
         given(commentRepository.findById(commentId))
                 .willReturn(Optional.of(comment));
-        given(commentMentionRepository.saveAllAndFlush(any()))
-                .willReturn(commentMentionList);
 
         commentMentionService.deleteCommentMention(commentId, commentMentionRequestDto);
         verify(commentMentionRepository).deleteAll(anyList());

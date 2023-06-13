@@ -4,6 +4,7 @@ import com.nhnacademy.minidooraytaskapi.exception.DuplicateIntIdException;
 import com.nhnacademy.minidooraytaskapi.exception.NotFoundProjectStatusException;
 import com.nhnacademy.minidooraytaskapi.projectstatus.dto.ProjectStatusDto;
 import com.nhnacademy.minidooraytaskapi.projectstatus.dto.ProjectStatusNameDto;
+import com.nhnacademy.minidooraytaskapi.projectstatus.dto.ProjectStatusIdDto;
 import com.nhnacademy.minidooraytaskapi.projectstatus.entity.ProjectStatus;
 import com.nhnacademy.minidooraytaskapi.projectstatus.repository.ProjectStatusRepository;
 import lombok.RequiredArgsConstructor;
@@ -31,30 +32,36 @@ public class DefaultProjectStatusService implements ProjectStatusService {
 
     @Override
     @Transactional
-    public ProjectStatus createProjectStatus(ProjectStatusDto projectStatusDto) {
+    public ProjectStatusIdDto createProjectStatus(ProjectStatusDto projectStatusDto) {
         if (projectStatusRepository.existsById(projectStatusDto.getProjectStatusId())) {
             throw new DuplicateIntIdException(projectStatusDto.getProjectStatusId());
         }
         ProjectStatus projectStatus = new ProjectStatus();
         projectStatus.setProjectStatusId(projectStatusDto.getProjectStatusId());
         projectStatus.setName(projectStatusDto.getName());
-        return projectStatusRepository.saveAndFlush(projectStatus);
+        ProjectStatus result = projectStatusRepository.saveAndFlush(projectStatus);
+        ProjectStatusIdDto projectStatusIdDto = new ProjectStatusIdDto();
+        projectStatusIdDto.setProjectStatusId(result.getProjectStatusId());
+        return projectStatusIdDto;
     }
 
     @Override
     @Transactional
-    public ProjectStatus updateMember(int projectStatusId, ProjectStatusNameDto projectStatusNameDto) {
+    public ProjectStatusIdDto updateMember(int projectStatusId, ProjectStatusNameDto projectStatusNameDto) {
         ProjectStatus projectStatus = projectStatusRepository.findById(projectStatusId)
-                .orElseThrow(NotFoundProjectStatusException::new);
+                .orElseThrow(() -> new NotFoundProjectStatusException(projectStatusId));
         projectStatus.setName(projectStatusNameDto.getName());
-        return projectStatusRepository.saveAndFlush(projectStatus);
+        ProjectStatus result = projectStatusRepository.saveAndFlush(projectStatus);
+        ProjectStatusIdDto projectStatusIdDto = new ProjectStatusIdDto();
+        projectStatusIdDto.setProjectStatusId(result.getProjectStatusId());
+        return projectStatusIdDto;
     }
 
     @Override
     @Transactional
     public void deleteProjectStatus(int projectStatusId) {
         if (!projectStatusRepository.existsById(projectStatusId)) {
-            throw new NotFoundProjectStatusException();
+            throw new NotFoundProjectStatusException(projectStatusId);
         }
         projectStatusRepository.deleteById(projectStatusId);
     }

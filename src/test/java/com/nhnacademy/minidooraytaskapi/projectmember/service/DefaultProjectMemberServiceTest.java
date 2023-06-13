@@ -11,8 +11,12 @@ import com.nhnacademy.minidooraytaskapi.projectmember.dto.ProjectMemberResponseD
 import com.nhnacademy.minidooraytaskapi.projectmember.entity.ProjectMember;
 import com.nhnacademy.minidooraytaskapi.projectmember.repository.ProjectMemberRepository;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -29,24 +33,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.AUTO_CONFIGURED)
+@ExtendWith(MockitoExtension.class)
 @DisplayName("ProjectMember : Service 테스트")
 class DefaultProjectMemberServiceTest {
-    @Autowired
-    ProjectMemberService projectMemberService;
-    @MockBean
+    @InjectMocks
+    DefaultProjectMemberService projectMemberService;
+    @Mock
     ProjectMemberRepository projectMemberRepository;
-    @MockBean
+    @Mock
     ProjectRepository projectRepository;
-    @MockBean
+    @Mock
     ProjectAuthorityRepository projectAuthorityRepository;
-
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
 
     @Test
     @Order(1)

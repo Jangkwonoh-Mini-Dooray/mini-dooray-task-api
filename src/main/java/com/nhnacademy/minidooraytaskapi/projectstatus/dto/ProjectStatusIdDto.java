@@ -11,8 +11,7 @@ import javax.validation.constraints.Positive;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
-public class ProjectStautusIdDto {
+public class ProjectStatusIdDto {
     @NotNull
     @Positive
     private int projectStatusId;

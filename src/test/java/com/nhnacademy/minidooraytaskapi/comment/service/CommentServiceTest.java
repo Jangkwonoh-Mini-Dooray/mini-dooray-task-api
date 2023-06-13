@@ -40,28 +40,14 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 @ExtendWith(MockitoExtension.class)
-//@ExtendWith(SpringExtension.class)
-//@SpringBootTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.AUTO_CONFIGURED)
 @DisplayName("Comment : Service 테스트")
 class CommentServiceTest {
-//    private AutoCloseable closeable;
     @InjectMocks
     DefaultCommentService commentService;
     @Mock
     CommentRepository commentRepository;
     @Mock
     TaskRepository taskRepository;
-
-//    @BeforeEach
-//    void setUp() {
-//        closeable = MockitoAnnotations.openMocks(this);
-//    }
-//
-//    @AfterEach
-//    void closeMock() throws Exception {
-//        closeable.close();
-//    }
 
 
     @Test
