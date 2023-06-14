@@ -30,29 +30,23 @@ public class DefaultCommentService implements CommentService {
 
     @Override
     public CommentIdDto postComment(RequestCommentDto requestCommentDto, Long taskId) {
-        Comment comment = new Comment();
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new NotFoundTaskException(taskId));
-        comment.save(task, requestCommentDto.getCommentWriterMemberId(), requestCommentDto.getComment());
+        Comment comment = new Comment();
+        comment.save(requestCommentDto, task);
 
         Comment save = commentRepository.save(comment);
-        CommentIdDto commentIdDto = new CommentIdDto();
-        commentIdDto.setCommentId(save.getCommentId());
-
-        return commentIdDto;
+        return new CommentIdDto(save.getCommentId());
     }
 
     @Override
     public CommentIdDto putComment(RequestCommentDto requestCommentDto, Long commentId) {
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new NotFoundCommentException(commentId));
-        comment.update(requestCommentDto.getComment());
+        comment.update(requestCommentDto);
 
         Comment save = commentRepository.save(comment);
-        CommentIdDto commentIdDto = new CommentIdDto();
-        commentIdDto.setCommentId(save.getCommentId());
-
-        return commentIdDto;
+        return new CommentIdDto(save.getCommentId());
     }
 
     @Override

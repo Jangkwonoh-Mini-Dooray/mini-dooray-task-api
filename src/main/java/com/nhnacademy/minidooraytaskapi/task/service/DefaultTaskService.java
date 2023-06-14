@@ -56,19 +56,19 @@ public class DefaultTaskService implements TaskService{
         taskRepository.deleteById(taskId);
     }
     @Override
-    public Long saveTask(TaskRequestDto postTaskDto, Long projectId, Task task) {
+    public Long saveTask(TaskRequestDto taskRequestDto, Long projectId, Task task) {
 
         Project targetProject = projectRepository.findById(projectId)
                 .orElseThrow(() -> new NotFoundProjectException(projectId));
         task.setProject(targetProject);
 
-        Long milestoneId = postTaskDto.getMilestoneId();
+        Long milestoneId = taskRequestDto.getMilestoneId();
         if (Objects.nonNull(milestoneId)) {
             Milestone targetMilestone = milestoneRepository.findById(milestoneId)
-                    .orElseThrow(() -> new NotFoundMilestoneException(postTaskDto.getMilestoneId()));
+                    .orElseThrow(() -> new NotFoundMilestoneException(taskRequestDto.getMilestoneId()));
             task.setMilestone(targetMilestone);
         }
-        task.save(postTaskDto.getTitle(), postTaskDto.getContent(), postTaskDto.getTaskWriterMemberId());
+        task.save(taskRequestDto);
 
         Task result = taskRepository.saveAndFlush(task);
         return result.getTaskId();

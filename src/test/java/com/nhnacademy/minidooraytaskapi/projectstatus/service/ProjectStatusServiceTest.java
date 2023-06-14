@@ -38,12 +38,8 @@ class ProjectStatusServiceTest {
     @Test
     @DisplayName("프로젝트 상태 데이터 전부 가져오는 Service")
     void getProjectStatuses() {
-        ProjectStatusDto projectStatus = new ProjectStatusDto();
-        ProjectStatusDto projectStatus2 = new ProjectStatusDto();
-        projectStatus.setProjectStatusId(1);
-        projectStatus2.setProjectStatusId(2);
-        projectStatus.setName("활성");
-        projectStatus2.setName("휴면");
+        ProjectStatusDto projectStatus = new ProjectStatusDto(1, "활성");
+        ProjectStatusDto projectStatus2 = new ProjectStatusDto(2, "휴면");
         given(projectStatusRepository.getProjectStatuses()).willReturn(List.of(projectStatus, projectStatus2));
 
         List<ProjectStatusDto> projectStatuses = projectStatusService.getProjectStatuses();
@@ -55,10 +51,8 @@ class ProjectStatusServiceTest {
     @Test
     @DisplayName("특정 프로젝트 상태 데이터 가져오는 Service")
     void getProjectStatus() {
-        ProjectStatusNameDto projectStatus = new ProjectStatusNameDto();
-        ProjectStatusNameDto projectStatus2 = new ProjectStatusNameDto();
-        projectStatus.setName("활성");
-        projectStatus2.setName("휴면");
+        ProjectStatusNameDto projectStatus = new ProjectStatusNameDto("활성");
+        ProjectStatusNameDto projectStatus2 = new ProjectStatusNameDto("휴면");
         given(projectStatusRepository.getProjectStatus(anyInt())).willReturn(projectStatus);
 
         ProjectStatusNameDto result = projectStatusService.getProjectStatus(1);
@@ -78,10 +72,8 @@ class ProjectStatusServiceTest {
     @Test
     @DisplayName("상태 데이터 생성 Service #성공")
     void createProjectStatus2() {
-        ProjectStatusDto projectStatusDto = new ProjectStatusDto();
-        projectStatusDto.setProjectStatusId(4);
-        ProjectStatus projectStatus = new ProjectStatus();
-        projectStatus.setProjectStatusId(4);
+        ProjectStatusDto projectStatusDto = new ProjectStatusDto(4, "test");
+        ProjectStatus projectStatus = new ProjectStatus(4, "test");
         given(projectStatusRepository.existsById(anyInt())).willReturn(false);
         given(projectStatusRepository.saveAndFlush(any())).willReturn(projectStatus);
         ProjectStatusIdDto projectStatusIdDto = projectStatusService.createProjectStatus(projectStatusDto);

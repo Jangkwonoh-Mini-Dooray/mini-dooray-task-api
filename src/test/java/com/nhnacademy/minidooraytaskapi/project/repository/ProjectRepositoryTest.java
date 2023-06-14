@@ -1,6 +1,7 @@
 package com.nhnacademy.minidooraytaskapi.project.repository;
 
 import com.nhnacademy.minidooraytaskapi.project.dto.ProjectDto;
+import com.nhnacademy.minidooraytaskapi.project.dto.ProjectRequestDto;
 import com.nhnacademy.minidooraytaskapi.project.entity.Project;
 import com.nhnacademy.minidooraytaskapi.projectstatus.entity.ProjectStatus;
 import org.junit.jupiter.api.*;
@@ -25,7 +26,8 @@ class ProjectRepositoryTest {
     @DisplayName("Project ID 로 개별 프로젝트 조회")
     void testFindByProjectId() {
         ProjectStatus projectStatus = new ProjectStatus("test");
-        Project project = new Project(projectStatus, "test", "test");
+        ProjectRequestDto projectRequestDto = new ProjectRequestDto();
+        Project project = new Project(projectStatus, projectRequestDto);
         testEntityManager.persist(projectStatus);
         testEntityManager.persist(project);
 

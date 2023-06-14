@@ -21,7 +21,7 @@ public class ProjectAuthorityRepositoryImpl extends QuerydslRepositorySupport im
     public List<ProjectAuthorityDto> getProjectAuthorities() {
         QProjectAuthority projectAuthority = QProjectAuthority.projectAuthority;
         return from(projectAuthority)
-                .select(Projections.bean(ProjectAuthorityDto.class,
+                .select(Projections.constructor(ProjectAuthorityDto.class,
                         projectAuthority.projectAuthorityId,
                         projectAuthority.name))
                 .fetch();
@@ -31,7 +31,7 @@ public class ProjectAuthorityRepositoryImpl extends QuerydslRepositorySupport im
     public ProjectAuthorityNameDto getProjectAuthority(int projectAuthorityId) {
         QProjectAuthority projectAuthority = QProjectAuthority.projectAuthority;
         return from(projectAuthority)
-                .select(Projections.bean(ProjectAuthorityNameDto.class,
+                .select(Projections.constructor(ProjectAuthorityNameDto.class,
                         projectAuthority.name))
                 .where(projectAuthority.projectAuthorityId.eq(projectAuthorityId))
                 .fetchOne();

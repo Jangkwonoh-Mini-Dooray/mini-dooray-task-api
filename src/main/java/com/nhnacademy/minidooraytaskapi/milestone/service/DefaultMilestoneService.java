@@ -43,7 +43,7 @@ public class DefaultMilestoneService implements MilestoneService {
     public MilestoneIdDto createMilestone(Long projectId, MilestoneRequestDto dto) {
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new NotFoundProjectException(projectId));
-        Milestone milestone = new Milestone(dto.getName(), dto.getStartPeriod(), dto.getEndPeriod(), dto.getStatus(), project);
+        Milestone milestone = new Milestone(dto, project);
         milestoneRepository.saveAndFlush(milestone);
         return new MilestoneIdDto(milestone.getMilestoneId());
     }
@@ -52,7 +52,7 @@ public class DefaultMilestoneService implements MilestoneService {
     public MilestoneIdDto modifyMilestone(Long milestoneId, MilestoneRequestDto dto) {
         Milestone milestone = milestoneRepository.findById(milestoneId)
                 .orElseThrow(() -> new NotFoundMilestoneException(milestoneId));
-        milestone.update(dto.getName(), dto.getStartPeriod(), dto.getEndPeriod(), dto.getStatus());
+        milestone.update(dto);
         milestoneRepository.saveAndFlush(milestone);
         return new MilestoneIdDto(milestone.getMilestoneId());
     }

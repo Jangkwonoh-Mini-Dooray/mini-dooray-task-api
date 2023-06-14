@@ -19,7 +19,7 @@ public class ProjectStatusRepositoryImpl extends QuerydslRepositorySupport imple
     public List<ProjectStatusDto> getProjectStatuses() {
         QProjectStatus qProjectStatus = QProjectStatus.projectStatus;
         return from(qProjectStatus)
-                .select(Projections.bean(ProjectStatusDto.class,
+                .select(Projections.constructor(ProjectStatusDto.class,
                         qProjectStatus.projectStatusId,
                         qProjectStatus.name))
                 .fetch();
@@ -30,7 +30,7 @@ public class ProjectStatusRepositoryImpl extends QuerydslRepositorySupport imple
         QProjectStatus qProjectStatus = QProjectStatus.projectStatus;
         return from(qProjectStatus)
                 .where(qProjectStatus.projectStatusId.eq(projectStatusId))
-                .select(Projections.bean(ProjectStatusNameDto.class,
+                .select(Projections.constructor(ProjectStatusNameDto.class,
                         qProjectStatus.name))
                 .fetchOne();
     }

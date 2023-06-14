@@ -1,7 +1,9 @@
 package com.nhnacademy.minidooraytaskapi.milestone.repository;
 
 import com.nhnacademy.minidooraytaskapi.milestone.dto.MilestoneDto;
+import com.nhnacademy.minidooraytaskapi.milestone.dto.MilestoneRequestDto;
 import com.nhnacademy.minidooraytaskapi.milestone.entity.Milestone;
+import com.nhnacademy.minidooraytaskapi.project.dto.ProjectRequestDto;
 import com.nhnacademy.minidooraytaskapi.project.entity.Project;
 import com.nhnacademy.minidooraytaskapi.projectstatus.entity.ProjectStatus;
 import org.junit.jupiter.api.*;
@@ -30,12 +32,14 @@ class MilestoneRepositoryTest {
     @DisplayName("프로젝트 내 마일스톤 전체 조회")
     void testFindMilestones() {
         ProjectStatus projectStatus = new ProjectStatus("test");
-        Project project = new Project(projectStatus, "test", "test");
+        ProjectRequestDto projectRequestDto = new ProjectRequestDto("test", "test", "test");
+        Project project = new Project(projectStatus, projectRequestDto);
 
         testEntityManager.persist(projectStatus);
         testEntityManager.persist(project);
 
-        Milestone milestone = new Milestone("test", LocalDate.now(), LocalDate.now(), "test", project);
+        MilestoneRequestDto milestoneRequestDto = new MilestoneRequestDto();
+        Milestone milestone = new Milestone(milestoneRequestDto, project);
         testEntityManager.persist(milestone);
 
         List<MilestoneDto> milestones = milestoneRepository.findMilestones(project.getProjectId());
@@ -54,12 +58,14 @@ class MilestoneRepositoryTest {
     @DisplayName("프로젝트 내 특정 마일스톤 조회")
     void testFindMilestone() {
         ProjectStatus projectStatus = new ProjectStatus("test");
-        Project project = new Project(projectStatus, "test", "test");
+        ProjectRequestDto projectRequestDto = new ProjectRequestDto("test", "test", "test");
+        Project project = new Project(projectStatus, projectRequestDto);
 
         testEntityManager.persist(projectStatus);
         testEntityManager.persist(project);
 
-        Milestone milestone = new Milestone("test", LocalDate.now(), LocalDate.now(), "test", project);
+        MilestoneRequestDto milestoneRequestDto = new MilestoneRequestDto();
+        Milestone milestone = new Milestone(milestoneRequestDto, project);
         testEntityManager.persist(milestone);
 
         MilestoneDto milestoneDto = milestoneRepository.findMilestone(milestone.getMilestoneId());

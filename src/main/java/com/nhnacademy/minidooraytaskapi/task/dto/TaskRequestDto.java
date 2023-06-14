@@ -1,5 +1,6 @@
 package com.nhnacademy.minidooraytaskapi.task.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,7 +9,7 @@ import org.springframework.lang.Nullable;
 import javax.validation.constraints.NotBlank;
 
 @Getter
-@Setter
+@AllArgsConstructor
 @NoArgsConstructor
 public class TaskRequestDto {
     @NotBlank(message = "작성자가 존재하지 않습니다.")

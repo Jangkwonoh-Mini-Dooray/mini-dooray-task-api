@@ -35,12 +35,8 @@ class ProjectAuthorityControllerTest {
     @Test
     @DisplayName("ProjectAuthority 목록 가져오는 Controller")
     void getProjectAuthorities() throws Exception {
-        ProjectAuthorityDto projectAuthorityDto = new ProjectAuthorityDto();
-        projectAuthorityDto.setProjectAuthorityId(1);
-        projectAuthorityDto.setName("hi");
-        ProjectAuthorityDto projectAuthorityDto2 = new ProjectAuthorityDto();
-        projectAuthorityDto2.setProjectAuthorityId(2);
-        projectAuthorityDto2.setName("hello");
+        ProjectAuthorityDto projectAuthorityDto = new ProjectAuthorityDto(1, "hi");
+        ProjectAuthorityDto projectAuthorityDto2 = new ProjectAuthorityDto(2, "hello");
 
         when(projectAuthorityService.getProjectAuthorities())
                 .thenReturn(List.of(projectAuthorityDto, projectAuthorityDto2));
@@ -54,8 +50,7 @@ class ProjectAuthorityControllerTest {
     @Test
     @DisplayName("특정 ProjectAuthority 가져오는 Controller")
     void getProjectAuthority() throws Exception {
-        ProjectAuthorityNameDto projectAuthorityNameDto = new ProjectAuthorityNameDto();
-        projectAuthorityNameDto.setName("hi");
+        ProjectAuthorityNameDto projectAuthorityNameDto = new ProjectAuthorityNameDto("hi");
 
         when(projectAuthorityService.getProjectAuthority(anyInt()))
                 .thenReturn(projectAuthorityNameDto);
@@ -75,11 +70,8 @@ class ProjectAuthorityControllerTest {
     @Test
     @DisplayName("ProjectAuthority 생성하는 Controller #성공")
     void postProjectAuthority2() throws Exception {
-        ProjectAuthorityIdDto projectAuthorityIdDto = new ProjectAuthorityIdDto();
-        projectAuthorityIdDto.setProjectAuthorityId(1);
-        ProjectAuthorityDto projectAuthorityDto = new ProjectAuthorityDto();
-        projectAuthorityDto.setName("test");
-        projectAuthorityDto.setProjectAuthorityId(1);
+        ProjectAuthorityIdDto projectAuthorityIdDto = new ProjectAuthorityIdDto(1);
+        ProjectAuthorityDto projectAuthorityDto = new ProjectAuthorityDto(1, "test");
         when(projectAuthorityService.postProjectAuthority(any()))
                 .thenReturn(projectAuthorityIdDto);
 
@@ -101,11 +93,8 @@ class ProjectAuthorityControllerTest {
     @Test
     @DisplayName("ProjectAuthority 수정하는 Controller #성공")
     void putProjectAuthority2() throws Exception {
-        ProjectAuthorityIdDto projectAuthorityIdDto = new ProjectAuthorityIdDto();
-        projectAuthorityIdDto.setProjectAuthorityId(1);
-        ProjectAuthorityDto projectAuthorityDto = new ProjectAuthorityDto();
-        projectAuthorityDto.setName("test");
-        projectAuthorityDto.setProjectAuthorityId(1);
+        ProjectAuthorityIdDto projectAuthorityIdDto = new ProjectAuthorityIdDto(1);
+        ProjectAuthorityDto projectAuthorityDto = new ProjectAuthorityDto(1, "test");
         when(projectAuthorityService.putProjectAuthority(any(), anyInt()))
                 .thenReturn(projectAuthorityIdDto);
 

@@ -25,7 +25,7 @@ public class ProjectRepositoryImpl extends QuerydslRepositorySupport implements 
                 .innerJoin(projectMember)
                 .on(project.eq(projectMember.project))
                 .where(projectMember.pk.targetMemberId.eq(memberId))
-                .select(Projections.bean(ProjectIdDto.class,
+                .select(Projections.constructor(ProjectIdDto.class,
                         project.projectId))
                 .fetch();
     }

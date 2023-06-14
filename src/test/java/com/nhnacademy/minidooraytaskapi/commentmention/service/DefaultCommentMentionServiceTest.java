@@ -1,5 +1,6 @@
 package com.nhnacademy.minidooraytaskapi.commentmention.service;
 
+import com.nhnacademy.minidooraytaskapi.comment.dto.RequestCommentDto;
 import com.nhnacademy.minidooraytaskapi.comment.entity.Comment;
 import com.nhnacademy.minidooraytaskapi.comment.repository.CommentRepository;
 import com.nhnacademy.minidooraytaskapi.commentmention.dto.CommentMentionRequestDto;
@@ -58,7 +59,8 @@ class DefaultCommentMentionServiceTest {
         Long commentId = 1L;
         Task task = new Task();
         Comment comment = new Comment();
-        comment.save(task, "test", "test");
+        RequestCommentDto requestCommentDto = new RequestCommentDto("test", "test");
+        comment.save(requestCommentDto, task);
         CommentMention commentMention = new CommentMention();
         List<CommentMention> commentMentionList = new ArrayList<>();
         commentMentionList.add(commentMention);
@@ -83,7 +85,8 @@ class DefaultCommentMentionServiceTest {
         Long commentId = 1L;
         Task task = new Task();
         Comment comment = new Comment();
-        comment.save(task, "test", "test");
+        RequestCommentDto requestCommentDto = new RequestCommentDto("test", "test");
+        comment.save(requestCommentDto, task);
         CommentMention commentMention = new CommentMention();
         List<CommentMention> commentMentionList = new ArrayList<>();
         commentMentionList.add(commentMention);
@@ -108,7 +111,9 @@ class DefaultCommentMentionServiceTest {
         Long commentId = 1L;
         Task task = new Task();
         Comment comment = new Comment();
-        comment.save(task, "test", "test");
+        RequestCommentDto requestCommentDto = new RequestCommentDto("test", "test");
+
+        comment.save(requestCommentDto, task);
         CommentMention commentMention = new CommentMention();
         List<CommentMention> commentMentionList = new ArrayList<>();
         commentMentionList.add(commentMention);

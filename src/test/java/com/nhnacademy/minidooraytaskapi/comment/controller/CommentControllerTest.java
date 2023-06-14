@@ -72,12 +72,9 @@ class CommentControllerTest {
     @Test
     @DisplayName("업무에 댓글 생성하는 Controller #성공")
     void postComment2() throws Exception {
-        RequestCommentDto requestCommentDto = new RequestCommentDto();
-        requestCommentDto.setComment("what!");
-        requestCommentDto.setCommentWriterMemberId("It's me!");
+        RequestCommentDto requestCommentDto = new RequestCommentDto("It's me!", "what!");
 
-        CommentIdDto commentIdDto = new CommentIdDto();
-        commentIdDto.setCommentId(1L);
+        CommentIdDto commentIdDto = new CommentIdDto(1L);
         when(commentService.postComment(any(), anyLong()))
                 .thenReturn(commentIdDto);
 
@@ -99,12 +96,9 @@ class CommentControllerTest {
     @Test
     @DisplayName("업무에 댓글 수정하는 Controller #성공")
     void putComment2() throws Exception {
-        RequestCommentDto requestCommentDto = new RequestCommentDto();
-        requestCommentDto.setComment("what!");
-        requestCommentDto.setCommentWriterMemberId("It's me!");
+        RequestCommentDto requestCommentDto = new RequestCommentDto("It's me!", "what!");
 
-        CommentIdDto commentIdDto = new CommentIdDto();
-        commentIdDto.setCommentId(1L);
+        CommentIdDto commentIdDto = new CommentIdDto(1L);
         when(commentService.putComment(any(), anyLong()))
                 .thenReturn(commentIdDto);
 

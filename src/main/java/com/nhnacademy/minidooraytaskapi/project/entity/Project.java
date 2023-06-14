@@ -1,5 +1,6 @@
 package com.nhnacademy.minidooraytaskapi.project.entity;
 
+import com.nhnacademy.minidooraytaskapi.project.dto.ProjectRequestDto;
 import com.nhnacademy.minidooraytaskapi.projectstatus.entity.ProjectStatus;
 import javax.persistence.*;
 
@@ -23,15 +24,15 @@ public class Project {
     private String name;
     private String description;
 
-    public Project(ProjectStatus projectStatus, String name, String description) {
+    public Project(ProjectStatus projectStatus, ProjectRequestDto projectRequestDto) {
         this.projectStatus = projectStatus;
-        this.name = name;
-        this.description = description;
+        this.name = projectRequestDto.getName();
+        this.description = projectRequestDto.getDescription();
     }
 
-    public void modify(ProjectStatus projectStatus, String name, String description) {
+    public void modify(ProjectStatus projectStatus, ProjectRequestDto projectRequestDto) {
         this.projectStatus = projectStatus;
-        this.name = name;
-        this.description = description;
+        this.name = projectRequestDto.getName();
+        this.description = projectRequestDto.getDescription();
     }
 }

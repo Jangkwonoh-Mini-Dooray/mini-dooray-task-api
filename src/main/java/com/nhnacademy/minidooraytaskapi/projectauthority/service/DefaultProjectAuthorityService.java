@@ -32,9 +32,7 @@ public class DefaultProjectAuthorityService implements ProjectAuthorityService {
     public ProjectAuthorityIdDto postProjectAuthority(ProjectAuthorityDto projectAuthorityDto) {
         ProjectAuthority projectAuthority = new ProjectAuthority(projectAuthorityDto.getProjectAuthorityId(), projectAuthorityDto.getName());
         ProjectAuthority result = projectAuthorityRepository.saveAndFlush(projectAuthority);
-        ProjectAuthorityIdDto projectAuthorityIdDto = new ProjectAuthorityIdDto();
-        projectAuthorityIdDto.setProjectAuthorityId(result.getProjectAuthorityId());
-        return projectAuthorityIdDto;
+        return new ProjectAuthorityIdDto(result.getProjectAuthorityId());
     }
     @Override
     public ProjectAuthorityIdDto putProjectAuthority(ProjectAuthorityDto projectAuthorityDto, int projectAuthorityId) {
@@ -42,9 +40,7 @@ public class DefaultProjectAuthorityService implements ProjectAuthorityService {
                 .orElseThrow(() -> new NotFoundProjectAuthorityException(projectAuthorityId));
         projectAuthority.setName(projectAuthorityDto.getName());
         ProjectAuthority result = projectAuthorityRepository.saveAndFlush(projectAuthority);
-        ProjectAuthorityIdDto projectAuthorityIdDto = new ProjectAuthorityIdDto();
-        projectAuthorityIdDto.setProjectAuthorityId(result.getProjectAuthorityId());
-        return projectAuthorityIdDto;
+        return new ProjectAuthorityIdDto(result.getProjectAuthorityId());
     }
     @Override
     public void deleteProjectAuthority(int projectAuthorityId) {

@@ -5,6 +5,7 @@ import com.nhnacademy.minidooraytaskapi.project.entity.Project;
 import com.nhnacademy.minidooraytaskapi.projectstatus.entity.ProjectStatus;
 import com.nhnacademy.minidooraytaskapi.tag.dto.TagDto;
 import com.nhnacademy.minidooraytaskapi.tag.entity.Tag;
+import com.nhnacademy.minidooraytaskapi.task.dto.TaskRequestDto;
 import com.nhnacademy.minidooraytaskapi.task.entity.Task;
 import com.nhnacademy.minidooraytaskapi.tasktag.entity.TaskTag;
 import org.assertj.core.api.Assertions;
@@ -41,10 +42,8 @@ class TagRepositoryTest {
         testEntityManager.persist(project);
         testEntityManager.persist(milestone);
 
-        Tag tag = new Tag(project);
-        tag.setName("test1");
-        Tag tag2 = new Tag(project);
-        tag2.setName("test2");
+        Tag tag = new Tag(project, "test1");
+        Tag tag2 = new Tag(project, "test2");
 
         testEntityManager.persist(tag);
         testEntityManager.persist(tag2);
@@ -72,22 +71,21 @@ class TagRepositoryTest {
 
         Task task = new Task();
         Task task2 = new Task();
+        TaskRequestDto taskRequestDto = new TaskRequestDto("naht94", 2L,"title", "content");
+        TaskRequestDto taskRequestDto2 = new TaskRequestDto("naht94", 2L,"title2", "content");
 
-        task.save("test", "content", "naht94");
+        task.save(taskRequestDto);
         task.setProject(project);
         task.setMilestone(milestone);
-        task2.save("test2", "content", "naht94");
+        task2.save(taskRequestDto2);
         task2.setProject(project);
         task2.setMilestone(milestone);
 
         testEntityManager.persist(task);
         testEntityManager.persist(task2);
 
-        Tag tag = new Tag(project);
-        Tag tag2 = new Tag(project);
-
-        tag.setName("test1");
-        tag2.setName("test2");
+        Tag tag = new Tag(project, "test1");
+        Tag tag2 = new Tag(project, "test2");
 
         testEntityManager.persist(tag);
         testEntityManager.persist(tag2);
@@ -95,12 +93,8 @@ class TagRepositoryTest {
         TaskTag getTag = new TaskTag();
         TaskTag getTag2 = new TaskTag();
 
-        getTag.setTag(tag);
-        getTag.setTask(task);
-        getTag.setPk(new TaskTag.Pk(tag.getTagId(), task.getTaskId()));
-        getTag2.setTag(tag2);
-        getTag2.setTask(task);
-        getTag2.setPk(new TaskTag.Pk(tag2.getTagId(), task2.getTaskId()));
+        getTag.update(new TaskTag.Pk(tag.getTagId(), task.getTaskId()), tag, task);
+        getTag2.update(new TaskTag.Pk(tag2.getTagId(), task2.getTaskId()), tag2, task);
 
         testEntityManager.persist(getTag);
         testEntityManager.persist(getTag2);

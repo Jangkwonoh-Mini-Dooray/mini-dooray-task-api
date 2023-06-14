@@ -108,14 +108,13 @@ class CommentServiceTest {
     @Test
     @DisplayName("업무에 댓글 수정하는 Service #성공")
     void putComment2() {
-        RequestCommentDto requestCommentDto = new RequestCommentDto();
+        RequestCommentDto requestCommentDto = new RequestCommentDto(null,"update!");
         Comment comment = new Comment();
         ReflectionTestUtils.setField(comment, "commentId", 1L);
         given(commentRepository.findById(anyLong()))
                 .willReturn(Optional.of(comment));
         given(commentRepository.save(any()))
                 .willReturn(comment);
-        requestCommentDto.setComment("update!");
         CommentIdDto commentIdDto = commentService.putComment(requestCommentDto, 2L);
         assertThat(commentIdDto.getCommentId()).isEqualTo(1L);
     }

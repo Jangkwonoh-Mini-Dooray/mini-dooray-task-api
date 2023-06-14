@@ -10,6 +10,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "comment_mention")

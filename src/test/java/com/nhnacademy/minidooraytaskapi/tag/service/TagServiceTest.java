@@ -152,7 +152,7 @@ class TagServiceTest {
     @DisplayName("프로젝트에 태그 생성하는 Service #성공2 taskId 없음")
     void saveTag4() {
         TaskTagRequestDto tagRequestDto = new TaskTagRequestDto();
-//        Project project = new Project();
+
         Task task = new Task();
         Tag tag = new Tag();
         TaskTag taskTag = new TaskTag();
@@ -161,8 +161,7 @@ class TagServiceTest {
         ReflectionTestUtils.setField(tag, "tagId", 1L);
         given(tagRepository.findById(anyLong()))
                 .willReturn(Optional.of(tag));
-//        given(projectRepository.findById(anyLong()))
-//                .willReturn(Optional.of(project));
+
         given(tagRepository.saveAndFlush(any()))
                 .willReturn(tag);
 

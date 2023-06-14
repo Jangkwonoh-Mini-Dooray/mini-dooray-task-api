@@ -20,7 +20,6 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
-@Setter
 @Getter
 @Table(name = "task_tag")
 public class TaskTag {
