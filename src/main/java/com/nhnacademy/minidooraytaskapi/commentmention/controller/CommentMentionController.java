@@ -33,7 +33,7 @@ public class CommentMentionController implements ValidateParam {
                                                          @RequestBody @Valid CommentMentionRequestDto commentMentionRequestDto,
                                                          BindingResult bindingResult) {
         validate(bindingResult);
-        commentMentionService.createCommentMention(commentId, commentMentionRequestDto);
+        commentMentionService.putCommentMention(commentId, commentMentionRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(new Response("OK"));
     }
 
@@ -42,7 +42,7 @@ public class CommentMentionController implements ValidateParam {
                                                          @RequestBody @Valid CommentMentionRequestDto commentMentionRequestDto,
                                                          BindingResult bindingResult) {
         validate(bindingResult);
-        commentMentionService.modifyCommentMention(commentId, commentMentionRequestDto);
+        commentMentionService.putCommentMention(commentId, commentMentionRequestDto);
         return ResponseEntity.ok().body(new Response("OK"));
     }
 

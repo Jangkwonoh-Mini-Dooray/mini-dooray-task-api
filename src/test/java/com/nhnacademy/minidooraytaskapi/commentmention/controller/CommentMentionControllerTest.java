@@ -61,7 +61,7 @@ class CommentMentionControllerTest {
         targetMemberIdList.add("test");
         CommentMentionRequestDto commentMentionRequestDto = new CommentMentionRequestDto(targetMemberIdList);
 
-        doNothing().when(commentMentionService).createCommentMention(commentId, commentMentionRequestDto);
+        doNothing().when(commentMentionService).putCommentMention(commentId, commentMentionRequestDto);
 
         mockMvc.perform(post("/mentions/{comment-id}", commentId)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -80,7 +80,7 @@ class CommentMentionControllerTest {
         targetMemberIdList.add("test");
         CommentMentionRequestDto commentMentionRequestDto = new CommentMentionRequestDto(targetMemberIdList);
 
-        doNothing().when(commentMentionService).modifyCommentMention(commentId, commentMentionRequestDto);
+        doNothing().when(commentMentionService).putCommentMention(commentId, commentMentionRequestDto);
 
         mockMvc.perform(put("/mentions/{comment-id}", commentId)
                         .contentType(MediaType.APPLICATION_JSON)

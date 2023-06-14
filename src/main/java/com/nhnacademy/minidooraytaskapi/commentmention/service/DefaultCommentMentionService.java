@@ -28,15 +28,7 @@ public class DefaultCommentMentionService implements CommentMentionService {
     }
 
     @Override
-    public void createCommentMention(Long commentId, CommentMentionRequestDto commentMentionRequestDto) {
-        Comment comment = commentRepository.findById(commentId)
-                .orElseThrow(() -> new NotFoundCommentException(commentId));
-        List<CommentMention> commentMentionList = convertToCommentMention(comment, commentMentionRequestDto);
-        commentMentionRepository.saveAllAndFlush(commentMentionList);
-    }
-
-    @Override
-    public void modifyCommentMention(Long commentId, CommentMentionRequestDto commentMentionRequestDto) {
+    public void putCommentMention(Long commentId, CommentMentionRequestDto commentMentionRequestDto) {
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new NotFoundCommentException(commentId));
         List<CommentMention> commentMentionList = convertToCommentMention(comment, commentMentionRequestDto);

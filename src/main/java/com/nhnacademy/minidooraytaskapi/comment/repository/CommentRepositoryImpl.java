@@ -16,7 +16,7 @@ public class CommentRepositoryImpl extends QuerydslRepositorySupport implements 
 
     @Override
     public List<ResponseCommentDto> getCommentByTaskId(Long taskId) {
-        QComment comment = QComment.comment1;
+        QComment comment = QComment.comment;
         QTask task = QTask.task;
         return from(comment)
                 .innerJoin(comment.task, task)
@@ -24,7 +24,7 @@ public class CommentRepositoryImpl extends QuerydslRepositorySupport implements 
                 .select(Projections.constructor(ResponseCommentDto.class,
                                 comment.commentId,
                                 comment.commentWriterMemberId,
-                                comment.comment))
+                                comment.commentContent))
                 .fetch();
     }
 }

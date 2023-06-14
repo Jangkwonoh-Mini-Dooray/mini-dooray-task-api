@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface CommentMentionService {
     List<CommentMentionResponseDto> getCommentMentions(Long commentId);
-    void createCommentMention(Long commentId, CommentMentionRequestDto commentMentionRequestDto);
-    void modifyCommentMention(Long commentId, CommentMentionRequestDto commentMentionRequestDto);
+    void putCommentMention(Long commentId, CommentMentionRequestDto commentMentionRequestDto);
     void deleteCommentMention(Long commentId, CommentMentionRequestDto commentMentionRequestDto);
 }

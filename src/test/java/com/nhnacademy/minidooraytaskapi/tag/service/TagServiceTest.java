@@ -15,17 +15,13 @@ import com.nhnacademy.minidooraytaskapi.task.repository.TaskRepository;
 import com.nhnacademy.minidooraytaskapi.tasktag.entity.TaskTag;
 import com.nhnacademy.minidooraytaskapi.tasktag.repository.TaskTagRepository;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.List;

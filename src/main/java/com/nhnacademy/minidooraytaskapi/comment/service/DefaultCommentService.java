@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -34,7 +33,7 @@ public class DefaultCommentService implements CommentService {
         Comment comment = new Comment();
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new NotFoundTaskException(taskId));
-        comment.save(task, requestCommentDto.getCommentWriterMemberId(), requestCommentDto.getComment(), LocalDateTime.now());
+        comment.save(task, requestCommentDto.getCommentWriterMemberId(), requestCommentDto.getComment());
 
         Comment save = commentRepository.save(comment);
         CommentIdDto commentIdDto = new CommentIdDto();
@@ -47,7 +46,7 @@ public class DefaultCommentService implements CommentService {
     public CommentIdDto putComment(RequestCommentDto requestCommentDto, Long commentId) {
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new NotFoundCommentException(commentId));
-        comment.update(requestCommentDto.getComment(), LocalDateTime.now());
+        comment.update(requestCommentDto.getComment());
 
         Comment save = commentRepository.save(comment);
         CommentIdDto commentIdDto = new CommentIdDto();

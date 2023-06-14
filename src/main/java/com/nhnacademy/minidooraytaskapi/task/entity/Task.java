@@ -3,13 +3,14 @@ package com.nhnacademy.minidooraytaskapi.task.entity;
 import com.nhnacademy.minidooraytaskapi.milestone.entity.Milestone;
 import com.nhnacademy.minidooraytaskapi.project.entity.Project;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
 @Table(name = "task")
+@NoArgsConstructor
 public class Task {
     @Id
     @Column(name = "task_id")
@@ -27,10 +28,6 @@ public class Task {
     private String content;
     @Column(name = "task_writer_member_id")
     private String taskWriterMemberId;
-
-    public Task() {
-
-    }
     public void save(String title, String content, String taskWriterMemberId) {
         this.title = title;
         this.content = content;

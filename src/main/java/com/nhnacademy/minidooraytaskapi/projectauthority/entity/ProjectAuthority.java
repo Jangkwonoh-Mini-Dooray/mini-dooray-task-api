@@ -1,12 +1,14 @@
 package com.nhnacademy.minidooraytaskapi.projectauthority.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Getter
-@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "project_authority")
 public class ProjectAuthority {
@@ -18,8 +20,7 @@ public class ProjectAuthority {
     @Column(name = "name")
     private String name;
 
-    public void save(int projectAuthorityId, String name) {
-        this.projectAuthorityId = projectAuthorityId;
+    public void setName(String name) {
         this.name = name;
     }
 }
