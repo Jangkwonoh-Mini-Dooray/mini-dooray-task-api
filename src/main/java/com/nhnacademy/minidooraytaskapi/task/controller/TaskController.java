@@ -44,16 +44,14 @@ public class TaskController implements ValidateParam {
     @PostMapping("/{project-id}/posts")
     public ResponseEntity<TaskIdDto> createTask(@RequestBody @Valid TaskRequestDto postTaskDto, BindingResult bindingResult, @PathVariable("project-id") Long projectId) {
         validate(bindingResult);
-        TaskIdDto taskIdDto = new TaskIdDto();
-        taskIdDto.setTaskId(taskService.postTask(postTaskDto, projectId));
+        TaskIdDto taskIdDto = new TaskIdDto(taskService.postTask(postTaskDto, projectId));
         return ResponseEntity.status(HttpStatus.CREATED).body(taskIdDto);
     }
 
     @PutMapping("/{project-id}/posts/{task-id}")
     public ResponseEntity<TaskIdDto> modifyTask(@RequestBody @Valid TaskRequestDto postTaskDto, BindingResult bindingResult, @PathVariable("project-id") Long projectId, @PathVariable("task-id") Long taskId) {
         validate(bindingResult);
-        TaskIdDto taskIdDto = new TaskIdDto();
-        taskIdDto.setTaskId(taskService.putTask(postTaskDto, projectId, taskId));
+        TaskIdDto taskIdDto = new TaskIdDto(taskService.putTask(postTaskDto, projectId, taskId));
         return ResponseEntity.status(HttpStatus.CREATED).body(taskIdDto);
     }
 
