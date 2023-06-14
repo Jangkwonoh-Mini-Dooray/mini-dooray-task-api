@@ -4,13 +4,13 @@ Host: localhost:9091
 Content-Type: application/json
 
 ### 프로젝트 멤버 초대
-POST /projects/1/members
+POST /projects/2/members
 Host: localhost:9091
 Content-Type: application/json
 
 [
   {
-    "targetMemberId": "suebin",
+    "targetMemberId": "user",
     "projectAuthorityId": 2
   }
 ]
