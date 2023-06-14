@@ -45,7 +45,8 @@ class ProjectControllerTest {
     void testGetProjects() throws Exception {
         List<Project> projectList = new ArrayList<>();
         ProjectStatus projectStatus = new ProjectStatus("test");
-        Project project = new Project(projectStatus, "test", "test");
+        ProjectRequestDto projectRequestDto = new ProjectRequestDto();
+        Project project = new Project(projectStatus, projectRequestDto);
         projectList.add(project);
 
         when(projectService.getProjects())

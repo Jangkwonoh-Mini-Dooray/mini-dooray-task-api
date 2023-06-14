@@ -1,5 +1,6 @@
 package com.nhnacademy.minidooraytaskapi.comment.entity;
 
+import com.nhnacademy.minidooraytaskapi.comment.dto.RequestCommentDto;
 import com.nhnacademy.minidooraytaskapi.task.entity.Task;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,15 +27,15 @@ public class Comment {
     @Column(name = "created_at")
     private LocalDateTime postTime;
 
-    public void save(Task task, String commentWriterMemberId, String commentContent) {
+    public void save(RequestCommentDto requestCommentDto, Task task) {
         this.task = task;
-        this.commentWriterMemberId = commentWriterMemberId;
-        this.commentContent = commentContent;
+        this.commentWriterMemberId = requestCommentDto.getCommentWriterMemberId();
+        this.commentContent = requestCommentDto.getCommentContent();
         this.postTime = LocalDateTime.now();
     }
 
-    public void update(String commentContent) {
-        this.commentContent = commentContent;
+    public void update(RequestCommentDto requestCommentDto) {
+        this.commentContent = requestCommentDto.getCommentContent();
         this.postTime = LocalDateTime.now();
     }
 }

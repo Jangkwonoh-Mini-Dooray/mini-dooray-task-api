@@ -44,7 +44,7 @@ public class DefaultTagService implements TagService {
     public TagIdDto postTagTask(TaskTagRequestDto taskTagRequestDto, Long projectId) {
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new NotFoundProjectException(projectId));
-        Tag tag = new Tag(project);
+        Tag tag = new Tag(project, taskTagRequestDto.getName());
         return save(taskTagRequestDto, tag);
     }
 
@@ -52,12 +52,11 @@ public class DefaultTagService implements TagService {
     public TagIdDto putTagTask(TaskTagRequestDto taskTagRequestDto, Long projectId, Long tagId) {
         Tag tag = tagRepository.findById(tagId)
                 .orElseThrow(() -> new NotFoundTagException(tagId));
+        tag.setName(taskTagRequestDto.getName());
         return save(taskTagRequestDto, tag);
     }
 
     private TagIdDto save(TaskTagRequestDto taskTagRequestDto, Tag tag) {
-        tag.setName(taskTagRequestDto.getName());
-
         Tag save = tagRepository.saveAndFlush(tag);
 
         if (Objects.nonNull(taskTagRequestDto.getTaskId())) {

@@ -36,13 +36,9 @@ public class DefaultProjectStatusService implements ProjectStatusService {
         if (projectStatusRepository.existsById(projectStatusDto.getProjectStatusId())) {
             throw new DuplicateIntIdException(projectStatusDto.getProjectStatusId());
         }
-        ProjectStatus projectStatus = new ProjectStatus();
-        projectStatus.setProjectStatusId(projectStatusDto.getProjectStatusId());
-        projectStatus.setName(projectStatusDto.getName());
+        ProjectStatus projectStatus = new ProjectStatus(projectStatusDto.getName());
         ProjectStatus result = projectStatusRepository.saveAndFlush(projectStatus);
-        ProjectStatusIdDto projectStatusIdDto = new ProjectStatusIdDto();
-        projectStatusIdDto.setProjectStatusId(result.getProjectStatusId());
-        return projectStatusIdDto;
+        return new ProjectStatusIdDto(result.getProjectStatusId());
     }
 
     @Override
@@ -51,9 +47,7 @@ public class DefaultProjectStatusService implements ProjectStatusService {
                 .orElseThrow(() -> new NotFoundProjectStatusException(projectStatusId));
         projectStatus.setName(projectStatusNameDto.getName());
         ProjectStatus result = projectStatusRepository.saveAndFlush(projectStatus);
-        ProjectStatusIdDto projectStatusIdDto = new ProjectStatusIdDto();
-        projectStatusIdDto.setProjectStatusId(result.getProjectStatusId());
-        return projectStatusIdDto;
+        return new ProjectStatusIdDto(result.getProjectStatusId());
     }
 
     @Override

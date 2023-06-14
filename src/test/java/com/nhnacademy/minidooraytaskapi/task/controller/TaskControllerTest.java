@@ -56,10 +56,11 @@ class TaskControllerTest {
         ReflectionTestUtils.setField(project, "projectStatus", projectStatus);
 
         ReflectionTestUtils.setField(task, "taskId", 1L);
-        task.save("test","content", "naht94");
+        TaskRequestDto taskRequestDto = new TaskRequestDto("naht94", 1L, "title", "content");
+        task.save(taskRequestDto);
         task.setProject(project);
         ReflectionTestUtils.setField(task2, "taskId", 2L);
-        task2.save("test","content", "naht94");
+        task2.save(taskRequestDto);
         task2.setProject(project);
 
         when(taskService.getTasks(anyLong()))
@@ -87,7 +88,8 @@ class TaskControllerTest {
         ReflectionTestUtils.setField(task, "taskId", 1L);
 
         ReflectionTestUtils.setField(task, "taskId", 1L);
-        task.save("test","content", "naht94");
+        TaskRequestDto taskRequestDto = new TaskRequestDto("naht94", 1L, "title", "content");
+        task.save(taskRequestDto);
         task.setProject(project);
 
         when(taskService.getTask(anyLong(), anyLong()))
@@ -113,18 +115,13 @@ class TaskControllerTest {
     @DisplayName("프로젝트에 업무 생성 #성공")
     void createTask2() throws Exception {
 
-        TaskRequestDto taskRequestDto = new TaskRequestDto();
-
+        TaskRequestDto taskRequestDto = new TaskRequestDto("naht94", 1L, "세번째 업무", "테스트 업무");
         Project project = new Project();
         ReflectionTestUtils.setField(project, "projectId", 1L);
         ReflectionTestUtils.setField(project, "name", "ggg");
         ReflectionTestUtils.setField(project, "projectId", 1L);
         ProjectStatus projectStatus = new ProjectStatus("활성");
         ReflectionTestUtils.setField(project, "projectStatus", projectStatus);
-
-        taskRequestDto.setTaskWriterMemberId("naht94");
-        taskRequestDto.setTitle("세번째 업무");
-        taskRequestDto.setContent("테스트 업무");
 
         when(taskService.postTask(any(), anyLong()))
                 .thenReturn(1L);
@@ -143,7 +140,8 @@ class TaskControllerTest {
         ReflectionTestUtils.setField(project, "projectId", 1L);
         Task task = new Task();
         ReflectionTestUtils.setField(task, "taskId", 1L);
-        task.save("test","content", "naht94");
+        TaskRequestDto taskRequestDto = new TaskRequestDto("naht94", 1L, "세번째 업무", "테스트 업무");
+        task.save(taskRequestDto);
 
         mockMvc.perform(put("/projects/{project-id}/posts/{task-id}", project.getProjectId(), task.getTaskId()))
                 .andExpect(status().isBadRequest());
@@ -152,7 +150,6 @@ class TaskControllerTest {
     @DisplayName("프로젝트에 업무 수정 #성공")
     void modifyTask2() throws Exception {
         Task task = new Task();
-        TaskRequestDto taskDto = new TaskRequestDto();
 
         Project project = new Project();
         ReflectionTestUtils.setField(project, "projectId", 1L);
@@ -162,11 +159,9 @@ class TaskControllerTest {
         ReflectionTestUtils.setField(project, "projectStatus", projectStatus);
 
         ReflectionTestUtils.setField(task, "taskId", 1L);
-        task.save("test","content", "naht94");
-
-        taskDto.setTaskWriterMemberId("naht94");
-        taskDto.setTitle("세번째 업무");
-        taskDto.setContent("테스트 업무");
+        TaskRequestDto taskRequestDto = new TaskRequestDto("naht94", 1L, "세번째 업무", "테스트 업무");
+        TaskRequestDto taskDto = new TaskRequestDto("naht94", 1L, "세번째 업무", "테스트 업무");
+        task.save(taskRequestDto);
 
         when(taskService.putTask(any(), anyLong(), anyLong()))
                 .thenReturn(1L);
@@ -183,7 +178,8 @@ class TaskControllerTest {
     void deleteTask() throws Exception {
         Task task = new Task();
         ReflectionTestUtils.setField(task, "taskId", 1L);
-        task.save("test","content", "naht94");
+        TaskRequestDto taskRequestDto = new TaskRequestDto("naht94", 1L, "세번째 업무", "테스트 업무");
+        task.save(taskRequestDto);
 
         doNothing().when(taskService).deleteTask(anyLong());
 

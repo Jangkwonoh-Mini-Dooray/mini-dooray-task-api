@@ -1,9 +1,11 @@
 package com.nhnacademy.minidooraytaskapi.task.repository;
 
 import com.nhnacademy.minidooraytaskapi.milestone.entity.Milestone;
+import com.nhnacademy.minidooraytaskapi.project.dto.ProjectRequestDto;
 import com.nhnacademy.minidooraytaskapi.project.entity.Project;
 import com.nhnacademy.minidooraytaskapi.projectstatus.entity.ProjectStatus;
 import com.nhnacademy.minidooraytaskapi.task.dto.TaskDto;
+import com.nhnacademy.minidooraytaskapi.task.dto.TaskRequestDto;
 import com.nhnacademy.minidooraytaskapi.task.entity.Task;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,17 +35,21 @@ class TaskRepositoryTest {
         Task task2 = new Task();
 
         ProjectStatus projectStatus = new ProjectStatus();
-        Project project = new Project(projectStatus, "ggg", "소녀시대");
+        ProjectRequestDto projectRequestDto = new ProjectRequestDto("test", "ggg", "소녀시대");
+        Project project = new Project(projectStatus, projectRequestDto);
         Milestone milestone = new Milestone();
 
         testEntityManager.persist(projectStatus);
         testEntityManager.persist(project);
         testEntityManager.persist(milestone);
 
-        task.save("test","content", "naht94");
+        TaskRequestDto taskRequestDto = new TaskRequestDto("naht94", 1L, "세번째 업무", "테스트 업무");
+        task.save(taskRequestDto);
         task.setProject(project);
         task.setMilestone(milestone);
-        task2.save("test2","content2", "naht94");
+        TaskRequestDto taskRequestDto2 = new TaskRequestDto("naht94", 1L, "세번째 업무", "테스트 업무");
+
+        task2.save(taskRequestDto2);
         task2.setProject(project);
         task2.setMilestone(milestone);
 
@@ -64,17 +70,20 @@ class TaskRepositoryTest {
         Task task2 = new Task();
 
         ProjectStatus projectStatus = new ProjectStatus("test");
-        Project project = new Project(projectStatus, "ggg", "소녀시대");
+        ProjectRequestDto projectRequestDto = new ProjectRequestDto("test", "ggg", "소녀시대");
+        Project project = new Project(projectStatus, projectRequestDto);
         Milestone milestone = new Milestone();
 
         testEntityManager.persist(projectStatus);
         testEntityManager.persist(project);
         testEntityManager.persist(milestone);
 
-        task.save("test", "content", "naht94");
+        TaskRequestDto taskRequestDto = new TaskRequestDto("naht94", 1L, "세번째 업무", "테스트 업무");
+        task.save(taskRequestDto);
         task.setProject(project);
         task.setMilestone(milestone);
-        task2.save("test2", "content", "naht94");
+        TaskRequestDto taskRequestDto2 = new TaskRequestDto("naht94", 1L, "네번째 업무", "테스트 업무");
+        task2.save(taskRequestDto2);
         task2.setProject(project);
         task2.setMilestone(milestone);
 

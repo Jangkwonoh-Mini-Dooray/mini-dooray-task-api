@@ -1,10 +1,13 @@
 package com.nhnacademy.minidooraytaskapi.comment.repository;
 
+import com.nhnacademy.minidooraytaskapi.comment.dto.RequestCommentDto;
 import com.nhnacademy.minidooraytaskapi.comment.dto.ResponseCommentDto;
 import com.nhnacademy.minidooraytaskapi.comment.entity.Comment;
 import com.nhnacademy.minidooraytaskapi.milestone.entity.Milestone;
+import com.nhnacademy.minidooraytaskapi.project.dto.ProjectRequestDto;
 import com.nhnacademy.minidooraytaskapi.project.entity.Project;
 import com.nhnacademy.minidooraytaskapi.projectstatus.entity.ProjectStatus;
+import com.nhnacademy.minidooraytaskapi.task.dto.TaskRequestDto;
 import com.nhnacademy.minidooraytaskapi.task.entity.Task;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -14,7 +17,6 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @DataJpaTest
@@ -30,23 +32,27 @@ class CommentRepositoryTest {
     void getCommentByTaskId() {
         Comment comment = new Comment();
         Comment comment2 = new Comment();
+        TaskRequestDto taskRequestDto = new TaskRequestDto("naht94", 1L,"test","content");
         Task task = new Task();
         ProjectStatus projectStatus = new ProjectStatus();
-        Project project = new Project(projectStatus, "ggg", "소녀시대");
+        ProjectRequestDto projectRequestDto = new ProjectRequestDto(projectStatus.getName(), "ggg", "소녀시대");
+
+        Project project = new Project(projectStatus, projectRequestDto);
         Milestone milestone = new Milestone();
 
         testEntityManager.persist(projectStatus);
         testEntityManager.persist(project);
         testEntityManager.persist(milestone);
 
-        task.save("test","content", "naht94");
+        task.save(taskRequestDto);
         task.setProject(project);
         task.setMilestone(milestone);
 
         testEntityManager.persist(task);
-
-        comment.save(task, "naht94","할게 너무 많다아아악!");
-        comment2.save(task, "nami","입닫고 할거 하쇼");
+        RequestCommentDto naht94 = new RequestCommentDto("naht94", "할게 너무 많다아아악!");
+        RequestCommentDto nami = new RequestCommentDto("nami", "입닫고 할거 하쇼");
+        comment.save(naht94, task);
+        comment2.save(nami, task);
 
         testEntityManager.persist(comment);
         testEntityManager.persist(comment2);

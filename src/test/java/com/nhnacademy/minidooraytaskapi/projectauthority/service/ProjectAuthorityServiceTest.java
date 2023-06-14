@@ -38,12 +38,8 @@ class ProjectAuthorityServiceTest {
     @Test
     @DisplayName("ProjectAuthority 테이블에 존재하는 모든 데이터를 가져오는 Service")
     void getProjectAuthorities() {
-        ProjectAuthorityDto projectAuthorityDto = new ProjectAuthorityDto();
-        projectAuthorityDto.setProjectAuthorityId(1);
-        projectAuthorityDto.setName("hi");
-        ProjectAuthorityDto projectAuthorityDto2 = new ProjectAuthorityDto();
-        projectAuthorityDto2.setProjectAuthorityId(2);
-        projectAuthorityDto2.setName("hello");
+        ProjectAuthorityDto projectAuthorityDto = new ProjectAuthorityDto(1, "hi");
+        ProjectAuthorityDto projectAuthorityDto2 = new ProjectAuthorityDto(2, "hello");
 
         when(projectAuthorityRepository.getProjectAuthorities())
                 .thenReturn(List.of(projectAuthorityDto, projectAuthorityDto2));
@@ -57,8 +53,7 @@ class ProjectAuthorityServiceTest {
     @Test
     @DisplayName("ProjectAuthority 테이블에 특정 데이터를 가져오는 Service")
     void getProjectAuthority() {
-        ProjectAuthorityNameDto projectAuthorityNameDto = new ProjectAuthorityNameDto();
-        projectAuthorityNameDto.setName("hi");
+        ProjectAuthorityNameDto projectAuthorityNameDto = new ProjectAuthorityNameDto("hi");
 
         when(projectAuthorityRepository.getProjectAuthority(anyInt()))
                 .thenReturn(projectAuthorityNameDto);

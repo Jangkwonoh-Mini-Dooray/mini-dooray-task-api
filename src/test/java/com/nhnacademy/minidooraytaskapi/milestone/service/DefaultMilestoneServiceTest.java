@@ -99,7 +99,7 @@ class DefaultMilestoneServiceTest {
         Long projectId = 1L;
         MilestoneRequestDto requestDto = new MilestoneRequestDto("test", LocalDate.now(), LocalDate.now(), "test");
         Project project = new Project();
-        Milestone milestone = new Milestone("test", LocalDate.now(), LocalDate.now(), "test", project);
+        Milestone milestone = new Milestone(requestDto, project);
 
         when(projectRepository.findById(projectId)).thenReturn(Optional.of(project));
         when(milestoneRepository.saveAndFlush(any(Milestone.class))).thenReturn(milestone);
@@ -117,7 +117,7 @@ class DefaultMilestoneServiceTest {
     void testModifyMilestone() {
         Long milestoneId = 1L;
         MilestoneRequestDto requestDto = new MilestoneRequestDto("test", LocalDate.now(), LocalDate.now(), "test");
-        Milestone milestone = new Milestone("test", LocalDate.now(), LocalDate.now(), "test", new Project());
+        Milestone milestone = new Milestone(requestDto, new Project());
 
         when(milestoneRepository.findById(milestoneId)).thenReturn(Optional.of(milestone));
         when(milestoneRepository.saveAndFlush(any(Milestone.class))).thenReturn(milestone);

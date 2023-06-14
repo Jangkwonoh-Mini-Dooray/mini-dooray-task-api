@@ -2,6 +2,7 @@ package com.nhnacademy.minidooraytaskapi.task.entity;
 
 import com.nhnacademy.minidooraytaskapi.milestone.entity.Milestone;
 import com.nhnacademy.minidooraytaskapi.project.entity.Project;
+import com.nhnacademy.minidooraytaskapi.task.dto.TaskRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -28,10 +29,10 @@ public class Task {
     private String content;
     @Column(name = "task_writer_member_id")
     private String taskWriterMemberId;
-    public void save(String title, String content, String taskWriterMemberId) {
-        this.title = title;
-        this.content = content;
-        this.taskWriterMemberId = taskWriterMemberId;
+    public void save(TaskRequestDto taskRequestDto) {
+        this.title = taskRequestDto.getTitle();
+        this.content = taskRequestDto.getContent();
+        this.taskWriterMemberId = taskRequestDto.getTaskWriterMemberId();
     }
     public void setProject(Project project) {
         this.project = project;

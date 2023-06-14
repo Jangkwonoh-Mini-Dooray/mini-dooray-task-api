@@ -1,5 +1,6 @@
 package com.nhnacademy.minidooraytaskapi.projectmember.repository;
 
+import com.nhnacademy.minidooraytaskapi.project.dto.ProjectRequestDto;
 import com.nhnacademy.minidooraytaskapi.projectmember.dto.ProjectMemberResponseDto;
 import com.nhnacademy.minidooraytaskapi.projectmember.entity.ProjectMember;
 import com.nhnacademy.minidooraytaskapi.project.entity.Project;
@@ -31,7 +32,8 @@ class ProjectMemberRepositoryTest {
     void testFindTargetMembers() {
         ProjectStatus projectStatus = new ProjectStatus("test");
         ProjectAuthority projectAuthority = new ProjectAuthority();
-        Project project = new Project(projectStatus, "test", "test");
+        ProjectRequestDto projectRequestDto = new ProjectRequestDto("test", "test", "test");
+        Project project = new Project(projectStatus, projectRequestDto);
         ProjectMember projectMember = new ProjectMember(new ProjectMember.Pk("test", project.getProjectId()), project, projectAuthority);
 
         testEntityManager.persist(projectStatus);

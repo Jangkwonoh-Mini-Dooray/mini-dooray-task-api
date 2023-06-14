@@ -21,8 +21,9 @@ public class Tag {
 
     public Tag() {
     }
-    public Tag(Project project) {
+    public Tag(Project project, String name) {
         this.project = project;
+        this.name = name;
     }
 
     public void setName(String name) {

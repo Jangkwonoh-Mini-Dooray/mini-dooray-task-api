@@ -100,12 +100,11 @@ class TaskServiceTest {
     @Test
     @DisplayName("프로젝트에 업무 수정 및 저장하는 서비스 #실패 2 가져온 마일스톤 아이디가 없는 아이디인 경우")
     void saveTask2() {
-        TaskRequestDto postTaskDto = new TaskRequestDto();
-        Task task = new Task();
+        TaskRequestDto postTaskDto = new TaskRequestDto("naht94", 1L, "세번째 업무", "테스트 업무");
+
         Project project = new Project();
         ReflectionTestUtils.setField(project, "projectId", 1L);
 
-        postTaskDto.setMilestoneId(1L);
         given(projectRepository.findById(anyLong())).willReturn(Optional.of(project));
         given(milestoneRepository.findById(anyLong())).willReturn(Optional.empty());
 
@@ -136,10 +135,9 @@ class TaskServiceTest {
     void saveTask4() {
         Task task = new Task();
         ReflectionTestUtils.setField(task, "taskId", 1L);
-        TaskRequestDto postTaskDto = new TaskRequestDto();
+        TaskRequestDto postTaskDto = new TaskRequestDto("naht94", 1L, "세번째 업무", "테스트 업무");
         Project project = new Project();
         Milestone milestone = new Milestone();
-        postTaskDto.setMilestoneId(1L);
 
         ReflectionTestUtils.setField(project, "projectId", 1L);
 

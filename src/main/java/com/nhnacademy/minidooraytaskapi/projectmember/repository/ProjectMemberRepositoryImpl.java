@@ -19,7 +19,7 @@ public class ProjectMemberRepositoryImpl extends QuerydslRepositorySupport imple
 
         return from(projectMember)
                 .where(projectMember.project.projectId.eq(projectId))
-                .select(Projections.bean(ProjectMemberResponseDto.class,
+                .select(Projections.constructor(ProjectMemberResponseDto.class,
                         projectMember.projectAuthority.projectAuthorityId,
                         projectMember.pk.targetMemberId))
                 .fetch();

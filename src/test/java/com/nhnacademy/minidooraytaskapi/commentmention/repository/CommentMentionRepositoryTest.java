@@ -1,5 +1,6 @@
 package com.nhnacademy.minidooraytaskapi.commentmention.repository;
 
+import com.nhnacademy.minidooraytaskapi.comment.dto.RequestCommentDto;
 import com.nhnacademy.minidooraytaskapi.comment.entity.Comment;
 import com.nhnacademy.minidooraytaskapi.commentmention.dto.CommentMentionResponseDto;
 import com.nhnacademy.minidooraytaskapi.commentmention.entity.CommentMention;
@@ -33,7 +34,8 @@ class CommentMentionRepositoryTest {
         testEntityManager.persist(task);
 
         Comment comment = new Comment();
-        comment.save(task, "test", "test");
+        RequestCommentDto requestCommentDto = new RequestCommentDto();
+        comment.save(requestCommentDto, task);
         testEntityManager.persist(comment);
 
         CommentMention commentMention1 = new CommentMention(new CommentMention.Pk("user", comment.getCommentId()), comment);

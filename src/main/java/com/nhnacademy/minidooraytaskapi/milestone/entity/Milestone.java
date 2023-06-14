@@ -1,5 +1,6 @@
 package com.nhnacademy.minidooraytaskapi.milestone.entity;
 
+import com.nhnacademy.minidooraytaskapi.milestone.dto.MilestoneRequestDto;
 import com.nhnacademy.minidooraytaskapi.project.entity.Project;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,18 +27,18 @@ public class Milestone {
     @JoinColumn(name = "project_id")
     private Project project;
 
-    public Milestone(String name, LocalDate startPeriod, LocalDate endPeriod, String status, Project project) {
-        this.name = name;
-        this.startPeriod = startPeriod;
-        this.endPeriod = endPeriod;
-        this.status = status;
+    public Milestone(MilestoneRequestDto milestoneRequestDto, Project project) {
+        this.name = milestoneRequestDto.getName();
+        this.startPeriod = milestoneRequestDto.getStartPeriod();
+        this.endPeriod = milestoneRequestDto.getEndPeriod();
+        this.status = milestoneRequestDto.getStatus();
         this.project = project;
     }
 
-    public void update(String name, LocalDate startPeriod, LocalDate endPeriod, String status) {
-        this.name = name;
-        this.startPeriod = startPeriod;
-        this.endPeriod = endPeriod;
-        this.status = status;
+    public void update(MilestoneRequestDto milestoneRequestDto) {
+        this.name = milestoneRequestDto.getName();
+        this.startPeriod = milestoneRequestDto.getStartPeriod();
+        this.endPeriod = milestoneRequestDto.getEndPeriod();
+        this.status = milestoneRequestDto.getStatus();
     }
 }
