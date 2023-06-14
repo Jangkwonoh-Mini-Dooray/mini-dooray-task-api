@@ -33,7 +33,7 @@ class CommentMentionRepositoryTest {
         testEntityManager.persist(task);
 
         Comment comment = new Comment();
-        comment.save(task, "test", "test", LocalDateTime.now());
+        comment.save(task, "test", "test");
         testEntityManager.persist(comment);
 
         CommentMention commentMention1 = new CommentMention(new CommentMention.Pk("user", comment.getCommentId()), comment);

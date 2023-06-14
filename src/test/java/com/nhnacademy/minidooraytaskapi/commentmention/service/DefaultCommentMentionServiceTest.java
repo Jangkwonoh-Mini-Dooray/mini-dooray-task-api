@@ -12,12 +12,7 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -63,7 +58,7 @@ class DefaultCommentMentionServiceTest {
         Long commentId = 1L;
         Task task = new Task();
         Comment comment = new Comment();
-        comment.save(task, "test", "test", LocalDateTime.now());
+        comment.save(task, "test", "test");
         CommentMention commentMention = new CommentMention();
         List<CommentMention> commentMentionList = new ArrayList<>();
         commentMentionList.add(commentMention);
@@ -77,7 +72,7 @@ class DefaultCommentMentionServiceTest {
         given(commentMentionRepository.saveAllAndFlush(any()))
                 .willReturn(commentMentionList);
 
-        commentMentionService.createCommentMention(commentId, commentMentionRequestDto);
+        commentMentionService.putCommentMention(commentId, commentMentionRequestDto);
         verify(commentMentionRepository).saveAllAndFlush(anyList());
     }
 
@@ -88,7 +83,7 @@ class DefaultCommentMentionServiceTest {
         Long commentId = 1L;
         Task task = new Task();
         Comment comment = new Comment();
-        comment.save(task, "test", "test", LocalDateTime.now());
+        comment.save(task, "test", "test");
         CommentMention commentMention = new CommentMention();
         List<CommentMention> commentMentionList = new ArrayList<>();
         commentMentionList.add(commentMention);
@@ -102,7 +97,7 @@ class DefaultCommentMentionServiceTest {
         given(commentMentionRepository.saveAllAndFlush(any()))
                 .willReturn(commentMentionList);
 
-        commentMentionService.modifyCommentMention(commentId, commentMentionRequestDto);
+        commentMentionService.putCommentMention(commentId, commentMentionRequestDto);
         verify(commentMentionRepository).saveAllAndFlush(anyList());
     }
 
@@ -113,7 +108,7 @@ class DefaultCommentMentionServiceTest {
         Long commentId = 1L;
         Task task = new Task();
         Comment comment = new Comment();
-        comment.save(task, "test", "test", LocalDateTime.now());
+        comment.save(task, "test", "test");
         CommentMention commentMention = new CommentMention();
         List<CommentMention> commentMentionList = new ArrayList<>();
         commentMentionList.add(commentMention);
@@ -139,6 +134,6 @@ class DefaultCommentMentionServiceTest {
         when(commentRepository.findById(commentId)).thenReturn(Optional.empty());
 
         assertThrows(NotFoundCommentException.class, () ->
-                commentMentionService.createCommentMention(commentId, commentMentionRequestDto));
+                commentMentionService.putCommentMention(commentId, commentMentionRequestDto));
     }
 }

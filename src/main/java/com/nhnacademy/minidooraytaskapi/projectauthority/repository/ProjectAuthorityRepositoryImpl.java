@@ -5,7 +5,6 @@ import com.nhnacademy.minidooraytaskapi.projectauthority.dto.ProjectAuthorityNam
 import com.nhnacademy.minidooraytaskapi.projectauthority.entity.ProjectAuthority;
 import com.nhnacademy.minidooraytaskapi.projectauthority.entity.QProjectAuthority;
 
-import com.nhnacademy.minidooraytaskapi.projectstatus.dto.ProjectStatusNameDto;
 
 import com.querydsl.core.types.Projections;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;

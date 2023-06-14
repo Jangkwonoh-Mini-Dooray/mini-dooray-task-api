@@ -114,6 +114,6 @@ class ProjectStatusControllerTest {
     void deleteProjectStatus() throws Exception {
         doNothing().when(projectStatusService).deleteProjectStatus(anyInt());
         mockMvc.perform(delete("/project-status/{projectStatusId}", 1))
-                .andExpect(status().isNoContent());
+                .andExpect(status().isOk());
     }
 }

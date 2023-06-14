@@ -45,8 +45,8 @@ class CommentRepositoryTest {
 
         testEntityManager.persist(task);
 
-        comment.save(task, "naht94","할게 너무 많다아아악!", LocalDateTime.now());
-        comment2.save(task, "nami","입닫고 할거 하쇼", LocalDateTime.now());
+        comment.save(task, "naht94","할게 너무 많다아아악!");
+        comment2.save(task, "nami","입닫고 할거 하쇼");
 
         testEntityManager.persist(comment);
         testEntityManager.persist(comment2);

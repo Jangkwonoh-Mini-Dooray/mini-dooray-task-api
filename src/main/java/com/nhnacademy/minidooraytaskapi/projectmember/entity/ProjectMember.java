@@ -28,7 +28,6 @@ public class ProjectMember {
         @Column(name = "project_id")
         private Long projectId;
     }
-
     @MapsId("projectId")
     @ManyToOne
     @JoinColumn(name = "project_id")

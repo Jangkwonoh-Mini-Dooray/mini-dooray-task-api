@@ -91,8 +91,9 @@ class ProjectStatusServiceTest {
     @Test
     @DisplayName("상태 데이터 업데이트 Service # 실패")
     void updateMember() {
+        ProjectStatusNameDto projectStatusNameDto = new ProjectStatusNameDto();
         given(projectStatusRepository.findById(anyInt())).willReturn(Optional.empty());
-        assertThrows(NotFoundProjectStatusException.class, () -> projectStatusService.updateProjectStatus(1, new ProjectStatusNameDto()));
+        assertThrows(NotFoundProjectStatusException.class, () -> projectStatusService.updateProjectStatus(1, projectStatusNameDto));
     }
 
     @Test

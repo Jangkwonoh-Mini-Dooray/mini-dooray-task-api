@@ -1,8 +1,6 @@
 package com.nhnacademy.minidooraytaskapi.comment.entity;
 
 import com.nhnacademy.minidooraytaskapi.task.entity.Task;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -23,19 +21,20 @@ public class Comment {
     private Task task;
     @Column(name = "comment_writer_member_id")
     private String commentWriterMemberId;
-    private String comment;
+    @Column(name = "comment")
+    private String commentContent;
     @Column(name = "created_at")
     private LocalDateTime postTime;
 
-    public void save(Task task, String commentWriterMemberId, String comment, LocalDateTime postTime) {
+    public void save(Task task, String commentWriterMemberId, String commentContent) {
         this.task = task;
         this.commentWriterMemberId = commentWriterMemberId;
-        this.comment = comment;
-        this.postTime = postTime;
+        this.commentContent = commentContent;
+        this.postTime = LocalDateTime.now();
     }
 
-    public void update(String comment, LocalDateTime postTime) {
-        this.comment = comment;
-        this.postTime = postTime;
+    public void update(String commentContent) {
+        this.commentContent = commentContent;
+        this.postTime = LocalDateTime.now();
     }
 }

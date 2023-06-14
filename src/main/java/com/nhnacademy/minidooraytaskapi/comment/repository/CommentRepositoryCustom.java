@@ -1,6 +1,5 @@
 package com.nhnacademy.minidooraytaskapi.comment.repository;
 
-import com.nhnacademy.minidooraytaskapi.comment.dto.RequestCommentDto;
 import com.nhnacademy.minidooraytaskapi.comment.dto.ResponseCommentDto;
 import org.springframework.data.repository.NoRepositoryBean;
 

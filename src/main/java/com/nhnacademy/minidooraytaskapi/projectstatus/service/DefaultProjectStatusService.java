@@ -15,6 +15,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class DefaultProjectStatusService implements ProjectStatusService {
     private final ProjectStatusRepository projectStatusRepository;
 
@@ -31,7 +32,6 @@ public class DefaultProjectStatusService implements ProjectStatusService {
     }
 
     @Override
-    @Transactional
     public ProjectStatusIdDto createProjectStatus(ProjectStatusDto projectStatusDto) {
         if (projectStatusRepository.existsById(projectStatusDto.getProjectStatusId())) {
             throw new DuplicateIntIdException(projectStatusDto.getProjectStatusId());
@@ -46,7 +46,6 @@ public class DefaultProjectStatusService implements ProjectStatusService {
     }
 
     @Override
-    @Transactional
     public ProjectStatusIdDto updateProjectStatus(int projectStatusId, ProjectStatusNameDto projectStatusNameDto) {
         ProjectStatus projectStatus = projectStatusRepository.findById(projectStatusId)
                 .orElseThrow(() -> new NotFoundProjectStatusException(projectStatusId));
@@ -58,7 +57,6 @@ public class DefaultProjectStatusService implements ProjectStatusService {
     }
 
     @Override
-    @Transactional
     public void deleteProjectStatus(int projectStatusId) {
         if (!projectStatusRepository.existsById(projectStatusId)) {
             throw new NotFoundProjectStatusException(projectStatusId);
