@@ -64,8 +64,8 @@ class TaskControllerTest {
         task2.setProject(project);
 
         when(taskService.getTasks(anyLong()))
-                .thenReturn(List.of(new TaskDto(task.getTaskId(), task.getTaskWriterMemberId(), task.getMilestone(), task.getTitle()),
-                        new TaskDto(task2.getTaskId(), task2.getTaskWriterMemberId(), task2.getMilestone(), task.getTitle())));
+                .thenReturn(List.of(new TaskDto(task.getTaskId(), task.getTaskWriterMemberId(), task.getMilestone(), task.getTitle(), task.getContent()),
+                        new TaskDto(task2.getTaskId(), task2.getTaskWriterMemberId(), task2.getMilestone(), task2.getTitle(), task2.getContent())));
 
 
         mockMvc.perform(get("/projects/{project-id}/posts", 1L))
@@ -93,7 +93,7 @@ class TaskControllerTest {
         task.setProject(project);
 
         when(taskService.getTask(anyLong(), anyLong()))
-                .thenReturn(new TaskDto(task.getTaskId(), task.getTaskWriterMemberId(), task.getMilestone(), task.getTitle()));
+                .thenReturn(new TaskDto(task.getTaskId(), task.getTaskWriterMemberId(), task.getMilestone(), task.getTitle(), task.getContent()));
 
 
         mockMvc.perform(get("/projects/{project-id}/posts/{task-id}", project.getProjectId(), task.getTaskId()))

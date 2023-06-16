@@ -61,8 +61,8 @@ class TaskServiceTest {
 
 
         given(taskRepository.getTasks(anyLong()))
-                .willReturn(List.of(new TaskDto(task.getTaskId(), task.getTaskWriterMemberId(), task.getMilestone(), task.getTitle()),
-                        new TaskDto(task2.getTaskId(), task2.getTaskWriterMemberId(), task2.getMilestone(), task.getTitle())));
+                .willReturn(List.of(new TaskDto(task.getTaskId(), task.getTaskWriterMemberId(), task.getMilestone(), task.getTitle(), task.getContent()),
+                        new TaskDto(task2.getTaskId(), task2.getTaskWriterMemberId(), task2.getMilestone(), task.getTitle(), task2.getContent())));
 
         List<TaskDto> allTask = taskService.getTasks(project.getProjectId());
 
@@ -82,7 +82,7 @@ class TaskServiceTest {
         task.setProject(project);
 
         given(taskRepository.getTask(task.getTaskId(), project.getProjectId()))
-                .willReturn(new TaskDto(task.getTaskId(), task.getTaskWriterMemberId(), task.getMilestone(), task.getTitle()));
+                .willReturn(new TaskDto(task.getTaskId(), task.getTaskWriterMemberId(), task.getMilestone(), task.getTitle(), task.getContent()));
 
         assertThat(taskService.getTask(task.getTaskId(), project.getProjectId()).getTitle()).isEqualTo(task.getTitle());
     }
