@@ -24,7 +24,8 @@ public class TaskRepositoryImpl extends QuerydslRepositorySupport implements Tas
                         task.taskId,
                         task.taskWriterMemberId,
                         task.milestone,
-                        task.title))
+                        task.title,
+                        task.content))
                 .fetch();
     }
 
@@ -37,7 +38,8 @@ public class TaskRepositoryImpl extends QuerydslRepositorySupport implements Tas
                         task.taskId,
                         task.taskWriterMemberId,
                         task.milestone,
-                        task.title))
+                        task.title,
+                        task.content))
                 .where(task.project.projectId.eq(projectId), task.taskId.eq(taskId))
                 .fetchOne();
     }
