@@ -32,16 +32,18 @@ public class DefaultProjectStatusService implements ProjectStatusService {
     }
 
     @Override
+    @Transactional
     public ProjectStatusIdDto createProjectStatus(ProjectStatusDto projectStatusDto) {
         if (projectStatusRepository.existsById(projectStatusDto.getProjectStatusId())) {
             throw new DuplicateIntIdException(projectStatusDto.getProjectStatusId());
         }
-        ProjectStatus projectStatus = new ProjectStatus(projectStatusDto.getName());
+        ProjectStatus projectStatus = new ProjectStatus(projectStatusDto.getProjectStatusId(), projectStatusDto.getName());
         ProjectStatus result = projectStatusRepository.saveAndFlush(projectStatus);
         return new ProjectStatusIdDto(result.getProjectStatusId());
     }
 
     @Override
+    @Transactional
     public ProjectStatusIdDto updateProjectStatus(int projectStatusId, ProjectStatusNameDto projectStatusNameDto) {
         ProjectStatus projectStatus = projectStatusRepository.findById(projectStatusId)
                 .orElseThrow(() -> new NotFoundProjectStatusException(projectStatusId));

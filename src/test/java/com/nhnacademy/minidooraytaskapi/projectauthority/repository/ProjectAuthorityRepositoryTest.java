@@ -26,28 +26,24 @@ class ProjectAuthorityRepositoryTest {
     ProjectAuthorityRepository projectAuthorityRepository;
     @Test
     void getProjectAuthorities() {
-        ProjectAuthority projectAuthority = new ProjectAuthority();
-        projectAuthority.setName("test1");
+        ProjectAuthority projectAuthority = new ProjectAuthority(1, "test1");
 
-        ProjectAuthority projectAuthority2 = new ProjectAuthority();
-        projectAuthority2.setName("test2");
+        ProjectAuthority projectAuthority2 = new ProjectAuthority(2, "test2");
 
         testEntityManager.persist(projectAuthority);
         testEntityManager.persist(projectAuthority2);
 
         List<ProjectAuthorityDto> projectAuthorities = projectAuthorityRepository.getProjectAuthorities();
         Assertions.assertThat(projectAuthorities).hasSize(2);
-        Assertions.assertThat(projectAuthorities.get(0).getProjectAuthorityId()).isEqualTo(3);
+        Assertions.assertThat(projectAuthorities.get(0).getProjectAuthorityId()).isEqualTo(1);
         Assertions.assertThat(projectAuthorities.get(0).getName()).isEqualTo("test1");
     }
 
     @Test
     void getProjectAuthority() {
-        ProjectAuthority projectAuthority = new ProjectAuthority();
-        projectAuthority.setName("test1");
+        ProjectAuthority projectAuthority = new ProjectAuthority(1, "test1");
 
-        ProjectAuthority projectAuthority2 = new ProjectAuthority();
-        projectAuthority2.setName("test2");
+        ProjectAuthority projectAuthority2 = new ProjectAuthority(2, "test2");
 
         testEntityManager.persist(projectAuthority);
         testEntityManager.persist(projectAuthority2);

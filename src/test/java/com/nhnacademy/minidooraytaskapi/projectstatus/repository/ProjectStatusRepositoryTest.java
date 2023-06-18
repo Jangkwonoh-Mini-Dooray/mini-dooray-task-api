@@ -24,9 +24,9 @@ class ProjectStatusRepositoryTest {
     @Test
     @DisplayName("프로젝트 상태 테이블 전체 조회")
     void getProjectStatuses() {
-        ProjectStatus projectStatus = new ProjectStatus("활성");
-        ProjectStatus projectStatus2 = new ProjectStatus("휴면");
-        ProjectStatus projectStatus3 = new ProjectStatus("종료");
+        ProjectStatus projectStatus = new ProjectStatus(1, "활성");
+        ProjectStatus projectStatus2 = new ProjectStatus(2, "휴면");
+        ProjectStatus projectStatus3 = new ProjectStatus(3, "종료");
 
         testEntityManager.persist(projectStatus);
         testEntityManager.persist(projectStatus2);
@@ -41,9 +41,9 @@ class ProjectStatusRepositoryTest {
     @Test
     @DisplayName("특정 프로젝트 상태 조회")
     void getProjectStatus() {
-        ProjectStatus projectStatus = new ProjectStatus("활성");
-        ProjectStatus projectStatus2 = new ProjectStatus("휴면");
-        ProjectStatus projectStatus3 = new ProjectStatus("종료");
+        ProjectStatus projectStatus = new ProjectStatus(1, "활성");
+        ProjectStatus projectStatus2 = new ProjectStatus(2, "휴면");
+        ProjectStatus projectStatus3 = new ProjectStatus(3, "종료");
 
         testEntityManager.persist(projectStatus);
         testEntityManager.persist(projectStatus2);

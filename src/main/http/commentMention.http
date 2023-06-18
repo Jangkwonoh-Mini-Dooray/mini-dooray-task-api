@@ -1,0 +1,32 @@
+### 댓글 내 멘션 전체 조회
+GET /mentions/1
+Host: localhost:9091
+Content-Type: application/json
+
+### 댓글 내 멘션 등록
+POST /mentions/1
+Host: localhost:9091
+Content-Type: application/json
+
+{
+  "targetMemberId" : ["1", "2", "3"]
+}
+
+### 댓글 내 멘션 수정
+PUT /task/comments/1
+Host: localhost:9091
+Content-Type: application/json
+
+{
+  "commentWriterMemberId" : 1,
+  "commentContent" : "수정합니다"
+}
+
+### 댓글 내 멘션 삭제
+DELETE /mentions/1
+Host: localhost:9091
+Content-Type: application/json
+
+{
+  "targetMemberId" : ["1", "2", "3"]
+}

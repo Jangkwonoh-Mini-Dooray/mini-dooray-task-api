@@ -60,6 +60,6 @@ public class ProjectController implements ValidateParam {
     @DeleteMapping(value = "/{project-id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Response> deleteProject(@PathVariable("project-id") Long projectId) {
         projectService.deleteProject(projectId);
-        return ResponseEntity.ok().body(new Response("ok"));
+        return ResponseEntity.ok().body(new Response("OK"));
     }
 }

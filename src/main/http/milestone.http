@@ -3,13 +3,19 @@ GET /milestones/projects/1
 Host: localhost:9091
 Content-Type: application/json
 
-### 특정 마일스톤 조회
+### 특정 마일스톤 조회1
 GET /milestones/1
 Host: localhost:9091
 Content-Type: application/json
 
+### 특정 마일스톤 조회2
+GET /milestones/13
+Host: localhost:9091
+Content-Type: application/json
+
+
 ### 프로젝트 내 마일스톤 생성
-POST /milestones/projects/1
+POST /milestones/projects/5
 Host: localhost:9091
 Content-Type: application/json
 
@@ -21,7 +27,7 @@ Content-Type: application/json
 }
 
 ### 마일스톤 수정
-PUT /milestones/1
+PUT /milestones/13
 Host: localhost:9091
 Content-Type: application/json
 
@@ -33,6 +39,6 @@ Content-Type: application/json
 }
 
 ### 마일스톤 삭제
-DELETE /milestones/2
+DELETE /milestones/13
 Host: localhost:9091
 Content-Type: application/json

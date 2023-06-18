@@ -1,0 +1,47 @@
+### 프로젝트 내 전체 업무 조회1
+GET /projects/1/posts
+Host: localhost:9091
+Content-Type: application/json
+
+### 프로젝트 내 전체 업무 조회2
+GET /projects/5/posts
+Host: localhost:9091
+Content-Type: application/json
+
+### 프로젝트 내 특정 업무 조회1
+GET /projects/1/posts/4
+Host: localhost:9091
+Content-Type: application/json
+
+### 프로젝트 내 특정 업무 조회2
+GET /projects/5/posts/16
+Host: localhost:9091
+Content-Type: application/json
+
+### 프로젝트 내 업무 생성
+POST /projects/5/posts
+Host: localhost:9091
+Content-Type: application/json
+
+{
+  "taskWriterMemberId" :  "naht94",
+  "milestoneId" : 1,
+  "title" : "업무",
+  "content" : "테스트 업무"
+}
+
+### 프로젝트 내 업무 수정
+PUT /projects/5/posts/16
+Host: localhost:9091
+Content-Type: application/json
+
+{
+  "taskWriterMemberId" :  "naht94",
+  "milestoneId" : 1,
+  "title" : "업무",
+  "content" : "테스트 업무"
+}
+
+### 업무 삭제
+DELETE /projects/posts/27
+Host: localhost:9091
