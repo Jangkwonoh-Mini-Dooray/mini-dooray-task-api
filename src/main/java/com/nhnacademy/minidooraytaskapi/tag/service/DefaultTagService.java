@@ -51,7 +51,8 @@ public class DefaultTagService implements TagService {
     @Override
     public TagIdDto putTagTask(TaskTagRequestDto taskTagRequestDto, Long projectId, Long tagId) {
         Tag tag = tagRepository.findById(tagId)
-                .orElseThrow(() -> new NotFoundTagException(tagId));
+                .orElseThrow(() -> new NotFoundTagException
+                        (tagId));
         tag.setName(taskTagRequestDto.getName());
         return save(taskTagRequestDto, tag);
     }
