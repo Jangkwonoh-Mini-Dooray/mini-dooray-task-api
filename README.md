@@ -118,7 +118,7 @@
   ```
   
   ---
-  # /comment mention
+# /comment mention
 
 ## 댓글 내 멘션 전체 조회
 
@@ -389,7 +389,7 @@
   ```
   
   ---
-  # /milestone
+# /milestone
 
 ## 프로젝트 내 전체 마일스톤 조회
 
@@ -547,7 +547,7 @@
   ```
   
   ---
-  # /project_authority
+# /project_authority
 
 ## 프로젝트 권한 목록 정보 조회
 
@@ -811,7 +811,7 @@
   ```
   
   ---
-  # /project_status
+# /project_status
 
 ## 프로젝트 상태 목록 정보 조회
 
@@ -948,7 +948,7 @@
   ```
   
   ---
-  # /project_status
+# /project_status
 
 ## 프로젝트 상태 목록 정보 조회
 
