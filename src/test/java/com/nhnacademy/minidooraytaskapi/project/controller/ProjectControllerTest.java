@@ -127,7 +127,7 @@ class ProjectControllerTest {
         mockMvc.perform(delete("/projects/{project-id}", 1L))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.result", equalTo("ok")));
+                .andExpect(jsonPath("$.result", equalTo("OK")));
 
         verify(projectService, times(1)).deleteProject(1L);
     }

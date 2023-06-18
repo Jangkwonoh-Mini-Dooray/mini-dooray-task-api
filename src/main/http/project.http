@@ -1,3 +1,13 @@
+### 프로젝트 전체 조회
+GET /projects
+Host: localhost:9091
+Content-Type: application/json
+
+### 개별 프로젝트 조회
+GET /projects/1
+Host: localhost:9091
+Content-Type: application/json
+
 ### 프로젝트 생성
 POST /projects
 Host: localhost:9091
@@ -5,25 +15,26 @@ Content-Type: application/json
 
 {
   "projectStatusName" : "활성",
-  "name" : "NHN Academy",
-  "description" : "NHN Academy 입니다."
+  "name" : "test Project",
+  "description" : "test Project 입니다."
 }
 
-### 프로젝트 전체 조회
-GET /projects
+### 프로젝트 수정
+PUT /projects/7
 Host: localhost:9091
 Content-Type: application/json
+
+{
+  "name" : "프로젝트2 수정",
+  "projectStatusName" : "휴면",
+  "description" : "updated"
+}
 
 ### 프로젝트 멤버 아이디로 조회
 GET /projects/list/suebin
 Host: localhost:9091
 Content-Type: application/json
 
-### 프로젝트 조회
-GET /projects/2
-Host: localhost:9091
-Content-Type: application/json
-
 ### 프로젝트 삭제
-DELETE /projects/2
+DELETE /projects/7
 Host: localhost:9091

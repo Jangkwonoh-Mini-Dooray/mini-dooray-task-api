@@ -35,7 +35,7 @@ public class TagController implements ValidateParam {
     }
 
     @GetMapping("/{project-id}/tags/{task-id}")
-    public ResponseEntity<List<TagDto>> getTagsByTags(@PathVariable("project-id") Long projectId, @PathVariable("task-id") Long taskId) {
+    public ResponseEntity<List<TagDto>> getTagsByTaskId(@PathVariable("project-id") Long projectId, @PathVariable("task-id") Long taskId) {
         List<TagDto> tags = tagService.getTags(projectId, taskId);
         return ResponseEntity.ok(tags);
     }

@@ -1,0 +1,53 @@
+### 프로젝트 내 전체 태그 조회
+GET /projects/5/tags
+Host: localhost:9091
+Content-Type: application/json
+
+### 프로젝트 업무 내 전체 태그 조회
+GET /projects/5/tags/28
+Host: localhost:9091
+Content-Type: application/json
+
+### 프로젝트 내 태그 생성1
+POST /projects/5/tags
+Host: localhost:9091
+Content-Type: application/json
+
+{
+  "taskId" : "28",
+  "name" : "지난활동"
+}
+
+### 프로젝트 내 태그 생성2
+POST /projects/5/tags
+Host: localhost:9091
+Content-Type: application/json
+
+{
+  "taskId" : null,
+  "name" : "태그만"
+}
+
+### 프로젝트 내 태그 수정
+PUT /projects/5/tags/18
+Host: localhost:9091
+Content-Type: application/json
+
+{
+  "taskId" : "28",
+  "name" : "지난활동"
+}
+
+### 프로젝트 내 태그 수정
+PUT /projects/5/tags/18
+Host: localhost:9091
+Content-Type: application/json
+
+{
+  "taskId" : null,
+  "name" : "지난활동2"
+}
+
+### 프로젝트 내 태그 삭제
+DELETE /projects/tags/18
+Host: localhost:9091

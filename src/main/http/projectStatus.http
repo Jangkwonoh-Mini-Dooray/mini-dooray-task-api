@@ -29,6 +29,7 @@ Host: localhost:9091
 Content-Type: application/json
 
 {
+  "projectStatusId" : 4,
   "name" : "name4"
 }
 
@@ -42,5 +43,5 @@ Content-Type: application/json
 }
 
 ### 프로젝트 상태 정보 삭제
-DELETE /project-status/8
+DELETE /project-status/4
 Host: localhost:9091

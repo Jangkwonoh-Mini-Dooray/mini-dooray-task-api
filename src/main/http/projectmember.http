@@ -1,42 +1,46 @@
 ### 프로젝트 멤버 조회
-GET /projects/2/members
+GET /projects/5/members
 Host: localhost:9091
 Content-Type: application/json
 
-### 프로젝트 멤버 초대
-POST /projects/1/members
+### 프로젝트 멤버 초대1
+POST /projects/5/members
 Host: localhost:9091
 Content-Type: application/json
 
 [
   {
-    "targetMemberId": "suebin",
+    "targetMemberId": "test_user1",
+    "projectAuthorityId": 2
+  },
+  {
+    "targetMemberId": "test_user2",
     "projectAuthorityId": 2
   }
 ]
 
 ### 프로젝트 멤버 수정
-PUT /projects/1/members
+PUT /projects/5/members
 Host: localhost:9091
 Content-Type: application/json
 
 [
   {
-    "targetMemberId": "user1",
+    "targetMemberId": "test-user2",
     "projectAuthorityId": 1
   }
 ]
 
 ### 프로젝트 멤버 삭제
-DELETE /projects/1/members
+DELETE /projects/5/members
 Host: localhost:9091
 Content-Type: application/json
 
 [
   {
-    "targetMemberId": "user1"
+    "targetMemberId": "test_user1"
   },
   {
-    "targetMemberId": "user2"
+    "targetMemberId": "test_user2"
   }
 ]

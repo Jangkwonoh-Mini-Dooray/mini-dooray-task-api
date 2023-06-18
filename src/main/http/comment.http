@@ -1,0 +1,38 @@
+### 업무 내 댓글 전체 조회
+GET /task/28/comments
+Host: localhost:9091
+Content-Type: application/json
+
+### 댓글 등록1
+POST /task/28/comments
+Host: localhost:9091
+Content-Type: application/json
+
+{
+    "commentWriterMemberId" : 1,
+    "commentContent" : "안녕하세요."
+}
+
+### 댓글 등록2
+POST /task/28/comments
+Host: localhost:9091
+Content-Type: application/json
+
+{
+  "commentWriterMemberId" : 2,
+  "commentContent" : "파이팅"
+}
+
+### 댓글 수정
+PUT /task/comments/2
+Host: localhost:9091
+Content-Type: application/json
+
+{
+    "commentWriterMemberId" : 1,
+    "commentContent" : "수정합니다"
+}
+
+### 프로젝트 삭제
+DELETE /task/comments/2
+Host: localhost:9091
