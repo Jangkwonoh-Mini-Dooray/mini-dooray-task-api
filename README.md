@@ -1,5 +1,5 @@
 # mini-dooray-task-api
-- Project, Task, Comment, Tag, Milestone 정보를 관리하는 Task-API
+- Project, Task, Comment, Tag, Milestone 정보를 관리하는 Task-API 입니다.
 
 ---
 # /comment
